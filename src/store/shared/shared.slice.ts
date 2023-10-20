@@ -2,15 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ISharedInitialState } from './shared.types'
 
 const initialState: ISharedInitialState = {
-	activeSubmenu: '',
+	showDrawer: false,
 }
 
 const sharedSlice = createSlice({
 	name: 'shared',
 	initialState,
 	reducers: {
-		setActiveSubmenu(state, { payload }: PayloadAction<string>) {
-			state.activeSubmenu = payload
+		setShowDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.showDrawer = payload
 		},
 	},
 })

@@ -1,0 +1,14 @@
+.navbar {
+	@apply fixed flex flex-col justify-between gap-y-5 bg-[#689C56] w-[200px] min-h-screen py-7 select-none;
+	.menu {
+		@apply flex flex-col items-baseline gap-3 text-xl rounded-2xl cursor-pointer;
+		
+		.menu_item {
+			@apply flex text-white w-full items-center justify-start text-base rounded-2xl p-3 gap-3 cursor-pointer hover:bg-black hover:bg-opacity-10 relative;
+		}
+	}
+	
+	.logout {
+		@apply ml-5 flex text-white w-full items-center justify-start text-base rounded-2xl p-3 gap-3 cursor-pointer hover:bg-black hover:bg-opacity-10
+	}
+}

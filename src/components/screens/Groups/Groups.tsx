@@ -1,8 +1,11 @@
 import React from 'react'
 import { Table, Button, Input } from 'antd'
-import * as XLSX from 'xlsx'
+import { exportToExcel } from 'src/utils/Export'
+import { FilterDrawer } from 'src/components/ui'
+import { useActions } from 'src/hooks/useActions'
 
-const All: React.FC = () => {
+const Groups: React.FC = () => {
+	const { setShowDrawer } = useActions()
 	const dataSource = [
 		{ key: '1', name: 'John Doe', age: 30, address: 'New York' },
 		{ key: '2', name: 'Jane Smith', age: 28, address: 'London' },
@@ -20,24 +23,19 @@ const All: React.FC = () => {
 		{ title: 'Address', dataIndex: 'address', key: 'address' },
 	]
 
-	const exportToExcel = () => {
-		const workbook = XLSX.utils.book_new()
-		const worksheet = XLSX.utils.json_to_sheet(dataSource)
-		XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1')
-		XLSX.writeFile(workbook, 'data.xlsx')
-	}
-
 	return (
-		<div className='flex flex-col gap-y-5'>
-			<div className='flex gap-x-5'>
-				<Button onClick={exportToExcel} className='w-40'>
-					Export to Excel
-				</Button>
-				<Input.Search className='w-60' />
+		<div className='flex flex-col gap-y-5 bg-white m-5 p-5 rounded-2xl'>
+			<div className='flex items-center justify-between gap-20'>
+				<Input.Search />
+				<div className='flex items-center gap-x-5'>
+					<Button onClick={() => exportToExcel(dataSource)}>Скачать</Button>
+					<Button onClick={() => setShowDrawer(true)}>Фильтр</Button>
+					<FilterDrawer />
+				</div>
 			</div>
 			<Table dataSource={dataSource} columns={columns} />
 		</div>
 	)
 }
 
-export { All }
+export { Groups }

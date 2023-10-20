@@ -1,3 +1,3 @@
 export interface ISharedInitialState {
-	activeSubmenu: string
+	showDrawer: boolean
 }

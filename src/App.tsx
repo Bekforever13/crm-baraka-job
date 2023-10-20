@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Layout, Login } from './pages'
+import { Layout, Login } from './components/screens'
 import { routes } from './routes/Routes'
 import { useSelectors } from 'src/hooks/useSelectors'
 
