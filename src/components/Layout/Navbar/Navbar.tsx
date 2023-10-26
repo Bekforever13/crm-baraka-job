@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AiOutlineHome } from 'react-icons/ai'
 import { FaUsers } from 'react-icons/fa'
-import { BiSolidUserDetail } from 'react-icons/bi'
+import { BiSolidMapPin, BiSolidUserDetail } from 'react-icons/bi'
 import { FiLogOut } from 'react-icons/fi'
 import { TbCategory } from 'react-icons/tb'
 import { Popconfirm } from 'antd'
@@ -37,6 +37,7 @@ const items: MenuProps['items'] = [
 		getItem('Заказчики', '/clients/customers', null),
 	]),
 	getItem('Регионы', '/regions', <TbCategory />),
+	getItem('Округи', '/districts', <BiSolidMapPin />),
 	getItem('Группы', '/groups', <BiSolidUserDetail />),
 ]
 

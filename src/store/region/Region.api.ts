@@ -1,15 +1,19 @@
 import { api } from '../index.api'
-import { IRegionDataResponse, TAddNewRegion, TRegion } from './Region.types'
+import {
+	IItemDataResponse,
+	TAddNewItem,
+	TItemData,
+} from 'src/store/shared/shared.types'
 
 export const regionsApi = api.injectEndpoints({
 	endpoints: builder => ({
-		getRegions: builder.query<IRegionDataResponse, number>({
+		getRegions: builder.query<IItemDataResponse, number>({
 			query: (page = 1) => ({
 				url: `/regions?page=${page}`,
 			}),
 			providesTags: ['regions'],
 		}),
-		addNewRegion: builder.mutation<unknown, TAddNewRegion>({
+		addNewRegion: builder.mutation<unknown, TAddNewItem>({
 			query: body => ({
 				url: '/regions',
 				method: 'POST',
@@ -17,7 +21,7 @@ export const regionsApi = api.injectEndpoints({
 			}),
 			invalidatesTags: ['regions'],
 		}),
-		editRegion: builder.mutation<unknown, TRegion>({
+		editRegion: builder.mutation<unknown, TItemData>({
 			query: body => ({
 				url: `/regions/${body.id}`,
 				method: 'PUT',

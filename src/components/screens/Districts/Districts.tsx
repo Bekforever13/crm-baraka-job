@@ -1,24 +1,25 @@
 import React from 'react'
 import { Table, Button, Input, message, Popconfirm } from 'antd'
 import { exportToExcel } from 'src/utils/export'
-import { UiFilterDrawer, UiButton, UiGroupDrawer } from 'src/components/ui'
+import { UiFilterDrawer, UiButton, UiAddRegionDrawer } from 'src/components/ui'
 import { useActions } from 'src/hooks/useActions'
 import {
-	useDeleteGroupMutation,
-	useGetGroupsQuery,
+	useDeleteRegionMutation,
+	useGetRegionsQuery,
 } from 'src/store/index.endpoints'
 import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 
-const Groups: React.FC = () => {
+const Districts: React.FC = () => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { data, isLoading, isError } = useGetGroupsQuery(currentPage)
+	const { data, isLoading, isError } = useGetRegionsQuery(currentPage)
 	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
 	const [editData, setEditData] = React.useState<TItemData>()
 	const { setShowDrawer } = useActions()
-	const [deleteGroup, { isSuccess }] = useDeleteGroupMutation()
+	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 	const total = data?.meta.total
 
+	console.log(data)
 	const handleClickEdit = (rec: TItemData) => {
 		setEditData(rec)
 		setIsDrawerOpen(true)
@@ -62,8 +63,8 @@ const Groups: React.FC = () => {
 							color='blue'
 						/>
 						<Popconfirm
-							title='Удалить группу?'
-							onConfirm={() => deleteGroup(rec.id)}
+							title='Удалить регион?'
+							onConfirm={() => deleteRegion(rec.id)}
 							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 						>
 							<BiSolidTrash className='cursor-pointer' size='22' color='red' />
@@ -94,7 +95,7 @@ const Groups: React.FC = () => {
 					<UiButton type='primary' onClick={handleClickAdd}>
 						Добавить
 					</UiButton>
-					<UiGroupDrawer
+					<UiAddRegionDrawer
 						isDrawerOpen={isDrawerOpen}
 						setIsDrawerOpen={setIsDrawerOpen}
 						editData={editData}
@@ -117,4 +118,4 @@ const Groups: React.FC = () => {
 	)
 }
 
-export { Groups }
+export { Districts }

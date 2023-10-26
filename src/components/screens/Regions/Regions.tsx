@@ -7,21 +7,20 @@ import {
 	useDeleteRegionMutation,
 	useGetRegionsQuery,
 } from 'src/store/index.endpoints'
-import { TRegion } from 'src/store/region/Region.types'
-import { IRuKarUz } from 'src/store/shared/shared.types'
+import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 
 const Regions: React.FC = () => {
 	const [currentPage, setCurrentPage] = React.useState(1)
 	const { data, isLoading, isError } = useGetRegionsQuery(currentPage)
 	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
-	const [editData, setEditData] = React.useState<TRegion>()
+	const [editData, setEditData] = React.useState<TItemData>()
 	const { setShowDrawer } = useActions()
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 	const total = data?.meta.total
 
 	console.log(data)
-	const handleClickEdit = (rec: TRegion) => {
+	const handleClickEdit = (rec: TItemData) => {
 		setEditData(rec)
 		setIsDrawerOpen(true)
 	}
@@ -54,7 +53,7 @@ const Regions: React.FC = () => {
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',
-			render: (_: unknown, rec: TRegion) => {
+			render: (_: unknown, rec: TItemData) => {
 				return (
 					<div className='flex items-center gap-3'>
 						<BiSolidPencil
@@ -89,7 +88,7 @@ const Regions: React.FC = () => {
 			<div className='flex items-center justify-between gap-20'>
 				<Input.Search />
 				<div className='flex items-center gap-x-5'>
-					<Button onClick={() => exportToExcel<TRegion>(data?.data ?? [])}>
+					<Button onClick={() => exportToExcel<TItemData>(data?.data ?? [])}>
 						Скачать
 					</Button>
 					<Button onClick={() => setShowDrawer(true)}>Фильтр</Button>

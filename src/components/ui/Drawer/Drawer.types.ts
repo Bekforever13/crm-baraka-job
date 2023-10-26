@@ -1,7 +1,7 @@
-import { TRegion } from 'src/store/region/Region.types'
+import { TItemData } from 'src/store/shared/shared.types'
 
-export type TAddRegionDrawerProps = {
-	editData: TRegion | undefined
+export type TAddDrawerProps = {
+	editData: TItemData | undefined
 	isDrawerOpen: boolean
 	setIsDrawerOpen: (el: React.SetStateAction<boolean>) => void
 }

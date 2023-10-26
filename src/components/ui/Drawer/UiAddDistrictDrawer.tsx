@@ -8,7 +8,7 @@ import { IRuKarUz } from 'src/store/shared/shared.types'
 import { Formik, Form, Field } from 'formik'
 import { TAddDrawerProps } from './Drawer.types'
 
-const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
+const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 	editData,
 	setIsDrawerOpen,
 	isDrawerOpen,
@@ -41,17 +41,17 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 	React.useEffect(() => {
 		if (addRegionIsSuccess) {
 			setIsDrawerOpen(false)
-			message.success('Регион успешно добавлен.')
+			message.success('Округ успешно добавлен.')
 		}
 		if (editRegionIsSuccess) {
 			setIsDrawerOpen(false)
-			message.success('Регион успешно изменён.')
+			message.success('Округ успешно изменён.')
 		}
 	}, [addRegionIsSuccess, editRegionIsSuccess])
 
 	return (
 		<Drawer
-			title='Регион'
+			title='Округ'
 			placement='right'
 			onClose={onClose}
 			open={isDrawerOpen}
@@ -115,4 +115,4 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 	)
 }
 
-export { UiAddRegionDrawer }
+export { UiAddDistrictDrawer }
