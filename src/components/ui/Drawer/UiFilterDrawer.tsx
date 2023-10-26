@@ -4,13 +4,11 @@ import { useSelectors } from 'src/hooks/useSelectors'
 import { useActions } from 'src/hooks/useActions'
 import { UiMultipleSelect, UiSelect } from '..'
 
-const FilterDrawer: React.FC = () => {
+const UiFilterDrawer: React.FC = () => {
 	const { showDrawer } = useSelectors()
 	const { setShowDrawer } = useActions()
 
-	const onClose = () => {
-		setShowDrawer(false)
-	}
+	const onClose = () => setShowDrawer(false)
 
 	return (
 		<Drawer
@@ -45,4 +43,4 @@ const FilterDrawer: React.FC = () => {
 	)
 }
 
-export { FilterDrawer }
+export { UiFilterDrawer }

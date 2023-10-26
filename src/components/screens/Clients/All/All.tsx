@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Button, Input } from 'antd'
-import { exportToExcel } from 'src/utils/Export'
-import { FilterDrawer } from 'src/components/ui'
+import { exportToExcel } from 'src/utils/export'
+import { UiFilterDrawer } from 'src/components/ui'
 import { useActions } from 'src/hooks/useActions'
 
 const All: React.FC = () => {
@@ -30,7 +30,7 @@ const All: React.FC = () => {
 				<div className='flex items-center gap-x-5'>
 					<Button onClick={() => exportToExcel(dataSource)}>Скачать</Button>
 					<Button onClick={() => setShowDrawer(true)}>Фильтр</Button>
-					<FilterDrawer />
+					<UiFilterDrawer />
 				</div>
 			</div>
 			<Table dataSource={dataSource} columns={columns} />

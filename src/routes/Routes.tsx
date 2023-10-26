@@ -1,6 +1,6 @@
 import {
 	All,
-	Categories,
+	Regions,
 	Customers,
 	Groups,
 	Home,
@@ -12,6 +12,6 @@ export const routes = [
 	{ path: '/clients/all', element: <All /> },
 	{ path: '/clients/workers', element: <Workers /> },
 	{ path: '/clients/customers', element: <Customers /> },
-	{ path: '/category', element: <Categories /> },
+	{ path: '/regions', element: <Regions /> },
 	{ path: '/groups', element: <Groups /> },
 ]

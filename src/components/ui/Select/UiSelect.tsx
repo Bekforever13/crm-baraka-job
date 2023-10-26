@@ -1,22 +1,8 @@
 import React from 'react'
-import { Select } from 'antd'
+import { Select, SelectProps } from 'antd'
 
-const handleChange = (value: string) => {
-	console.log(`selected ${value}`)
+const UiSelect: React.FC<SelectProps> = props => {
+	return <Select {...props} style={{ width: '100%' }} />
 }
-
-const UiSelect: React.FC = () => (
-	<Select
-		defaultValue='lucy'
-		style={{ width: '100%' }}
-		onChange={handleChange}
-		options={[
-			{ value: 'jack', label: 'Jack' },
-			{ value: 'lucy', label: 'Lucy' },
-			{ value: 'Yiminghe', label: 'yiminghe' },
-			{ value: 'disabled', label: 'Disabled', disabled: true },
-		]}
-	/>
-)
 
 export { UiSelect }

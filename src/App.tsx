@@ -1,11 +1,20 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import { Layout, Login } from './components/screens'
-import { routes } from './routes/Routes'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Layout, Login } from 'src/components/screens'
+import { routes } from 'src/routes/Routes'
 import { useSelectors } from 'src/hooks/useSelectors'
 
 const App: React.FC = () => {
 	const { isAuth } = useSelectors()
+	const { pathname } = useLocation()
+	const navigate = useNavigate()
+
+	React.useEffect(() => {
+		if (!isAuth) {
+			navigate('/auth', { replace: true })
+		}
+	}, [pathname, isAuth])
+
 	return (
 		<div>
 			<Routes>

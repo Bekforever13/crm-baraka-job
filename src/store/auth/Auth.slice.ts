@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IInitialState } from './Auth.types'
 
 const initialState: IInitialState = {
-	isAuth: true,
-	token: '',
+	isAuth: localStorage.getItem('token') ? true : false,
+	token: localStorage.getItem('token') || '',
 }
 
 const AuthSlice = createSlice({

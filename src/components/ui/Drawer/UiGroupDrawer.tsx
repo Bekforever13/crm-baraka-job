@@ -8,9 +8,7 @@ const UiGroupDrawer: React.FC = () => {
 	const { showDrawer } = useSelectors()
 	const { setShowDrawer } = useActions()
 
-	const onClose = () => {
-		setShowDrawer(false)
-	}
+	const onClose = () => setShowDrawer(false)
 
 	return (
 		<Drawer

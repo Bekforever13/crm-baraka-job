@@ -36,7 +36,7 @@ const items: MenuProps['items'] = [
 		getItem('Рабочие', '/clients/workers', null),
 		getItem('Заказчики', '/clients/customers', null),
 	]),
-	getItem('Категории', '/category', <TbCategory />),
+	getItem('Регионы', '/regions', <TbCategory />),
 	getItem('Группы', '/groups', <BiSolidUserDetail />),
 ]
 
@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
 		<nav className={s.navbar}>
 			<Menu
 				onClick={onClick}
-				style={{ width: 200, color: 'white', backgroundColor: 'transparent' }}
+				style={{ width: 180, color: 'white', backgroundColor: 'transparent' }}
 				defaultSelectedKeys={[pathname]}
 				mode='inline'
 				items={items}
