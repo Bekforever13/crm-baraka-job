@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Input, message, Popconfirm } from 'antd'
+import { Table, message, Popconfirm } from 'antd'
 import { UiButton, UiGroupDrawer } from 'src/components/ui'
 import {
 	useDeleteGroupMutation,
@@ -81,8 +81,7 @@ const Groups: React.FC = () => {
 
 	return (
 		<div className='flex flex-col gap-y-5 bg-white m-5 p-5 rounded-2xl'>
-			<div className='flex items-center justify-between gap-20'>
-				<Input.Search />
+			<div className='flex items-center justify-end gap-20'>
 				<div className='flex items-center gap-x-5'>
 					<UiButton type='primary' onClick={handleClickAdd}>
 						Добавить
