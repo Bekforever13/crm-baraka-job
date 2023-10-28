@@ -5,3 +5,8 @@ export type TAddDrawerProps = {
 	isDrawerOpen: boolean
 	setIsDrawerOpen: (el: React.SetStateAction<boolean>) => void
 }
+
+export type TSelectOptions = {
+	value: string
+	label: string
+}

@@ -1,8 +1,6 @@
 import React from 'react'
-import { Table, Button, Input, message, Popconfirm } from 'antd'
-import { exportToExcel } from 'src/utils/export'
-import { UiFilterDrawer, UiButton, UiAddRegionDrawer } from 'src/components/ui'
-import { useActions } from 'src/hooks/useActions'
+import { Table, Input, message, Popconfirm } from 'antd'
+import { UiButton, UiAddRegionDrawer } from 'src/components/ui'
 import {
 	useDeleteRegionMutation,
 	useGetRegionsQuery,
@@ -15,7 +13,6 @@ const Regions: React.FC = () => {
 	const { data, isLoading, isError } = useGetRegionsQuery(currentPage)
 	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
 	const [editData, setEditData] = React.useState<TItemData>()
-	const { setShowDrawer } = useActions()
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 	const total = data?.meta.total
 
@@ -88,10 +85,6 @@ const Regions: React.FC = () => {
 			<div className='flex items-center justify-between gap-20'>
 				<Input.Search />
 				<div className='flex items-center gap-x-5'>
-					<Button onClick={() => exportToExcel<TItemData>(data?.data ?? [])}>
-						Скачать
-					</Button>
-					<Button onClick={() => setShowDrawer(true)}>Фильтр</Button>
 					<UiButton type='primary' onClick={handleClickAdd}>
 						Добавить
 					</UiButton>
@@ -100,7 +93,6 @@ const Regions: React.FC = () => {
 						setIsDrawerOpen={setIsDrawerOpen}
 						editData={editData}
 					/>
-					<UiFilterDrawer />
 				</div>
 			</div>
 			<Table

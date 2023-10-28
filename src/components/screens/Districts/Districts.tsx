@@ -1,26 +1,26 @@
 import React from 'react'
-import { Table, Button, Input, message, Popconfirm } from 'antd'
-import { exportToExcel } from 'src/utils/export'
-import { UiFilterDrawer, UiButton, UiAddRegionDrawer } from 'src/components/ui'
-import { useActions } from 'src/hooks/useActions'
+import { Table, message, Popconfirm } from 'antd'
+import { UiButton } from 'src/components/ui'
 import {
-	useDeleteRegionMutation,
+	useDeleteDistrictsMutation,
+	useGetDistrictsQuery,
 	useGetRegionsQuery,
 } from 'src/store/index.endpoints'
 import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
+import { UiAddDistrictDrawer } from 'src/components/ui/Drawer/UiAddDistrictDrawer'
 
 const Districts: React.FC = () => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { data, isLoading, isError } = useGetRegionsQuery(currentPage)
+	const { data, isLoading, isError } = useGetDistrictsQuery(currentPage)
 	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
 	const [editData, setEditData] = React.useState<TItemData>()
-	const { setShowDrawer } = useActions()
-	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
+	const [deleteRegion, { isSuccess }] = useDeleteDistrictsMutation()
+	const { data: regions } = useGetRegionsQuery(1)
 	const total = data?.meta.total
 
-	console.log(data)
 	const handleClickEdit = (rec: TItemData) => {
+		setEditData(undefined)
 		setEditData(rec)
 		setIsDrawerOpen(true)
 	}
@@ -31,6 +31,14 @@ const Districts: React.FC = () => {
 	}
 
 	const columns = [
+		{
+			title: 'Регион',
+			dataIndex: 'region_id',
+			key: 'region_id',
+			render: (el: number) => (
+				<>{regions?.data.find(item => item.id === el)?.name.ru}</>
+			),
+		},
 		{
 			title: 'Каракалпакский',
 			dataIndex: 'name',
@@ -85,22 +93,16 @@ const Districts: React.FC = () => {
 
 	return (
 		<div className='flex flex-col gap-y-5 bg-white m-5 p-5 rounded-2xl'>
-			<div className='flex items-center justify-between gap-20'>
-				<Input.Search />
+			<div className='flex items-center justify-end gap-20'>
 				<div className='flex items-center gap-x-5'>
-					<Button onClick={() => exportToExcel<TItemData>(data?.data ?? [])}>
-						Скачать
-					</Button>
-					<Button onClick={() => setShowDrawer(true)}>Фильтр</Button>
 					<UiButton type='primary' onClick={handleClickAdd}>
 						Добавить
 					</UiButton>
-					<UiAddRegionDrawer
+					<UiAddDistrictDrawer
 						isDrawerOpen={isDrawerOpen}
 						setIsDrawerOpen={setIsDrawerOpen}
 						editData={editData}
 					/>
-					<UiFilterDrawer />
 				</div>
 			</div>
 			<Table

@@ -7,8 +7,8 @@ import {
 
 export const districtsApi = api.injectEndpoints({
 	endpoints: builder => ({
-		getDistricts: builder.query<IItemDataResponse, number>({
-			query: (page = 1) => ({
+		getDistricts: builder.query<IItemDataResponse, number | void>({
+			query: page => ({
 				url: `/districts?page=${page}`,
 			}),
 			providesTags: ['districts'],
@@ -25,7 +25,7 @@ export const districtsApi = api.injectEndpoints({
 			query: body => ({
 				url: `/districts/${body.id}`,
 				method: 'PUT',
-				body: { name: { ...body.name } },
+				body: { name: { ...body.name }, region_id: body.region_id },
 			}),
 			invalidatesTags: ['districts'],
 		}),

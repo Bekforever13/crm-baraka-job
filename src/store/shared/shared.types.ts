@@ -11,6 +11,12 @@ export interface IRuKarUz {
 export type TItemData = {
 	id: number
 	name: IRuKarUz
+	region_id?: number
+}
+
+export type TDistrictData = {
+	region_id: number
+	name: IRuKarUz
 }
 
 export type TAddNewItem = {

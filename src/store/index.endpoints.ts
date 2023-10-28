@@ -1,4 +1,5 @@
 import { authApi } from './auth/Auth.api'
+import { districtsApi } from './districts/Districts.api'
 import { groupsApi } from './groups/Groups.api'
 import { regionsApi } from './region/Region.api'
 
@@ -17,3 +18,10 @@ export const {
 	useEditGroupMutation,
 	useDeleteGroupMutation,
 } = groupsApi
+
+export const {
+	useGetDistrictsQuery,
+	useAddNewDistrictMutation,
+	useEditDistrictMutation,
+	useDeleteDistrictsMutation,
+} = districtsApi
