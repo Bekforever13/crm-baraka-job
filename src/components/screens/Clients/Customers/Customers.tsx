@@ -2,7 +2,6 @@ import React from 'react'
 import { Table, Button, Input } from 'antd'
 import { UiFilterDrawer } from 'src/components/ui'
 import { useActions } from 'src/hooks/useActions'
-import { exportToExcel } from 'src/utils/export'
 
 const Customers: React.FC = () => {
 	const { setShowDrawer } = useActions()
@@ -28,7 +27,8 @@ const Customers: React.FC = () => {
 			<div className='flex items-center justify-between gap-20'>
 				<Input.Search />
 				<div className='flex items-center gap-x-5'>
-					<Button onClick={() => exportToExcel(dataSource)}>Скачать</Button>
+					{/* <Button onClick={() => exportToExcel(dataSource)}>Скачать</Button> */}
+					<Button>Скачать</Button>
 					<Button onClick={() => setShowDrawer(true)}>Фильтр</Button>
 					<UiFilterDrawer />
 				</div>
