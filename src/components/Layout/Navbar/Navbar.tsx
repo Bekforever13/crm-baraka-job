@@ -5,6 +5,7 @@ import { FaUsers } from 'react-icons/fa'
 import { BiSolidMapPin, BiSolidUserDetail } from 'react-icons/bi'
 import { FiLogOut } from 'react-icons/fi'
 import { TbCategory } from 'react-icons/tb'
+import { IoPeopleOutline } from 'react-icons/io5'
 import { Popconfirm } from 'antd'
 import { useActions } from 'src/hooks/useActions'
 import s from './Navbar.module.scss'
@@ -31,7 +32,7 @@ function getItem(
 
 const items: MenuProps['items'] = [
 	getItem('Главная', '/', <AiOutlineHome />),
-	getItem('Клиенты', '/clients', <FaUsers />, [
+	getItem('Клиенты', '/clients', <IoPeopleOutline />, [
 		getItem('Все', '/clients/all', null),
 		getItem('Рабочие', '/clients/workers', null),
 		getItem('Заказчики', '/clients/customers', null),
@@ -39,6 +40,7 @@ const items: MenuProps['items'] = [
 	getItem('Регионы', '/regions', <TbCategory />),
 	getItem('Округи', '/districts', <BiSolidMapPin />),
 	getItem('Группы', '/groups', <BiSolidUserDetail />),
+	getItem('Пользователи', '/users', <FaUsers />),
 ]
 
 const Navbar: React.FC = () => {

@@ -11,7 +11,7 @@ export const api = createApi({
 		},
 	}),
 	refetchOnFocus: true,
-	tagTypes: ['auth', 'regions', 'groups', 'districts'],
+	tagTypes: ['auth', 'regions', 'groups', 'districts', 'users'],
 	endpoints: build => ({
 		default: build.query({
 			query: () => 'default',

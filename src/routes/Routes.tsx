@@ -6,6 +6,7 @@ import {
 	Home,
 	Workers,
 	Districts,
+	Users,
 } from 'src/components/screens'
 
 export const routes = [
@@ -16,4 +17,5 @@ export const routes = [
 	{ path: '/regions', element: <Regions /> },
 	{ path: '/districts', element: <Districts /> },
 	{ path: '/groups', element: <Groups /> },
+	{ path: '/users', element: <Users /> },
 ]
