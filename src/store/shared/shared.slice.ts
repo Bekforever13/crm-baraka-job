@@ -3,6 +3,11 @@ import { ISharedInitialState } from './shared.types'
 
 const initialState: ISharedInitialState = {
 	showDrawer: false,
+	filter: {
+		group: [''],
+		region: '',
+		district: '',
+	},
 }
 
 const sharedSlice = createSlice({
@@ -11,6 +16,12 @@ const sharedSlice = createSlice({
 	reducers: {
 		setShowDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.showDrawer = payload
+		},
+		setFilter(
+			state,
+			{ payload }: PayloadAction<ISharedInitialState['filter']>
+		) {
+			state.filter = payload
 		},
 	},
 })

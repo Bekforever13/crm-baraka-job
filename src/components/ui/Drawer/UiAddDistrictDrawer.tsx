@@ -32,9 +32,10 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 			uz: '',
 		},
 	}
-	const { handleSubmit, register, setValue } = useForm<TDistrictData>({
-		defaultValues: editData || initialValues,
-	})
+	const { handleSubmit, register, setValue, reset } =
+		useForm<TDistrictData>({
+			defaultValues: editData || initialValues,
+		})
 
 	React.useEffect(() => {
 		if (editData?.region_id) {
@@ -53,7 +54,11 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 				id: editData.id,
 				...values,
 			})
-		} else addNewDistrict(values)
+			reset()
+		} else {
+			addNewDistrict(values)
+			reset()
+		}
 	}
 
 	React.useEffect(() => {

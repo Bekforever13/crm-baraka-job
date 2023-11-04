@@ -1,21 +1,19 @@
 import {
-	All,
+	Clients,
 	Regions,
-	Customers,
-	Groups,
+	Services,
 	Home,
-	Workers,
 	Districts,
 	Users,
+	Client,
 } from 'src/components/screens'
 
 export const routes = [
 	{ path: '/', element: <Home /> },
-	{ path: '/clients/all', element: <All /> },
-	{ path: '/clients/workers', element: <Workers /> },
-	{ path: '/clients/customers', element: <Customers /> },
+	{ path: '/clients', element: <Clients /> },
+	{ path: '/client/:id', element: <Client /> },
 	{ path: '/regions', element: <Regions /> },
 	{ path: '/districts', element: <Districts /> },
-	{ path: '/groups', element: <Groups /> },
+	{ path: '/services', element: <Services /> },
 	{ path: '/users', element: <Users /> },
 ]

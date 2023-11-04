@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, message, Popconfirm } from 'antd'
-import { UiButton, UiGroupDrawer } from 'src/components/ui'
+import { UiButton, UiServicesDrawer } from 'src/components/ui'
 import {
 	useDeleteGroupMutation,
 	useGetGroupsQuery,
@@ -8,7 +8,7 @@ import {
 import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 
-const Groups: React.FC = () => {
+const Services: React.FC = () => {
 	const [currentPage, setCurrentPage] = React.useState(1)
 	const { data, isLoading, isError } = useGetGroupsQuery(currentPage)
 	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
@@ -86,7 +86,7 @@ const Groups: React.FC = () => {
 					<UiButton type='primary' onClick={handleClickAdd}>
 						Добавить
 					</UiButton>
-					<UiGroupDrawer
+					<UiServicesDrawer
 						isDrawerOpen={isDrawerOpen}
 						setIsDrawerOpen={setIsDrawerOpen}
 						editData={editData}
@@ -108,4 +108,4 @@ const Groups: React.FC = () => {
 	)
 }
 
-export { Groups }
+export { Services }

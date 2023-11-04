@@ -5,14 +5,20 @@ export type TUserRole = {
 	roleId: string
 }
 
+export type TService = {
+	id: number
+	name: IRuKarUz
+}
+
 export interface IUser {
 	id: number
-	first_name: string
-	last_name: string
+	name: string
 	phone: string
 	language: string
 	role: string
-	district: IRuKarUz
+	district: string
+	region?: string
+	service?: string
 }
 
 export interface IUserDataResponse {

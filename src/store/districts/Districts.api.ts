@@ -9,9 +9,14 @@ export const districtsApi = api.injectEndpoints({
 	endpoints: builder => ({
 		getDistricts: builder.query<IItemDataResponse, number | void>({
 			query: page => ({
-				url: `/districts?page=${page}`,
+				url: `/districts?&${page ? `limit=10&page=${page}` : ''}`,
 			}),
 			providesTags: ['districts'],
+		}),
+		getOneDistrict: builder.query<IItemDataResponse, number>({
+			query: id => ({
+				url: `/districts/${id}`,
+			}),
 		}),
 		addNewDistrict: builder.mutation<unknown, TAddNewItem>({
 			query: body => ({

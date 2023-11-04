@@ -16,7 +16,6 @@ const Regions: React.FC = () => {
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 	const total = data?.meta.total
 
-	console.log(data)
 	const handleClickEdit = (rec: TItemData) => {
 		setEditData(rec)
 		setIsDrawerOpen(true)

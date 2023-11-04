@@ -5,7 +5,6 @@ import {
 	useEditUserRoleMutation,
 	useGetUsersQuery,
 } from 'src/store/index.endpoints'
-import { IRuKarUz } from 'src/store/shared/shared.types'
 import { BiSolidTrash } from 'react-icons/bi'
 import { IUser, TUserRole } from 'src/store/users/Users.types'
 
@@ -15,12 +14,13 @@ const Users: React.FC = () => {
 	const [deleteUser, { isSuccess }] = useDeleteUserMutation()
 	const [changeRole, { isSuccess: changeRoleIsSuccess }] =
 		useEditUserRoleMutation()
-	const total = data?.meta.total
+	const total = data?.meta ? data?.meta?.total : 20
 
 	const roles = [
 		{ value: 1, label: 'super_admin' },
 		{ value: 2, label: 'admin' },
-		{ value: 3, label: 'user' },
+		{ value: 3, label: 'worker' },
+		{ value: 4, label: 'client' },
 	]
 
 	const handleSelectRole = (e: TUserRole) => {
@@ -30,13 +30,8 @@ const Users: React.FC = () => {
 	const columns = [
 		{
 			title: 'Имя',
-			dataIndex: 'first_name',
-			key: 'first_name',
-		},
-		{
-			title: 'Фамилия',
-			dataIndex: 'last_name',
-			key: 'last_name',
+			dataIndex: 'full_name',
+			key: 'full_name',
 		},
 		{
 			title: 'Телефон',
@@ -52,8 +47,10 @@ const Users: React.FC = () => {
 			title: 'Роль',
 			dataIndex: 'role',
 			key: 'role',
+			width: 200,
 			render: (el: string, rec: IUser) => (
 				<Select
+					style={{ width: '100%' }}
 					value={el}
 					onSelect={e => handleSelectRole({ userId: rec.id, roleId: e })}
 					options={roles}
@@ -64,7 +61,6 @@ const Users: React.FC = () => {
 			title: 'Округ',
 			dataIndex: 'district',
 			key: 'district',
-			render: (el: IRuKarUz) => <>{el.ru}</>,
 		},
 		{
 			title: 'Действия',

@@ -1,13 +1,10 @@
 import { api } from '../index.api'
-import {
-	IItemDataResponse,
-	TAddNewItem,
-	TItemData,
-} from 'src/store/shared/shared.types'
+import { TAddNewItem } from 'src/store/shared/shared.types'
+import { IServiceDataResponse, TAddServiceData } from './Services.types'
 
 export const groupsApi = api.injectEndpoints({
 	endpoints: builder => ({
-		getGroups: builder.query<IItemDataResponse, number>({
+		getGroups: builder.query<IServiceDataResponse, number>({
 			query: (page = 1) => ({
 				url: `/services?page=${page}`,
 			}),
@@ -21,7 +18,7 @@ export const groupsApi = api.injectEndpoints({
 			}),
 			invalidatesTags: ['groups'],
 		}),
-		editGroup: builder.mutation<unknown, TItemData>({
+		editGroup: builder.mutation<unknown, TAddServiceData>({
 			query: body => ({
 				url: `/services/${body.id}`,
 				method: 'PUT',

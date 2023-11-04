@@ -38,17 +38,6 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 		}
 	}
 
-	React.useEffect(() => {
-		if (addRegionIsSuccess) {
-			setIsDrawerOpen(false)
-			message.success('Регион успешно добавлен.')
-		}
-		if (editRegionIsSuccess) {
-			setIsDrawerOpen(false)
-			message.success('Регион успешно изменён.')
-		}
-	}, [addRegionIsSuccess, editRegionIsSuccess])
-
 	return (
 		<Drawer
 			title='Регион'
@@ -64,6 +53,18 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 				onSubmit={handleClickSubmit}
 			>
 				{formikProps => {
+					React.useEffect(() => {
+						if (addRegionIsSuccess) {
+							setIsDrawerOpen(false)
+							message.success('Регион успешно добавлен.')
+							formikProps.resetForm()
+						}
+						if (editRegionIsSuccess) {
+							setIsDrawerOpen(false)
+							message.success('Регион успешно изменён.')
+							formikProps.resetForm()
+						}
+					}, [addRegionIsSuccess, editRegionIsSuccess])
 					React.useEffect(() => {
 						if (editData) {
 							formikProps.setFieldValue('kar', editData?.name.kar)

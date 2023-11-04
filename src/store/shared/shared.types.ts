@@ -1,5 +1,10 @@
 export interface ISharedInitialState {
 	showDrawer: boolean
+	filter: {
+		group: string[]
+		region: string
+		district: string
+	}
 }
 
 export interface IRuKarUz {
