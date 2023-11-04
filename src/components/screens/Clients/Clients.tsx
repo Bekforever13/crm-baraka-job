@@ -10,7 +10,7 @@ import { BsClockHistory } from 'react-icons/bs'
 import { IUser } from 'src/store/users/Users.types'
 import { useNavigate } from 'react-router-dom'
 import { useDebounce } from 'src/hooks/useDebounce'
-import { exportToExcel } from 'src/utils/export'
+import { exportToExcel } from 'src/utils/Download'
 
 type TFilter = {
 	text: string
