@@ -2,18 +2,18 @@ import React from 'react'
 import { Table, message, Popconfirm } from 'antd'
 import { UiButton, UiServicesDrawer } from 'src/components/ui'
 import {
-	useDeleteGroupMutation,
-	useGetGroupsQuery,
+	useDeleteServiceMutation,
+	useGetServicesQuery,
 } from 'src/store/index.endpoints'
 import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 
 const Services: React.FC = () => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { data, isLoading, isError } = useGetGroupsQuery(currentPage)
+	const { data, isLoading, isError } = useGetServicesQuery(currentPage)
 	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
 	const [editData, setEditData] = React.useState<TItemData>()
-	const [deleteGroup, { isSuccess }] = useDeleteGroupMutation()
+	const [deleteGroup, { isSuccess }] = useDeleteServiceMutation()
 	const total = data?.meta.total
 
 	const handleClickEdit = (rec: TItemData) => {
@@ -31,19 +31,19 @@ const Services: React.FC = () => {
 			title: 'Каракалпакский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.kar}</>,
+			render: (el: IRuKarUz) => el.kar,
 		},
 		{
 			title: 'Русский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.ru}</>,
+			render: (el: IRuKarUz) => el.ru,
 		},
 		{
 			title: 'Узбекский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.uz}</>,
+			render: (el: IRuKarUz) => el.uz,
 		},
 		{
 			title: 'Действия',
@@ -59,7 +59,7 @@ const Services: React.FC = () => {
 							color='blue'
 						/>
 						<Popconfirm
-							title='Удалить группу?'
+							title='Удалить сервис?'
 							onConfirm={() => deleteGroup(rec.id)}
 							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 						>

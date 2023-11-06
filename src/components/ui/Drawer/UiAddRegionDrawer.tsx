@@ -1,11 +1,11 @@
 import React from 'react'
 import { Drawer, Row, message } from 'antd'
+import { useForm } from 'react-hook-form'
 import {
 	useAddNewRegionMutation,
 	useEditRegionMutation,
 } from 'src/store/index.endpoints'
 import { IRuKarUz } from 'src/store/shared/shared.types'
-import { Formik, Form, Field } from 'formik'
 import { TAddDrawerProps } from './Drawer.types'
 
 const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
@@ -13,6 +13,13 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 	setIsDrawerOpen,
 	isDrawerOpen,
 }) => {
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { isSubmitting },
+	} = useForm<IRuKarUz>()
+
 	const [
 		addNewRegion,
 		{ isLoading: addRegionIsLoading, isSuccess: addRegionIsSuccess },
@@ -21,22 +28,36 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 		editRegion,
 		{ isLoading: editRegionIsLoading, isSuccess: editRegionIsSuccess },
 	] = useEditRegionMutation()
-	const initialValues = {
-		ru: '',
-		kar: '',
-		uz: '',
-	}
-	const onClose = () => {
-		setIsDrawerOpen(false)
+
+	const onClose = () => setIsDrawerOpen(false)
+
+	const onSubmit = (values: IRuKarUz) => {
+		if (editData?.id) editRegion({ id: editData.id, name: values }) 
+		else addNewRegion({ name: values })
 	}
 
-	const handleClickSubmit = (values: IRuKarUz) => {
-		if (editData?.id) {
-			editRegion({ id: editData.id, name: values })
-		} else {
-			addNewRegion({ name: values })
+	React.useEffect(() => {
+		if (addRegionIsSuccess) {
+			setIsDrawerOpen(false)
+			message.success('Регион успешно добавлен.')
+			reset()
 		}
-	}
+		if (editRegionIsSuccess) {
+			setIsDrawerOpen(false)
+			message.success('Регион успешно изменён.')
+			reset()
+		}
+	}, [addRegionIsSuccess, editRegionIsSuccess])
+
+	React.useEffect(() => {
+		if (editData) {
+			reset({
+				kar: editData?.name.kar,
+				ru: editData?.name.ru,
+				uz: editData?.name.uz,
+			})
+		}
+	}, [editData?.id])
 
 	return (
 		<Drawer
@@ -45,73 +66,41 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 			onClose={onClose}
 			open={isDrawerOpen}
 		>
-			<Formik
-				initialValues={
-					(editData?.name.ru !== '' && editData?.name) || initialValues
-				}
-				enableReinitialize
-				onSubmit={handleClickSubmit}
-			>
-				{formikProps => {
-					React.useEffect(() => {
-						if (addRegionIsSuccess) {
-							setIsDrawerOpen(false)
-							message.success('Регион успешно добавлен.')
-							formikProps.resetForm()
-						}
-						if (editRegionIsSuccess) {
-							setIsDrawerOpen(false)
-							message.success('Регион успешно изменён.')
-							formikProps.resetForm()
-						}
-					}, [addRegionIsSuccess, editRegionIsSuccess])
-					React.useEffect(() => {
-						if (editData) {
-							formikProps.setFieldValue('kar', editData?.name.kar)
-							formikProps.setFieldValue('ru', editData?.name.ru)
-							formikProps.setFieldValue('uz', editData?.name.uz)
-						}
-					}, [editData?.id])
-
-					return (
-						<Form>
-							<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
-								Русский:
-								<Field
-									className='w-[300px] px-4 py-2 rounded-md border outline-none'
-									type='text'
-									name='ru'
-								/>
-							</Row>
-							<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
-								Каракалпакский:
-								<Field
-									className='w-[300px] px-4 py-2 rounded-md border outline-none'
-									type='text'
-									name='kar'
-								/>
-							</Row>
-							<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
-								Узбекский:
-								<Field
-									className='w-[300px] px-4 py-2 rounded-md border outline-none'
-									type='text'
-									name='uz'
-								/>
-							</Row>
-							<button
-								className='w-full p-3 border rounded-md bg-[#F4C95B] text-white font-bold '
-								type='submit'
-								disabled={addRegionIsLoading}
-							>
-								{addRegionIsLoading || editRegionIsLoading
-									? 'Загрузка...'
-									: 'Применить'}
-							</button>
-						</Form>
-					)
-				}}
-			</Formik>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
+					Русский:
+					<input
+						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						type='text'
+						{...register('ru')}
+					/>
+				</Row>
+				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
+					Каракалпакский:
+					<input
+						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						type='text'
+						{...register('kar')}
+					/>
+				</Row>
+				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
+					Узбекский:
+					<input
+						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						type='text'
+						{...register('uz')}
+					/>
+				</Row>
+				<button
+					className='w-full p-3 border rounded-md bg-[#F4C95B] text-white font-bold'
+					type='submit'
+					disabled={isSubmitting}
+				>
+					{isSubmitting || addRegionIsLoading || editRegionIsLoading
+						? 'Загрузка...'
+						: 'Применить'}
+				</button>
+			</form>
 		</Drawer>
 	)
 }

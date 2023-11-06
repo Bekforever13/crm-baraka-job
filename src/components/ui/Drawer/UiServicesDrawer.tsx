@@ -2,8 +2,8 @@ import React from 'react'
 import { Drawer, Row, message } from 'antd'
 import { useForm } from 'react-hook-form'
 import {
-	useAddNewGroupMutation,
-	useEditGroupMutation,
+	useAddNewServiceMutation,
+	useEditServiceMutation,
 } from 'src/store/index.endpoints'
 import { IRuKarUz } from 'src/store/shared/shared.types'
 import { TAddDrawerProps } from './Drawer.types'
@@ -21,9 +21,9 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 	} = useForm<IRuKarUz>()
 
 	const [addNewGroup, { isSuccess: addServiceIsSuccess }] =
-		useAddNewGroupMutation()
+		useAddNewServiceMutation()
 	const [editGroup, { isSuccess: editServiceIsSuccess }] =
-		useEditGroupMutation()
+		useEditServiceMutation()
 
 	const onClose = () => {
 		reset()

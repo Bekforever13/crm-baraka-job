@@ -1,7 +1,7 @@
 import { authApi } from './auth/Auth.api'
 import { clientsApi } from './clients/Clients.api'
 import { districtsApi } from './districts/Districts.api'
-import { groupsApi } from './services/Services.api'
+import { servicesApi } from './services/Services.api'
 import { regionsApi } from './region/Region.api'
 import { usersApi } from './users/Users.api'
 
@@ -15,11 +15,11 @@ export const {
 } = regionsApi
 
 export const {
-	useAddNewGroupMutation,
-	useGetGroupsQuery,
-	useEditGroupMutation,
-	useDeleteGroupMutation,
-} = groupsApi
+	useAddNewServiceMutation,
+	useGetServicesQuery,
+	useEditServiceMutation,
+	useDeleteServiceMutation,
+} = servicesApi
 
 export const {
 	useGetDistrictsQuery,
