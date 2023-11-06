@@ -1,6 +1,7 @@
 import { Button, Checkbox } from 'antd'
 import React from 'react'
 import { FilterDropdownPropsWithOptions } from './TableFilter.types'
+import { CheckboxValueType } from 'antd/lib/checkbox/Group'
 
 const TableFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
 	const { setSelectedKeys, selectedKeys, confirm, clearFilters, options } =
@@ -10,8 +11,8 @@ const TableFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
 			<div>
 				<Checkbox.Group
 					options={options}
-					value={selectedKeys}
-					onChange={values => setSelectedKeys(values)}
+					value={selectedKeys as CheckboxValueType[]}
+					onChange={values => setSelectedKeys(values as React.Key[])}
 					className='flex flex-col gap-y-2'
 				/>
 			</div>
@@ -25,7 +26,7 @@ const TableFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
 					ОК
 				</Button>
 				<Button
-					onClick={() => clearFilters()}
+					onClick={() => clearFilters && clearFilters()}
 					size='small'
 					style={{ width: 90 }}
 				>

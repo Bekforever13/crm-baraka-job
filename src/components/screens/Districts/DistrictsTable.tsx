@@ -1,54 +1,61 @@
 import React from 'react'
-import type { ColumnsType } from 'antd/es/table'
-import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
-import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
-import { Popconfirm } from 'antd/lib'
-import Table from 'antd/es/table'
 import {
-	useDeleteServiceMutation,
-	useGetServicesQuery,
+	useDeleteDistrictsMutation,
+	useGetDistrictsQuery,
+	useGetRegionsQuery,
 } from 'src/store/index.endpoints'
-import { message } from 'antd'
+import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
+import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
+import { Table, message, Popconfirm } from 'antd'
 import { ITableProps } from 'src/components/shared/shared.types'
 
-const ServicesTable: React.FC<ITableProps> = ({
+const DistrictsTable: React.FC<ITableProps> = ({
 	setIsDrawerOpen,
 	setEditData,
 }) => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { data, isLoading, isError } = useGetServicesQuery(currentPage)
-	const [deleteService, { isSuccess }] = useDeleteServiceMutation()
+	const { data, isLoading, isError } = useGetDistrictsQuery(currentPage)
+	const [deleteRegion, { isSuccess }] = useDeleteDistrictsMutation()
+	const { data: regions } = useGetRegionsQuery(1)
 
 	const handleClickEdit = (rec: TItemData) => {
+		setEditData(undefined)
 		setEditData(rec)
 		setIsDrawerOpen(true)
 	}
 
-	const columns: ColumnsType<TItemData> = [
+	const columns = [
+		{
+			title: 'Регион',
+			dataIndex: 'region_id',
+			key: 'region_id',
+			render: (el: number) => (
+				<>{regions?.data.find(item => item.id === el)?.name.ru}</>
+			),
+		},
 		{
 			title: 'Каракалпакский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => el.kar,
+			render: (el: IRuKarUz) => <>{el.kar}</>,
 		},
 		{
 			title: 'Русский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => el.ru,
+			render: (el: IRuKarUz) => <>{el.ru}</>,
 		},
 		{
 			title: 'Узбекский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => el.uz,
+			render: (el: IRuKarUz) => <>{el.uz}</>,
 		},
 		{
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',
 			render: (_: unknown, rec: TItemData) => {
-				console.log(rec)
 				return (
 					<div className='flex items-center gap-3'>
 						<BiSolidPencil
@@ -58,8 +65,8 @@ const ServicesTable: React.FC<ITableProps> = ({
 							color='blue'
 						/>
 						<Popconfirm
-							title='Удалить сервис?'
-							onConfirm={() => deleteService(rec.id)}
+							title='Удалить регион?'
+							onConfirm={() => deleteRegion(rec.id)}
 							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 						>
 							<BiSolidTrash className='cursor-pointer' size='22' color='red' />
@@ -72,12 +79,10 @@ const ServicesTable: React.FC<ITableProps> = ({
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			message.success('Сервис успешно удалён.')
+			message.success('Регион успешно удалён.')
 			setIsDrawerOpen(false)
 		}
-		if (isError) {
-			message.error('Произошла ошибка, повторите попытку.')
-		}
+		if (isError) message.error('Произошла ошибка, повторите попытку.')
 	}, [isSuccess, isError])
 
 	return (
@@ -95,4 +100,4 @@ const ServicesTable: React.FC<ITableProps> = ({
 	)
 }
 
-export { ServicesTable }
+export { DistrictsTable }

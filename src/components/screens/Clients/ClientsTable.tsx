@@ -11,6 +11,7 @@ import {
 	useGetRegionsQuery,
 	useGetServicesQuery,
 } from 'src/store/index.endpoints'
+import { FilterDropdownProps } from 'antd/es/table/interface'
 
 const ClientsTable: React.FC<ClientsTableProps> = ({
 	data,
@@ -68,7 +69,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 				selectedKeys,
 				clearFilters,
 				confirm,
-			}: any) => (
+			}: FilterDropdownProps) => (
 				<TableFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
@@ -93,7 +94,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 				selectedKeys,
 				clearFilters,
 				confirm,
-			}: any) => (
+			}: FilterDropdownProps) => (
 				<TableFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
@@ -119,7 +120,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 				selectedKeys,
 				clearFilters,
 				confirm,
-			}: any) => (
+			}: FilterDropdownProps) => (
 				<TableFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
@@ -145,7 +146,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 				selectedKeys,
 				clearFilters,
 				confirm,
-			}: any) => (
+			}: FilterDropdownProps) => (
 				<TableFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}

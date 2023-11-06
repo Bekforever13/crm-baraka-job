@@ -1,10 +1,8 @@
-import { CheckboxValueType } from "antd/es/checkbox/Group"
-
 export type FilterDropdownProps = {
-	setSelectedKeys: (values: CheckboxValueType[]) => void
-	selectedKeys: CheckboxValueType[]
+	setSelectedKeys: (values: React.Key[]) => void
+	selectedKeys: React.Key[]
 	confirm: () => void
-	clearFilters: (() => void)
+	clearFilters: (() => void) | undefined
 }
 
 type FilterOption = {

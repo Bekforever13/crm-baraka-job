@@ -39,6 +39,7 @@ const Login: React.FC = () => {
 			setAuth(true)
 		}
 	}, [checkedUser])
+
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
@@ -52,7 +53,7 @@ const Login: React.FC = () => {
 					<input
 						{...field}
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
-						placeholder='First Name *'
+						placeholder='Телефон'
 					/>
 				)}
 			/>
@@ -61,7 +62,7 @@ const Login: React.FC = () => {
 				className='w-[300px] px-4 py-2 rounded-md border outline-none'
 				type='password'
 				{...register('password', { required: true })}
-				placeholder='Password'
+				placeholder='Пароль'
 			/>
 			{errors.password && <div>Password is required</div>}
 			<button
