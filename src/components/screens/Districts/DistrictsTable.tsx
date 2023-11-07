@@ -8,6 +8,7 @@ import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { Table, message, Popconfirm } from 'antd'
 import { ITableProps } from 'src/components/shared/shared.types'
+import type { ColumnsType } from 'antd/es/table'
 
 const DistrictsTable: React.FC<ITableProps> = ({
 	setIsDrawerOpen,
@@ -24,38 +25,37 @@ const DistrictsTable: React.FC<ITableProps> = ({
 		setIsDrawerOpen(true)
 	}
 
-	const columns = [
+	const columns: ColumnsType<TItemData> = [
 		{
 			title: 'Регион',
 			dataIndex: 'region_id',
 			key: 'region_id',
-			render: (el: number) => (
-				<>{regions?.data.find(item => item.id === el)?.name.ru}</>
-			),
+			render: (el: number) =>
+				regions?.data.find(item => item.id === el)?.name.ru,
 		},
 		{
 			title: 'Каракалпакский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.kar}</>,
+			render: (el: IRuKarUz) => el.kar,
 		},
 		{
 			title: 'Русский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.ru}</>,
+			render: (el: IRuKarUz) => el.ru,
 		},
 		{
 			title: 'Узбекский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.uz}</>,
+			render: (el: IRuKarUz) => el.uz,
 		},
 		{
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',
-			render: (_: unknown, rec: TItemData) => {
+			render: (_, rec) => {
 				return (
 					<div className='flex items-center gap-3'>
 						<BiSolidPencil

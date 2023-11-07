@@ -29,25 +29,25 @@ const RegionsTable: React.FC<ITableProps> = ({
 			title: 'Каракалпакский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.kar}</>,
+			render: (el: IRuKarUz) => el.kar,
 		},
 		{
 			title: 'Русский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.ru}</>,
+			render: (el: IRuKarUz) => el.ru,
 		},
 		{
 			title: 'Узбекский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => <>{el.uz}</>,
+			render: (el: IRuKarUz) => el.uz,
 		},
 		{
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',
-			render: (_: unknown, rec: TItemData) => {
+			render: (_, rec) => {
 				return (
 					<div className='flex items-center gap-3'>
 						<BiSolidPencil

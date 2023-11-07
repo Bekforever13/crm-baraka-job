@@ -6,6 +6,7 @@ import {
 	useGetUsersQuery,
 } from 'src/store/index.endpoints'
 import { BiSolidTrash } from 'react-icons/bi'
+import type { ColumnsType } from 'antd/es/table'
 import { IUser, TUserRole } from 'src/store/users/Users.types'
 
 const roles = [
@@ -24,7 +25,7 @@ const UsersTable: React.FC = () => {
 
 	const handleSelectRole = (e: TUserRole) => changeRole(e)
 
-	const columns = [
+	const columns: ColumnsType<IUser> = [
 		{
 			title: 'Имя',
 			dataIndex: 'full_name',
@@ -45,7 +46,7 @@ const UsersTable: React.FC = () => {
 			dataIndex: 'role',
 			key: 'role',
 			width: 200,
-			render: (el: string, rec: IUser) => (
+			render: (el: string, rec) => (
 				<Select
 					style={{ width: '100%' }}
 					value={el}
@@ -63,7 +64,7 @@ const UsersTable: React.FC = () => {
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',
-			render: (_: unknown, rec: IUser) => {
+			render: (_, rec) => {
 				return (
 					<Popconfirm
 						title='Удалить пользователя?'

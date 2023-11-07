@@ -47,26 +47,23 @@ const ServicesTable: React.FC<ITableProps> = ({
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',
-			render: (_: unknown, rec: TItemData) => {
-				console.log(rec)
-				return (
-					<div className='flex items-center gap-3'>
-						<BiSolidPencil
-							onClick={() => handleClickEdit(rec)}
-							className='cursor-pointer'
-							size='22'
-							color='blue'
-						/>
-						<Popconfirm
-							title='Удалить сервис?'
-							onConfirm={() => deleteService(rec.id)}
-							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
-						>
-							<BiSolidTrash className='cursor-pointer' size='22' color='red' />
-						</Popconfirm>
-					</div>
-				)
-			},
+			render: (_, rec) => (
+				<div className='flex items-center gap-3'>
+					<BiSolidPencil
+						onClick={() => handleClickEdit(rec)}
+						className='cursor-pointer'
+						size='22'
+						color='blue'
+					/>
+					<Popconfirm
+						title='Удалить сервис?'
+						onConfirm={() => deleteService(rec.id)}
+						okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
+					>
+						<BiSolidTrash className='cursor-pointer' size='22' color='red' />
+					</Popconfirm>
+				</div>
+			),
 		},
 	]
 

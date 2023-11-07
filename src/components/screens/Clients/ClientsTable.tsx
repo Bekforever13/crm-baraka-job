@@ -54,7 +54,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			dataIndex: 'role',
 			key: 'role',
 			render: (role: string) => (role === 'worker' ? 'Рабочий' : 'Клиент'),
-			sorter: (a: IUser, b: IUser) => {
+			sorter: (a, b) => {
 				a.role === 'client' && b.role === 'worker' && -1
 				a.role === 'worker' && b.role === 'client' && 1
 				return 0
@@ -63,7 +63,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 				{ text: 'Рабочий', value: 'worker' },
 				{ text: 'Клиент', value: 'client' },
 			],
-			onFilter: (value: boolean | React.Key, rec: IUser) => rec.role === value,
+			onFilter: (value, rec) => rec.role === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -87,8 +87,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			dataIndex: 'service',
 			key: 'service',
 			filters: filters.service,
-			onFilter: (value: boolean | React.Key, rec: IUser) =>
-				rec?.service === value,
+			onFilter: (value, rec) => rec?.service === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -113,8 +112,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			dataIndex: 'region',
 			key: 'region',
 			filters: filters.region,
-			onFilter: (value: boolean | React.Key, rec: IUser) =>
-				rec?.region === value,
+			onFilter: (value, rec) => rec?.region === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -139,8 +137,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			dataIndex: 'district',
 			key: 'district',
 			filters: filters.district,
-			onFilter: (value: boolean | React.Key, rec: IUser) =>
-				rec?.district === value,
+			onFilter: (value, rec) => rec?.district === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -164,7 +161,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',
-			render: (_: unknown, rec: IUser) => {
+			render: (_, rec) => {
 				return (
 					<BsClockHistory
 						onClick={() => navigate(`/client/${rec.id}`)}
