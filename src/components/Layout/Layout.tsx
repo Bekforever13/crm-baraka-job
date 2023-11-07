@@ -9,7 +9,10 @@ const Layout: React.FC = () => {
 	const { data, isSuccess, isError } = useCheckUserQuery()
 
 	React.useEffect(() => {
-		if (isSuccess) !data?.data.role.includes('admin') && navigate('/auth')
+		if (isSuccess) {
+			!data?.data.role.includes('admin') && navigate('/auth')
+			message.success(`Добро пожаловать ${data.data.role}`)
+		}
 		if (isError) message.error('Произошла ошибка при проверке пользователя.')
 	}, [isSuccess, isError])
 
