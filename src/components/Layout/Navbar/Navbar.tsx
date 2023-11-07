@@ -10,6 +10,7 @@ import { Popconfirm } from 'antd'
 import { useActions } from 'src/hooks/useActions'
 import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
+import { useWindowSize } from 'src/hooks/useWindowSize'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -42,6 +43,7 @@ const Navbar: React.FC = () => {
 	const navigate = useNavigate()
 	const { pathname } = useLocation()
 	const { setAuth } = useActions()
+	const { width } = useWindowSize()
 
 	const handleClickLogout = () => {
 		localStorage.removeItem('token')
@@ -52,16 +54,21 @@ const Navbar: React.FC = () => {
 	const onClick: MenuProps['onClick'] = e => navigate(e.key)
 
 	return (
-		<nav className='z-50 fixed flex flex-col justify-between gap-y-5 bg-[#689C56] w-[180px] min-h-screen py-7 select-none'>
+		// <nav className='hidden z-50 fixed md:flex flex-col justify-between gap-y-5 bg-[#689C56] w-[180px] min-h-screen py-7 select-none'>
+		<nav className='select-none bg-[#689C56] z-50 fixed top-0 w-full flex items-center justify-between h-20 md:flex md:flex-col md:justify-between md:gap-y-5  md:w-[180px] md:min-h-screen md:py-7'>
 			<div>
-				<h1 className='text-white text-2xl text-center font-bold mb-7'>
+				<h1 className='text-white text-2xl text-center font-bold mb-7 md:block hidden'>
 					JOB Baraka
 				</h1>
 				<Menu
 					onClick={onClick}
-					style={{ width: 180, color: 'white', backgroundColor: 'transparent' }}
+					style={{
+						width: width > 768 ? 180 : '70vw',
+						color: 'white',
+						backgroundColor: 'transparent',
+					}}
 					defaultSelectedKeys={[pathname]}
-					mode='inline'
+					mode={width > 768 ? 'vertical' : 'horizontal'}
 					items={items}
 				/>
 			</div>

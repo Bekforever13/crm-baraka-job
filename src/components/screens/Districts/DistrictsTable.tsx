@@ -96,6 +96,8 @@ const DistrictsTable: React.FC<ITableProps> = ({
 			rowKey={e => e.id}
 			dataSource={data?.data}
 			columns={columns}
+			scroll={{ x: true }}
+			style={{ width: '100%' }}
 		/>
 	)
 }

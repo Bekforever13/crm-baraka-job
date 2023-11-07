@@ -211,6 +211,8 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			rowKey={e => e.id}
 			dataSource={data}
 			columns={clientsColumns}
+			scroll={{x: true}}
+			style={{width: '100%'}}
 		/>
 	)
 }

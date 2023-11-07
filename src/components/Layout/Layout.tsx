@@ -19,7 +19,7 @@ const Layout: React.FC = () => {
 	return (
 		<div className='bg-[#F5F2DF] w-full min-h-screen flex items-start justify-start'>
 			<Navbar />
-			<main className='w-full pl-[12%]'>
+			<main className='w-full md:pl-[180px] md:mt-0 mt-20'>
 				<Outlet />
 			</main>
 		</div>
