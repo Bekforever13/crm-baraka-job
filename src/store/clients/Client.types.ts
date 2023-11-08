@@ -11,6 +11,8 @@ export interface IClientInfo {
 	name: string
 	phone: string
 	call_history: TCallHistory[]
+	region: IRuKarUz
+	district: IRuKarUz
 }
 
 export interface IClientDataResponse {

@@ -25,6 +25,16 @@ const Client: React.FC = () => {
 					},
 					{
 						key: '3',
+						label: 'Регион',
+						children: data?.data.region.ru,
+					},
+					{
+						key: '4',
+						label: 'Округ',
+						children: data?.data.district.ru,
+					},
+					{
+						key: '5',
 						label: 'История звонков',
 						children: (
 							<div className='flex flex-col items-start gap-y-5 max-h-[500px] pr-2 overflow-auto'>
