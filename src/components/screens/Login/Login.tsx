@@ -6,6 +6,7 @@ import { useCheckUserQuery, useLoginMutation } from 'src/store/index.endpoints'
 import { ILoginDataBody } from 'src/store/auth/Auth.types'
 import { formatPhone } from 'src/utils/shared'
 import { message } from 'antd'
+import { MaskedInput } from 'antd-mask-input'
 
 const Login: React.FC = () => {
 	const {
@@ -17,7 +18,6 @@ const Login: React.FC = () => {
 	const navigate = useNavigate()
 	const { setAuth } = useActions()
 	const [login, { data, isSuccess, isLoading, isError }] = useLoginMutation()
-	const { data: checkUser, isSuccess: checkedUser } = useCheckUserQuery()
 
 	const onSubmit = async (values: ILoginDataBody) => {
 		await login({ ...values, phone: formatPhone(values.phone) })
@@ -34,11 +34,14 @@ const Login: React.FC = () => {
 
 	React.useEffect(() => {
 		const token = localStorage.getItem('token')
-		if (token && checkUser?.data.role.includes('admin') && checkedUser) {
-			navigate('/')
-			setAuth(true)
+		if (token) {
+			const { data: checkUser, isSuccess: checkedUser } = useCheckUserQuery()
+			if (token && checkedUser && checkUser?.data.role.includes('admin')) {
+				navigate('/')
+				setAuth(true)
+			}
 		}
-	}, [checkedUser])
+	}, [])
 
 	return (
 		<form
@@ -50,13 +53,15 @@ const Login: React.FC = () => {
 				name='phone'
 				control={control}
 				render={({ field }) => (
-					<input
+					<MaskedInput
 						{...field}
+						mask='+{998}00 000 00 00'
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						placeholder='Телефон'
 					/>
 				)}
 			/>
+
 			{errors.phone && <div>Phone is required</div>}
 			<input
 				className='w-[300px] px-4 py-2 rounded-md border outline-none'
