@@ -6,7 +6,8 @@ import { message } from 'antd'
 
 const Layout: React.FC = () => {
 	const navigate = useNavigate()
-	const { data, isSuccess, isError } = useCheckUserQuery()
+	const token = localStorage.getItem('token')
+	const { data, isSuccess, isError } = useCheckUserQuery(token as string)
 
 	React.useEffect(() => {
 		if (isSuccess) {

@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
 				<Menu
 					onClick={onClick}
 					style={{
-						width: width > 768 ? 180 : '70vw',
+						width: width > 768 ? 180 : '60vw',
 						color: 'white',
 						backgroundColor: 'transparent',
 					}}

@@ -16,8 +16,12 @@ const Login: React.FC = () => {
 		formState: { errors },
 	} = useForm<ILoginDataBody>()
 	const navigate = useNavigate()
+	const token = localStorage.getItem('token')
 	const { setAuth } = useActions()
 	const [login, { data, isSuccess, isLoading, isError }] = useLoginMutation()
+	const { data: checkUser, isSuccess: checkedUser } = useCheckUserQuery(
+		token as string
+	)
 
 	const onSubmit = async (values: ILoginDataBody) => {
 		await login({ ...values, phone: formatPhone(values.phone) })
@@ -33,15 +37,11 @@ const Login: React.FC = () => {
 	}, [isSuccess, isError])
 
 	React.useEffect(() => {
-		const token = localStorage.getItem('token')
-		if (token) {
-			const { data: checkUser, isSuccess: checkedUser } = useCheckUserQuery()
-			if (token && checkedUser && checkUser?.data.role.includes('admin')) {
-				navigate('/')
-				setAuth(true)
-			}
+		if (token && checkedUser && checkUser?.data.role.includes('admin')) {
+			navigate('/')
+			setAuth(true)
 		}
-	}, [])
+	}, [token, checkedUser])
 
 	return (
 		<form
