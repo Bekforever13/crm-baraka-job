@@ -52,6 +52,12 @@ const DistrictsTable: React.FC<ITableProps> = ({
 			render: (el: IRuKarUz) => el.uz,
 		},
 		{
+			title: 'Английский',
+			dataIndex: 'name',
+			key: 'name',
+			render: (el: IRuKarUz) => el.en,
+		},
+		{
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',

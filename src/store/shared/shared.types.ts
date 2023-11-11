@@ -11,6 +11,7 @@ export interface IRuKarUz {
 	kar: string
 	uz: string
 	ru: string
+	en: string
 }
 
 export type TItemData = {

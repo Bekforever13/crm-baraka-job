@@ -30,12 +30,12 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 			ru: '',
 			kar: '',
 			uz: '',
+			en: '',
 		},
 	}
-	const { handleSubmit, register, setValue, reset } =
-		useForm<TDistrictData>({
-			defaultValues: editData || initialValues,
-		})
+	const { handleSubmit, register, setValue, reset } = useForm<TDistrictData>({
+		defaultValues: editData || initialValues,
+	})
 
 	React.useEffect(() => {
 		if (editData?.region_id) {
@@ -43,22 +43,30 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 			setValue('name.kar', editData.name.kar)
 			setValue('name.ru', editData.name.ru)
 			setValue('name.uz', editData.name.uz)
+			setValue('name.en', editData.name.en)
 		}
 	}, [editData])
 
-	const onClose = () => setIsDrawerOpen(false)
+	const onClose = () => {
+		setIsDrawerOpen(false)
+		reset({
+			region_id: 0,
+			name: {
+				kar: '',
+				ru: '',
+				uz: '',
+				en: '',
+			},
+		})
+	}
 
 	const handleClickSubmit = (values: TDistrictData) => {
-		if (editData?.id) {
-			editDistrict({
-				id: editData.id,
-				...values,
+		editData?.id
+			? editDistrict({
+					id: editData.id,
+					...values,
 			})
-			reset()
-		} else {
-			addNewDistrict(values)
-			reset()
-		}
+			: addNewDistrict(values)
 	}
 
 	React.useEffect(() => {
@@ -124,6 +132,14 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
 						{...register('name.uz')}
+					/>
+				</Row>
+				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
+					Английский:
+					<input
+						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						type='text'
+						{...register('name.en')}
 					/>
 				</Row>
 				<button

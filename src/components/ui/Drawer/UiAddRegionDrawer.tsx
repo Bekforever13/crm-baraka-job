@@ -29,10 +29,18 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 		{ isLoading: editRegionIsLoading, isSuccess: editRegionIsSuccess },
 	] = useEditRegionMutation()
 
-	const onClose = () => setIsDrawerOpen(false)
+	const onClose = () => {
+		setIsDrawerOpen(false)
+		reset({
+			kar: '',
+			ru: '',
+			uz: '',
+			en: '',
+		})
+	}
 
 	const onSubmit = (values: IRuKarUz) => {
-		if (editData?.id) editRegion({ id: editData.id, name: values }) 
+		if (editData?.id) editRegion({ id: editData.id, name: values })
 		else addNewRegion({ name: values })
 	}
 
@@ -40,12 +48,10 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 		if (addRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Регион успешно добавлен.')
-			reset()
 		}
 		if (editRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Регион успешно изменён.')
-			reset()
 		}
 	}, [addRegionIsSuccess, editRegionIsSuccess])
 
@@ -55,6 +61,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 				kar: editData?.name.kar,
 				ru: editData?.name.ru,
 				uz: editData?.name.uz,
+				en: editData?.name.en,
 			})
 		}
 	}, [editData?.id])
@@ -89,6 +96,14 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
 						{...register('uz')}
+					/>
+				</Row>
+				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
+					Английский:
+					<input
+						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						type='text'
+						{...register('en')}
 					/>
 				</Row>
 				<button

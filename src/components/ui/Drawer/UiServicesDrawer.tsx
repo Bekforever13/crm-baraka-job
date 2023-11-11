@@ -26,18 +26,19 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 		useEditServiceMutation()
 
 	const onClose = () => {
-		reset()
 		setIsDrawerOpen(false)
+		reset({
+			kar: '',
+			ru: '',
+			uz: '',
+			en: '',
+		})
 	}
 
 	const onSubmit = (values: IRuKarUz) => {
-		if (editData?.id) {
-			editGroup({ id: editData.id, name: values })
-			reset()
-		} else {
-			addNewGroup({ name: values })
-			reset()
-		}
+		editData?.id
+			? editGroup({ id: editData.id, name: values })
+			: addNewGroup({ name: values })
 	}
 
 	React.useEffect(() => {
@@ -46,6 +47,7 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 				kar: editData?.name.kar,
 				ru: editData?.name.ru,
 				uz: editData?.name.uz,
+				en: editData?.name.en,
 			})
 		}
 		if (addServiceIsSuccess) {
@@ -90,6 +92,14 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
 						{...register('uz')}
+					/>
+				</Row>
+				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
+					Английский:
+					<input
+						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						type='text'
+						{...register('en')}
 					/>
 				</Row>
 				<button
