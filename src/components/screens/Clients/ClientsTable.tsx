@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, message } from 'antd'
-import { IUser } from 'src/store/users/Users.types'
+import { INewUserType } from 'src/store/users/Users.types'
 import { BsClockHistory } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import type { ColumnsType } from 'antd/es/table'
@@ -12,6 +12,9 @@ import {
 	useGetServicesQuery,
 } from 'src/store/index.endpoints'
 import { FilterDropdownProps } from 'antd/es/table/interface'
+import { TablePaginationConfig } from 'antd/lib'
+import { useActions } from 'src/hooks/useActions'
+import { useSelectors } from 'src/hooks/useSelectors'
 
 const ClientsTable: React.FC<ClientsTableProps> = ({
 	data,
@@ -21,6 +24,8 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 	onChangePage,
 	clientsError,
 }) => {
+	const { setLimit } = useActions()
+	const { limit } = useSelectors()
 	const [filters, setFilters] = React.useState<TFiltersState>({
 		district: [],
 		service: [],
@@ -33,7 +38,14 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 	const { data: servicesData, isError: servicesError } = useGetServicesQuery(1)
 	const { data: regionsData, isError: regionsError } = useGetRegionsQuery(1)
 
-	const clientsColumns: ColumnsType<IUser> = [
+	const handleTableChange = (pagination: TablePaginationConfig) => {
+		if (pagination.pageSize) {
+			setLimit(pagination.pageSize)
+		}
+		onChangePage(1)
+	}
+
+	const clientsColumns: ColumnsType<INewUserType> = [
 		{
 			title: 'Имя',
 			dataIndex: 'full_name',
@@ -87,7 +99,9 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			dataIndex: 'service',
 			key: 'service',
 			filters: filters.service,
-			onFilter: (value, rec) => rec?.service === value,
+			render: (_, rec) => rec.service?.name.ru,
+			onFilter: (value, rec) => rec?.service?.name.ru === value,
+
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -112,7 +126,8 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			dataIndex: 'region',
 			key: 'region',
 			filters: filters.region,
-			onFilter: (value, rec) => rec?.region === value,
+			render: (_, rec) => rec.region?.name.ru,
+			onFilter: (value, rec) => rec?.region?.name.ru === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -136,8 +151,9 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			title: 'Округ',
 			dataIndex: 'district',
 			key: 'district',
+			render: (_, rec) => rec.district?.name.ru,
 			filters: filters.district,
-			onFilter: (value, rec) => rec?.district === value,
+			onFilter: (value, rec) => rec.district?.name.ru === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -203,16 +219,20 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 	return (
 		<Table
 			loading={isLoading}
+			id='clientsTable'
 			pagination={{
 				total,
 				current: currentPage,
 				onChange: onChangePage,
+				showSizeChanger: true,
+				pageSize: limit,
 			}}
 			rowKey={e => e.id}
-			dataSource={data}
+			onChange={handleTableChange}
+			dataSource={data as INewUserType[]}
 			columns={clientsColumns}
-			scroll={{x: true}}
-			style={{width: '100%'}}
+			scroll={{ x: true }}
+			style={{ width: '100%' }}
 		/>
 	)
 }

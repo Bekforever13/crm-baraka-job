@@ -5,7 +5,7 @@ import { useActions } from 'src/hooks/useActions'
 import { useCheckUserQuery, useLoginMutation } from 'src/store/index.endpoints'
 import { ILoginDataBody } from 'src/store/auth/Auth.types'
 import { formatPhone } from 'src/utils/shared'
-import { message } from 'antd'
+import { notification } from 'antd'
 import { MaskedInput } from 'antd-mask-input'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
@@ -16,7 +16,7 @@ const Login: React.FC = () => {
 		register,
 		handleSubmit,
 		control,
-		formState: { isValid },
+		formState: { errors, isValid },
 	} = useForm<ILoginDataBody>({
 		mode: 'onChange',
 	})
@@ -40,9 +40,28 @@ const Login: React.FC = () => {
 			navigate('/')
 		}
 		if (isError) {
-			message.error('Телефон или пароль введён неправильно. Повторите попытку')
+			notification.error({
+				message: 'Ошибка',
+				description:
+					'Телефон или пароль введены неправильно. Повторите попытку',
+				placement: 'topRight',
+			})
 		}
-	}, [isSuccess, isError])
+		if (errors.password) {
+			notification.warning({
+				message: 'Предупреждение',
+				description: 'Заполните поле "Пароль"',
+				placement: 'topRight',
+			})
+		}
+		if (errors.phone) {
+			notification.warning({
+				message: 'Предупреждение',
+				description: 'Заполните поле "Телефон"',
+				placement: 'topRight',
+			})
+		}
+	}, [isSuccess, isError, errors.password, errors.phone])
 
 	React.useEffect(() => {
 		if (token && checkedUser && checkUser?.data.role.includes('admin')) {
@@ -66,7 +85,7 @@ const Login: React.FC = () => {
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
-			className='flex items-center justify-center h-screen bg-[#F5F2DF] flex-col gap-y-5 select-none'
+			className='relative flex items-center justify-center h-screen bg-[#F5F2DF] flex-col gap-y-5 select-none'
 		>
 			<h1 className='font-bold text-xl'>Вход в аккаунт</h1>
 			<Controller
@@ -88,7 +107,7 @@ const Login: React.FC = () => {
 			/>
 			<div className='relative'>
 				<input
-					className='w-[300px] px-4 py-2 rounded-md border outline-none'
+					className='w-[300px] px-4 py-[7px] rounded-md border outline-none'
 					type={showPassword ? 'text' : 'password'}
 					{...register('password', { required: true })}
 					placeholder='Пароль'

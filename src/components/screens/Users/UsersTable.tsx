@@ -7,13 +7,12 @@ import {
 } from 'src/store/index.endpoints'
 import { BiSolidTrash } from 'react-icons/bi'
 import type { ColumnsType } from 'antd/es/table'
-import { IUser, TUserRole } from 'src/store/users/Users.types'
+import { INewUserType, TUserRole } from 'src/store/users/Users.types'
 
 const roles = [
-	{ value: 1, label: 'super_admin' },
-	{ value: 2, label: 'admin' },
-	{ value: 3, label: 'worker' },
-	{ value: 4, label: 'client' },
+	{ value: 2, label: 'Админ' },
+	{ value: 3, label: 'Рабочий' },
+	{ value: 4, label: 'Клиент' },
 ]
 
 const UsersTable: React.FC = () => {
@@ -25,7 +24,7 @@ const UsersTable: React.FC = () => {
 
 	const handleSelectRole = (e: TUserRole) => changeRole(e)
 
-	const columns: ColumnsType<IUser> = [
+	const columns: ColumnsType<INewUserType> = [
 		{
 			title: 'Имя',
 			dataIndex: 'full_name',
@@ -49,16 +48,27 @@ const UsersTable: React.FC = () => {
 			render: (el: string, rec) => (
 				<Select
 					style={{ width: '100%' }}
-					value={el}
-					onSelect={e => handleSelectRole({ userId: rec.id, roleId: e })}
+					value={
+						(el === 'admin' && 'Админ') ||
+						(el === 'worker' && 'Рабочий') ||
+						(el === 'client' && 'Клиент')
+					}
+					onSelect={e => handleSelectRole({ userId: rec.id, roleId: e as string })}
 					options={roles}
 				/>
 			),
 		},
 		{
+			title: 'Регион',
+			dataIndex: 'region',
+			key: 'region',
+			render: (_, rec) => rec.region?.name.ru,
+		},
+		{
 			title: 'Округ',
 			dataIndex: 'district',
 			key: 'district',
+			render: (_, rec) => rec.district?.name.ru,
 		},
 		{
 			title: 'Действия',

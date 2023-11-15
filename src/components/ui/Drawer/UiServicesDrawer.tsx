@@ -25,20 +25,19 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 	const [editGroup, { isSuccess: editServiceIsSuccess }] =
 		useEditServiceMutation()
 
-	const onClose = () => {
-		setIsDrawerOpen(false)
-		reset({
-			kar: '',
-			ru: '',
-			uz: '',
-			en: '',
-		})
-	}
+	const onClose = () => setIsDrawerOpen(false)
 
 	const onSubmit = (values: IRuKarUz) => {
-		editData?.id
-			? editGroup({ id: editData.id, name: values })
-			: addNewGroup({ name: values })
+		if (
+			values?.ru.length ||
+			values?.uz.length ||
+			values?.en.length ||
+			values?.kar.length
+		) {
+			editData?.id
+				? editGroup({ id: editData.id, name: values })
+				: addNewGroup({ name: values })
+		}
 	}
 
 	React.useEffect(() => {
@@ -62,6 +61,18 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 		}
 	}, [editData?.id, addServiceIsSuccess, editServiceIsSuccess])
 
+	React.useEffect(() => {
+		// clear form values when drawer closed
+		if (!isDrawerOpen) {
+			reset({
+			kar: '',
+			ru: '',
+			uz: '',
+			en: '',
+		})
+		}
+	}, [isDrawerOpen])
+
 	return (
 		<Drawer
 			title='Сервис'
@@ -75,7 +86,7 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('ru')}
+						{...register('ru', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -83,7 +94,7 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('kar')}
+						{...register('kar', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -91,7 +102,7 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('uz')}
+						{...register('uz', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -99,7 +110,7 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('en')}
+						{...register('en', { required: true })}
 					/>
 				</Row>
 				<button

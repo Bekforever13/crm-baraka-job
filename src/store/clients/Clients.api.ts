@@ -9,7 +9,8 @@ export const clientsApi = api.injectEndpoints({
 				url: `/clients?
 				${body?.search?.length ? `search=${body.search}&` : ''}
 				${body.id ? `role_id=${body.id}&` : ''}
-				${body.page ? `page=${body.page}&` : ''}`,
+				${body.page ? `page=${body.page}&` : ''},
+				${body.limit ? `limit=${body.limit}&` : ''}`,
 			}),
 			providesTags: ['clients'],
 		}),

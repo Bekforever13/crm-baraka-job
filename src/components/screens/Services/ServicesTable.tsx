@@ -90,6 +90,7 @@ const ServicesTable: React.FC<ITableProps> = ({
 				total: data?.meta.total,
 				current: currentPage,
 				onChange: page => setCurrentPage(page),
+				showSizeChanger: false
 			}}
 			rowKey={e => e.id}
 			dataSource={data?.data}

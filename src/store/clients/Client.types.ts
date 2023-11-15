@@ -23,4 +23,5 @@ export interface IClientsParams {
 	id?: string | void
 	search?: string | void
 	page?: number | void
+	limit?: number
 }

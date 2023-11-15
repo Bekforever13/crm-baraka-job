@@ -8,11 +8,8 @@ import {
 import { IRuKarUz } from 'src/store/shared/shared.types'
 import { TAddDrawerProps } from './Drawer.types'
 
-const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
-	editData,
-	setIsDrawerOpen,
-	isDrawerOpen,
-}) => {
+const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
+	const { editData, setIsDrawerOpen, isDrawerOpen } = props
 	const {
 		register,
 		handleSubmit,
@@ -29,31 +26,20 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 		{ isLoading: editRegionIsLoading, isSuccess: editRegionIsSuccess },
 	] = useEditRegionMutation()
 
-	const onClose = () => {
-		setIsDrawerOpen(false)
-		reset({
-			kar: '',
-			ru: '',
-			uz: '',
-			en: '',
-		})
-	}
+	const onClose = () => setIsDrawerOpen(false)
 
 	const onSubmit = (values: IRuKarUz) => {
-		if (editData?.id) editRegion({ id: editData.id, name: values })
-		else addNewRegion({ name: values })
+		if (
+			values?.ru.length ||
+			values?.uz.length ||
+			values?.en.length ||
+			values?.kar.length
+		) {
+			editData?.id
+				? editRegion({ id: editData.id, name: values })
+				: addNewRegion({ name: values })
+		}
 	}
-
-	React.useEffect(() => {
-		if (addRegionIsSuccess) {
-			setIsDrawerOpen(false)
-			message.success('Регион успешно добавлен.')
-		}
-		if (editRegionIsSuccess) {
-			setIsDrawerOpen(false)
-			message.success('Регион успешно изменён.')
-		}
-	}, [addRegionIsSuccess, editRegionIsSuccess])
 
 	React.useEffect(() => {
 		if (editData) {
@@ -64,7 +50,27 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 				en: editData?.name.en,
 			})
 		}
-	}, [editData?.id])
+		if (addRegionIsSuccess) {
+			setIsDrawerOpen(false)
+			message.success('Регион успешно добавлен.')
+		}
+		if (editRegionIsSuccess) {
+			setIsDrawerOpen(false)
+			message.success('Регион успешно изменён.')
+		}
+	}, [editData?.id, addRegionIsSuccess, editRegionIsSuccess])
+
+	React.useEffect(() => {
+		// clear form values when drawer closed
+		if (!isDrawerOpen) {
+			reset({
+				kar: '',
+				ru: '',
+				uz: '',
+				en: '',
+			})
+		}
+	}, [isDrawerOpen])
 
 	return (
 		<Drawer
@@ -79,7 +85,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('ru')}
+						{...register('ru', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -87,7 +93,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('kar')}
+						{...register('kar', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -95,7 +101,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('uz')}
+						{...register('uz', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -103,7 +109,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('en')}
+						{...register('en', { required: true })}
 					/>
 				</Row>
 				<button

@@ -1,4 +1,4 @@
-import { IUser } from 'src/store/users/Users.types'
+import { INewUserType, IUser } from 'src/store/users/Users.types'
 
 type TFilter = {
 	text: string
@@ -11,7 +11,7 @@ export interface SearchProps {
 }
 
 export interface ClientsTableProps {
-	data: IUser[] | undefined
+	data: INewUserType[] | IUser[] | undefined
 	isLoading: boolean
 	currentPage: number
 	total: number | undefined

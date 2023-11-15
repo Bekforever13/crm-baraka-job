@@ -21,8 +21,28 @@ export interface IUser {
 	service?: string
 }
 
+export interface INewUserType {
+	id: number
+	name: string
+	phone: string
+	language: string
+	role: string
+	district?: {
+		id: number
+		name: IRuKarUz
+	}
+	region?: {
+		id: number
+		name: IRuKarUz
+	}
+	service?: {
+		id: number
+		name: IRuKarUz
+	}
+}
+
 export interface IUserDataResponse {
-	data: IUser[]
+	data: INewUserType[]
 	links: {
 		first: string
 		last: string

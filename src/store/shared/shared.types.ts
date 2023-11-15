@@ -1,5 +1,6 @@
 export interface ISharedInitialState {
 	showDrawer: boolean
+	limit: number
 	filter: {
 		group: string[]
 		region: string

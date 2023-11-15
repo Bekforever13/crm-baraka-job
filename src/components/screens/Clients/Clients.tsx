@@ -5,17 +5,20 @@ import { useDebounce } from 'src/hooks/useDebounce'
 import { exportToExcel } from 'src/utils/Download'
 import { ClientsTable } from './ClientsTable'
 import { ClientsSearch } from './ClientsSearch'
+import { useSelectors } from 'src/hooks/useSelectors'
 
 const Clients: React.FC = () => {
 	const [currentPage, setCurrentPage] = React.useState(1)
 	const [search, setSearch] = React.useState('')
 	const debouncedSearch = useDebounce<string>(search, 300)
+	const { limit } = useSelectors()
 	const {
 		data,
 		isLoading,
 		isError: clientsError,
 	} = useGetClientsQuery({
 		search: debouncedSearch,
+		limit: limit,
 		page: currentPage,
 	})
 

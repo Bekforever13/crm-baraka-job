@@ -9,12 +9,21 @@ import { TDistrictData } from 'src/store/shared/shared.types'
 import { useForm } from 'react-hook-form'
 import { TAddDrawerProps, TSelectOptions } from './Drawer.types'
 
-const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
-	editData,
-	setIsDrawerOpen,
-	isDrawerOpen,
-}) => {
+const initialValues: TDistrictData = {
+	region_id: 0,
+	name: {
+		ru: '',
+		kar: '',
+		uz: '',
+		en: '',
+	},
+}
+
+const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
+	const { setIsDrawerOpen, isDrawerOpen, editData } = props
 	const [options, setOptions] = React.useState<TSelectOptions[]>([])
+
+	const { data } = useGetRegionsQuery(1)
 	const [
 		addNewDistrict,
 		{ isLoading: addRegionIsLoading, isSuccess: addRegionIsSuccess },
@@ -23,21 +32,29 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 		editDistrict,
 		{ isLoading: editRegionIsLoading, isSuccess: editRegionIsSuccess },
 	] = useEditDistrictMutation()
-	const { data } = useGetRegionsQuery(1)
-	const initialValues: TDistrictData = {
-		region_id: 0,
-		name: {
-			ru: '',
-			kar: '',
-			uz: '',
-			en: '',
-		},
-	}
 	const { handleSubmit, register, setValue, reset } = useForm<TDistrictData>({
 		defaultValues: editData || initialValues,
 	})
 
+	const onClose = () => setIsDrawerOpen(false)
+
+	const handleClickSubmit = (values: TDistrictData) => {
+		// check is forms valid for submit
+		if (
+			values?.name?.ru.length ||
+			values?.name?.uz.length ||
+			values?.name?.en.length ||
+			values?.name?.kar.length ||
+			values.region_id
+		) {
+			editData?.id
+				? editDistrict({ ...values, id: editData.id })
+				: addNewDistrict(values)
+		}
+	}
+
 	React.useEffect(() => {
+		// fill forms if clicked edit button
 		if (editData?.region_id) {
 			setValue('region_id', editData.region_id)
 			setValue('name.kar', editData.name.kar)
@@ -47,29 +64,8 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 		}
 	}, [editData])
 
-	const onClose = () => {
-		setIsDrawerOpen(false)
-		reset({
-			region_id: 0,
-			name: {
-				kar: '',
-				ru: '',
-				uz: '',
-				en: '',
-			},
-		})
-	}
-
-	const handleClickSubmit = (values: TDistrictData) => {
-		editData?.id
-			? editDistrict({
-					id: editData.id,
-					...values,
-			})
-			: addNewDistrict(values)
-	}
-
 	React.useEffect(() => {
+		// notification messages
 		if (addRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Округ успешно добавлен.')
@@ -81,6 +77,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 	}, [addRegionIsSuccess, editRegionIsSuccess])
 
 	React.useEffect(() => {
+		// set options for select region
 		setOptions(
 			data?.data.map(item => ({
 				value: item.id.toString(),
@@ -88,6 +85,21 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 			})) || []
 		)
 	}, [data])
+
+	React.useEffect(() => {
+		// clear form values when drawer closed
+		if (!isDrawerOpen) {
+			reset({
+				region_id: -1,
+				name: {
+					kar: '',
+					ru: '',
+					uz: '',
+					en: '',
+				},
+			})
+		}
+	}, [isDrawerOpen])
 
 	return (
 		<Drawer
@@ -101,7 +113,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 					Выберите регион:
 					<select
 						className='border py-2 px-3 rounded-md w-[300px]'
-						{...register('region_id')}
+						{...register('region_id', { required: true })}
 					>
 						{options.map(item => (
 							<option key={item.value} value={item.value}>
@@ -115,7 +127,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('name.ru')}
+						{...register('name.ru', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -123,7 +135,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('name.kar')}
+						{...register('name.kar', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -131,7 +143,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('name.uz')}
+						{...register('name.uz', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -139,7 +151,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('name.en')}
+						{...register('name.en', { required: true })}
 					/>
 				</Row>
 				<button
