@@ -11,6 +11,7 @@ const flattenObject = (obj: any, parentKey = ''): any => {
 		return acc
 	}, {})
 }
+
 export const exportToExcel = <T>(data: T[]): void => {
 	// Flatten the deep objects
 	const flattenedData = data.map(obj => flattenObject(obj))

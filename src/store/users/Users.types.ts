@@ -27,6 +27,7 @@ export interface INewUserType {
 	phone: string
 	language: string
 	role: string
+	role_id?: number
 	district?: {
 		id: number
 		name: IRuKarUz

@@ -1,3 +1,4 @@
+import { FilterValue } from 'antd/es/table/interface'
 import { IRuKarUz } from '../shared/shared.types'
 
 type TCallHistory = {
@@ -20,8 +21,15 @@ export interface IClientDataResponse {
 }
 
 export interface IClientsParams {
-	id?: string | void
-	search?: string | void
-	page?: number | void
-	limit?: number
+	limit: number
+	search?: string
+	page?: number
+	role_id?: any
+	service_id?: FilterValue
+	region_id?: FilterValue
+	district_id?: FilterValue
+}
+
+export interface IInitialState {
+	tableFilter: IClientsParams
 }

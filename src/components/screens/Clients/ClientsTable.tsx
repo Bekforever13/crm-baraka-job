@@ -1,32 +1,30 @@
-import React from 'react'
+import { useState, useEffect, FC } from 'react'
 import { Table, message } from 'antd'
 import { INewUserType } from 'src/store/users/Users.types'
 import { BsClockHistory } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import type { ColumnsType } from 'antd/es/table'
 import { TableFilter } from 'src/components/shared'
-import { ClientsTableProps, TFiltersState } from './Clients.types'
+import { ClientsTableProps, TFiltersState } from './ClientsTypes'
 import {
 	useGetDistrictsQuery,
 	useGetRegionsQuery,
 	useGetServicesQuery,
 } from 'src/store/index.endpoints'
 import { FilterDropdownProps } from 'antd/es/table/interface'
-import { TablePaginationConfig } from 'antd/lib'
+import { TableProps } from 'antd/lib'
 import { useActions } from 'src/hooks/useActions'
 import { useSelectors } from 'src/hooks/useSelectors'
 
-const ClientsTable: React.FC<ClientsTableProps> = ({
+const ClientsTable: FC<ClientsTableProps> = ({
 	data,
 	isLoading,
-	currentPage,
 	total,
-	onChangePage,
 	clientsError,
 }) => {
-	const { setLimit } = useActions()
-	const { limit } = useSelectors()
-	const [filters, setFilters] = React.useState<TFiltersState>({
+	const { setTableFilter, setLimit, setPage } = useActions()
+	const { tableFilter } = useSelectors()
+	const [filters, setFilters] = useState<TFiltersState>({
 		district: [],
 		service: [],
 		region: [],
@@ -38,11 +36,27 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 	const { data: servicesData, isError: servicesError } = useGetServicesQuery(1)
 	const { data: regionsData, isError: regionsError } = useGetRegionsQuery(1)
 
-	const handleTableChange = (pagination: TablePaginationConfig) => {
-		if (pagination.pageSize) {
-			setLimit(pagination.pageSize)
+	const onChange: TableProps<INewUserType>['onChange'] = (
+		pagination,
+		{ service, role, region, district }
+	) => {
+		if (
+			pagination.pageSize ||
+			service?.length ||
+			region?.length ||
+			district?.length ||
+			role?.length
+		) {
+			setTableFilter({
+				...tableFilter,
+				...(service?.length && { service_id: service }),
+				...{ page: pagination.current },
+				...(region?.length && { region_id: region }),
+				...(district?.length && { district_id: district }),
+				...(role?.length && { role_id: role[role.length - 1] }),
+				...(pagination.pageSize && { limit: pagination.pageSize }),
+			})
 		}
-		onChangePage(1)
 	}
 
 	const clientsColumns: ColumnsType<INewUserType> = [
@@ -66,16 +80,11 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			dataIndex: 'role',
 			key: 'role',
 			render: (role: string) => (role === 'worker' ? 'Рабочий' : 'Клиент'),
-			sorter: (a, b) => {
-				a.role === 'client' && b.role === 'worker' && -1
-				a.role === 'worker' && b.role === 'client' && 1
-				return 0
-			},
 			filters: [
-				{ text: 'Рабочий', value: 'worker' },
-				{ text: 'Клиент', value: 'client' },
+				{ text: 'Рабочий', value: 3 },
+				{ text: 'Клиент', value: 4 },
 			],
-			onFilter: (value, rec) => rec.role === value,
+			onFilter: (value, rec) => rec.role_id === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -83,13 +92,23 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 				confirm,
 			}: FilterDropdownProps) => (
 				<TableFilter
-					setSelectedKeys={setSelectedKeys}
+					setSelectedKeys={selectedKeys => {
+						if (selectedKeys.length > 0) {
+							setSelectedKeys([selectedKeys[selectedKeys.length - 1]])
+						} else {
+							setSelectedKeys(selectedKeys)
+						}
+					}}
 					selectedKeys={selectedKeys}
 					confirm={confirm}
-					clearFilters={clearFilters}
+					clearFilters={() => {
+						const { role_id, ...rest } = tableFilter
+						clearFilters && clearFilters()
+						setTableFilter(rest)
+					}}
 					options={[
-						{ label: 'Рабочий', value: 'worker' },
-						{ label: 'Клиент', value: 'client' },
+						{ label: 'Рабочий', value: String(3) },
+						{ label: 'Клиент', value: String(4) },
 					]}
 				/>
 			),
@@ -100,8 +119,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			key: 'service',
 			filters: filters.service,
 			render: (_, rec) => rec.service?.name.ru,
-			onFilter: (value, rec) => rec?.service?.name.ru === value,
-
+			onFilter: (value, rec) => rec?.service?.id.toString() === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -112,10 +130,14 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
 					confirm={confirm}
-					clearFilters={clearFilters}
+					clearFilters={() => {
+						const { service_id, ...rest } = tableFilter
+						clearFilters && clearFilters()
+						setTableFilter(rest)
+					}}
 					options={
 						servicesData?.data.map(item => {
-							return { value: item.name.ru, label: item.name.ru }
+							return { value: String(item.id), label: item.name.ru }
 						}) ?? []
 					}
 				/>
@@ -127,7 +149,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			key: 'region',
 			filters: filters.region,
 			render: (_, rec) => rec.region?.name.ru,
-			onFilter: (value, rec) => rec?.region?.name.ru === value,
+			onFilter: (value, rec) => rec?.region?.id.toString() === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -138,10 +160,14 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
 					confirm={confirm}
-					clearFilters={clearFilters}
+					clearFilters={() => {
+						const { region_id, ...rest } = tableFilter
+						clearFilters && clearFilters()
+						setTableFilter(rest)
+					}}
 					options={
 						regionsData?.data.map(item => {
-							return { value: item.name.ru, label: item.name.ru }
+							return { value: String(item.id), label: item.name.ru }
 						}) ?? []
 					}
 				/>
@@ -153,7 +179,7 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 			key: 'district',
 			render: (_, rec) => rec.district?.name.ru,
 			filters: filters.district,
-			onFilter: (value, rec) => rec.district?.name.ru === value,
+			onFilter: (value, rec) => rec.district?.id.toString() === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -164,10 +190,14 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
 					confirm={confirm}
-					clearFilters={clearFilters}
+					clearFilters={() => {
+						const { district_id, ...rest } = tableFilter
+						clearFilters && clearFilters()
+						setTableFilter(rest)
+					}}
 					options={
 						districtsData?.data.map(item => {
-							return { value: item.name.ru, label: item.name.ru }
+							return { value: String(item.id), label: item.name.ru }
 						}) ?? []
 					}
 				/>
@@ -190,13 +220,13 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 		},
 	]
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (clientsError || districtsError || servicesError || regionsError) {
 			message.error('Произошла ошибка при загрузке данных')
 		}
 	}, [clientsError, districtsError, servicesError, regionsError])
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (regionsData && servicesData && districtsData) {
 			setFilters(prev => ({
 				...prev,
@@ -220,15 +250,18 @@ const ClientsTable: React.FC<ClientsTableProps> = ({
 		<Table
 			loading={isLoading}
 			id='clientsTable'
+			rowKey={e => e.id}
 			pagination={{
 				total,
-				current: currentPage,
-				onChange: onChangePage,
 				showSizeChanger: true,
-				pageSize: limit,
+				current: tableFilter.page,
+				pageSize: tableFilter.limit,
+				onChange: (page, pageSize) => {
+					setPage(page)
+					setLimit(pageSize)
+				},
 			}}
-			rowKey={e => e.id}
-			onChange={handleTableChange}
+			onChange={onChange}
 			dataSource={data as INewUserType[]}
 			columns={clientsColumns}
 			scroll={{ x: true }}

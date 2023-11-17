@@ -1,16 +1,20 @@
 import { Col, Descriptions, Row } from 'antd'
 import React from 'react'
 import { AiOutlinePhone } from 'react-icons/ai'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import { UiButton } from 'src/components/ui'
 import { useGetClientInfoQuery } from 'src/store/index.endpoints'
 
 const Client: React.FC = () => {
 	const { id } = useParams()
 	const { data } = useGetClientInfoQuery(id)
+	const navigate = useNavigate()
+
 	return (
 		<div className='flex flex-col bg-white m-5 p-5 rounded-2xl'>
 			<Descriptions
-				title='User Info'
+				title='Информация о пользователе'
+				extra={<UiButton onClick={() => navigate(-1)}> Назад </UiButton>}
 				layout='vertical'
 				items={[
 					{

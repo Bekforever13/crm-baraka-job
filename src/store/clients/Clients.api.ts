@@ -6,11 +6,8 @@ export const clientsApi = api.injectEndpoints({
 	endpoints: builder => ({
 		getClients: builder.query<IUserDataResponse, IClientsParams>({
 			query: body => ({
-				url: `/clients?
-				${body?.search?.length ? `search=${body.search}&` : ''}
-				${body.id ? `role_id=${body.id}&` : ''}
-				${body.page ? `page=${body.page}&` : ''},
-				${body.limit ? `limit=${body.limit}&` : ''}`,
+				url: `/clients`,
+				params: body,
 			}),
 			providesTags: ['clients'],
 		}),
