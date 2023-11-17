@@ -89,6 +89,7 @@ const RegionsTable: React.FC<ITableProps> = ({
 			pagination={{
 				total: data?.meta.total,
 				current: currentPage,
+				showSizeChanger: false,
 				onChange: page => setCurrentPage(page),
 			}}
 			rowKey={e => e.id}

@@ -53,7 +53,9 @@ const UsersTable: React.FC = () => {
 						(el === 'worker' && 'Рабочий') ||
 						(el === 'client' && 'Клиент')
 					}
-					onSelect={e => handleSelectRole({ userId: rec.id, roleId: e as string })}
+					onSelect={e =>
+						handleSelectRole({ userId: rec.id, roleId: e as string })
+					}
 					options={roles}
 				/>
 			),
@@ -102,6 +104,7 @@ const UsersTable: React.FC = () => {
 				total: data?.meta.total,
 				current: currentPage,
 				onChange: page => setCurrentPage(page),
+				showSizeChanger: false,
 			}}
 			rowKey={e => e.id}
 			dataSource={data?.data}
