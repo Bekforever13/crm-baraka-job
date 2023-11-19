@@ -1,11 +1,13 @@
 import { api } from '../index.api'
+import { IGetDataParams } from '../shared/shared.types'
 import { IUserDataResponse, TUserRole } from './Users.types'
 
 export const usersApi = api.injectEndpoints({
 	endpoints: builder => ({
-		getUsers: builder.query<IUserDataResponse, number>({
-			query: (page = 1) => ({
-				url: `/all-users?page=${page}`,
+		getUsers: builder.query<IUserDataResponse, IGetDataParams>({
+			query: body => ({
+				url: '/all-users',
+				params: body,
 			}),
 			providesTags: ['users'],
 		}),

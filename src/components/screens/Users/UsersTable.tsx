@@ -8,6 +8,7 @@ import {
 import { BiSolidTrash } from 'react-icons/bi'
 import type { ColumnsType } from 'antd/es/table'
 import { INewUserType, TUserRole } from 'src/store/users/Users.types'
+import { useSelectors } from 'src/hooks/useSelectors'
 
 const roles = [
 	{ value: 2, label: 'Админ' },
@@ -18,7 +19,11 @@ const roles = [
 
 const UsersTable: React.FC = () => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { data, isLoading, isError } = useGetUsersQuery(currentPage)
+	const { search } = useSelectors()
+	const { data, isLoading, isError } = useGetUsersQuery({
+		page: currentPage,
+		search: search,
+	})
 	const [deleteUser, { isSuccess }] = useDeleteUserMutation()
 	const [changeRole, { isSuccess: changeRoleIsSuccess }] =
 		useEditUserRoleMutation()
