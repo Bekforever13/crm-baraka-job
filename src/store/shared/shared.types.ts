@@ -1,11 +1,6 @@
 export interface ISharedInitialState {
 	showDrawer: boolean
 	search: string
-	filter: {
-		group: string[]
-		region: string
-		district: string
-	}
 }
 
 export interface IRuKarUz {
@@ -20,6 +15,11 @@ export type TItemData = {
 	id: number
 	name: IRuKarUz
 	region_id?: number
+}
+
+export type TImport = {
+	url: string
+	file: File
 }
 
 export type TDistrictData = {

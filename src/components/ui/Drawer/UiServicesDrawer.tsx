@@ -20,9 +20,9 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 		formState: { isSubmitting },
 	} = useForm<IRuKarUz>()
 
-	const [addNewGroup, { isSuccess: addServiceIsSuccess }] =
+	const [addNewService, { isSuccess: addServiceIsSuccess }] =
 		useAddNewServiceMutation()
-	const [editGroup, { isSuccess: editServiceIsSuccess }] =
+	const [editService, { isSuccess: editServiceIsSuccess }] =
 		useEditServiceMutation()
 
 	const onClose = () => setIsDrawerOpen(false)
@@ -36,8 +36,8 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 			values?.kar.length
 		) {
 			editData?.id
-				? editGroup({ id: editData.id, name: values })
-				: addNewGroup({ name: values })
+				? editService({ id: editData.id, name: values })
+				: addNewService({ name: values })
 		}
 	}
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'antd'
 import { useGetClientsQuery } from 'src/store/index.endpoints'
-import { exportToExcel } from 'src/utils/Download'
+import { exportToExcel } from 'src/utils/Export'
 import { ClientsTable } from './ClientsTable'
 import { ClientsSearch } from './ClientsSearch'
 import { useSelectors } from 'src/hooks/useSelectors'

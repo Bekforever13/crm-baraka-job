@@ -4,6 +4,7 @@ import { districtsApi } from './districts/Districts.api'
 import { servicesApi } from './services/Services.api'
 import { regionsApi } from './region/Region.api'
 import { usersApi } from './users/Users.api'
+import { sharedApi } from './shared/shared.api'
 
 export const { useLoginMutation, useCheckUserQuery } = authApi
 
@@ -26,7 +27,7 @@ export const {
 	useAddNewDistrictMutation,
 	useEditDistrictMutation,
 	useDeleteDistrictsMutation,
-	useGetOneDistrictQuery
+	useGetOneDistrictQuery,
 } = districtsApi
 
 export const {
@@ -34,5 +35,7 @@ export const {
 	useEditUserRoleMutation,
 	useDeleteUserMutation,
 } = usersApi
+
+export const { usePostImportMutation } = sharedApi
 
 export const { useGetClientsQuery, useGetClientInfoQuery } = clientsApi
