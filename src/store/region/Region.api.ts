@@ -1,5 +1,6 @@
 import { api } from '../index.api'
 import {
+	IGetDataParams,
 	IItemDataResponse,
 	TAddNewItem,
 	TItemData,
@@ -7,9 +8,10 @@ import {
 
 export const regionsApi = api.injectEndpoints({
 	endpoints: builder => ({
-		getRegions: builder.query<IItemDataResponse, number>({
-			query: (page = 1) => ({
-				url: `/regions?page=${page}`,
+		getRegions: builder.query<IItemDataResponse, IGetDataParams>({
+			query: body => ({
+				url: '/regions',
+				params: body,
 			}),
 			providesTags: ['regions'],
 		}),

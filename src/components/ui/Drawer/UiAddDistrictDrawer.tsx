@@ -14,7 +14,8 @@ const initialValues: TDistrictData = {
 	name: {
 		ru: '',
 		kar: '',
-		uz: '',
+		uz_latin: '',
+		uz_kiril: '',
 		en: '',
 	},
 }
@@ -23,7 +24,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 	const { setIsDrawerOpen, isDrawerOpen, editData } = props
 	const [options, setOptions] = React.useState<TSelectOptions[]>([])
 
-	const { data } = useGetRegionsQuery(1)
+	const { data } = useGetRegionsQuery({ page: 1, search: '' })
 	const [
 		addNewDistrict,
 		{ isLoading: addRegionIsLoading, isSuccess: addRegionIsSuccess },
@@ -42,7 +43,8 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 		// check is forms valid for submit
 		if (
 			values?.name?.ru.length ||
-			values?.name?.uz.length ||
+			values?.name.uz_latin.length ||
+			values?.name.uz_kiril.length ||
 			values?.name?.en.length ||
 			values?.name?.kar.length ||
 			values.region_id
@@ -59,7 +61,8 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 			setValue('region_id', editData.region_id)
 			setValue('name.kar', editData.name.kar)
 			setValue('name.ru', editData.name.ru)
-			setValue('name.uz', editData.name.uz)
+			setValue('name.uz_latin', editData.name.uz_latin)
+			setValue('name.uz_kiril', editData.name.uz_kiril)
 			setValue('name.en', editData.name.en)
 		}
 	}, [editData])
@@ -94,7 +97,8 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 				name: {
 					kar: '',
 					ru: '',
-					uz: '',
+					uz_latin: '',
+					uz_kiril: '',
 					en: '',
 				},
 			})
@@ -143,7 +147,15 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('name.uz', { required: true })}
+						{...register('name.uz_kiril', { required: true })}
+					/>
+				</Row>
+				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
+					Ozbekcha:
+					<input
+						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						type='text'
+						{...register('name.uz_latin', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>

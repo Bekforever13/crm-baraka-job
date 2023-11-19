@@ -1,6 +1,5 @@
 import React from 'react'
 import type { ColumnsType } from 'antd/es/table'
-import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 import { Popconfirm } from 'antd/lib'
 import Table from 'antd/es/table'
@@ -9,14 +8,20 @@ import {
 	useGetServicesQuery,
 } from 'src/store/index.endpoints'
 import { message } from 'antd'
+import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { ITableProps } from 'src/components/shared/shared.types'
+import { useSelectors } from 'src/hooks/useSelectors'
 
 const ServicesTable: React.FC<ITableProps> = ({
 	setIsDrawerOpen,
 	setEditData,
 }) => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { data, isLoading, isError } = useGetServicesQuery(currentPage)
+	const { search } = useSelectors()
+	const { data, isLoading, isError } = useGetServicesQuery({
+		page: currentPage,
+		search: search,
+	})
 	const [deleteService, { isSuccess }] = useDeleteServiceMutation()
 
 	const handleClickEdit = (rec: TItemData) => {
@@ -41,7 +46,13 @@ const ServicesTable: React.FC<ITableProps> = ({
 			title: 'Узбекский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => el.uz,
+			render: (el: IRuKarUz) => el.uz_kiril,
+		},
+		{
+			title: 'Ozbekcha',
+			dataIndex: 'name',
+			key: 'name',
+			render: (el: IRuKarUz) => el.uz_latin,
 		},
 		{
 			title: 'Английский',
@@ -90,7 +101,7 @@ const ServicesTable: React.FC<ITableProps> = ({
 				total: data?.meta.total,
 				current: currentPage,
 				onChange: page => setCurrentPage(page),
-				showSizeChanger: false
+				showSizeChanger: false,
 			}}
 			rowKey={e => e.id}
 			dataSource={data?.data}

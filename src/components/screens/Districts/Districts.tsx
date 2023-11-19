@@ -3,6 +3,7 @@ import { UiButton } from 'src/components/ui'
 import { TItemData } from 'src/store/shared/shared.types'
 import { UiAddDistrictDrawer } from 'src/components/ui/Drawer/UiAddDistrictDrawer'
 import { DistrictsTable } from './DistrictsTable'
+import { Search } from 'src/components/shared'
 
 const Districts: React.FC = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
@@ -15,7 +16,8 @@ const Districts: React.FC = () => {
 
 	return (
 		<div className='flex flex-col gap-y-5 bg-white m-5 p-5 rounded-2xl'>
-			<div className='flex items-center justify-end'>
+			<div className='flex items-center justify-between'>
+				<Search />
 				<UiButton type='primary' onClick={handleClickAdd}>
 					Добавить
 				</UiButton>

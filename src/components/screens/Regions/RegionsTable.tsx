@@ -10,13 +10,18 @@ import {
 } from 'src/store/index.endpoints'
 import { message } from 'antd'
 import { ITableProps } from 'src/components/shared/shared.types'
+import { useSelectors } from 'src/hooks/useSelectors'
 
 const RegionsTable: React.FC<ITableProps> = ({
 	setIsDrawerOpen,
 	setEditData,
 }) => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { data, isLoading, isError } = useGetRegionsQuery(currentPage)
+	const { search } = useSelectors()
+	const { data, isLoading, isError } = useGetRegionsQuery({
+		page: currentPage,
+		search: search,
+	})
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 
 	const handleClickEdit = (rec: TItemData) => {
@@ -41,7 +46,13 @@ const RegionsTable: React.FC<ITableProps> = ({
 			title: 'Узбекский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => el.uz,
+			render: (el: IRuKarUz) => el.uz_kiril,
+		},
+		{
+			title: 'Ozbekcha',
+			dataIndex: 'name',
+			key: 'name',
+			render: (el: IRuKarUz) => el.uz_latin,
 		},
 		{
 			title: 'Английский',

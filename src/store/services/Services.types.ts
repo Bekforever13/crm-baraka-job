@@ -1,4 +1,4 @@
-import { IRuKarUz } from "../shared/shared.types"
+import { IRuKarUz } from '../shared/shared.types'
 
 export type TServiceData = {
 	id: number

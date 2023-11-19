@@ -3,6 +3,7 @@ import { ISharedInitialState } from './shared.types'
 
 const initialState: ISharedInitialState = {
 	showDrawer: false,
+	search: '',
 	filter: {
 		group: [''],
 		region: '',
@@ -16,6 +17,9 @@ const sharedSlice = createSlice({
 	reducers: {
 		setShowDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.showDrawer = payload
+		},
+		setSearch(state, { payload }: PayloadAction<string>) {
+			state.search = payload
 		},
 		setFilter(
 			state,

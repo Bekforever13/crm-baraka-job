@@ -1,12 +1,13 @@
 import { api } from '../index.api'
-import { TAddNewItem } from 'src/store/shared/shared.types'
+import { IGetDataParams, TAddNewItem } from 'src/store/shared/shared.types'
 import { IServiceDataResponse, TAddServiceData } from './Services.types'
 
 export const servicesApi = api.injectEndpoints({
 	endpoints: builder => ({
-		getServices: builder.query<IServiceDataResponse, number>({
-			query: (page = 1) => ({
-				url: `/services?page=${page}`,
+		getServices: builder.query<IServiceDataResponse, IGetDataParams>({
+			query: body => ({
+				url: `/services`,
+				params: body,
 			}),
 			providesTags: ['services'],
 		}),

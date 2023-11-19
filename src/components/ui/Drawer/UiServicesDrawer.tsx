@@ -30,7 +30,8 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 	const onSubmit = (values: IRuKarUz) => {
 		if (
 			values?.ru.length ||
-			values?.uz.length ||
+			values?.uz_latin.length ||
+			values?.uz_kiril.length ||
 			values?.en.length ||
 			values?.kar.length
 		) {
@@ -45,7 +46,8 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 			reset({
 				kar: editData?.name.kar,
 				ru: editData?.name.ru,
-				uz: editData?.name.uz,
+				uz_latin: editData?.name.uz_latin,
+				uz_kiril: editData?.name.uz_kiril,
 				en: editData?.name.en,
 			})
 		}
@@ -65,11 +67,12 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 		// clear form values when drawer closed
 		if (!isDrawerOpen) {
 			reset({
-			kar: '',
-			ru: '',
-			uz: '',
-			en: '',
-		})
+				kar: '',
+				ru: '',
+				uz_latin: '',
+				uz_kiril: '',
+				en: '',
+			})
 		}
 	}, [isDrawerOpen])
 
@@ -102,7 +105,15 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('uz', { required: true })}
+						{...register('uz_kiril', { required: true })}
+					/>
+				</Row>
+				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
+					Ozbekcha:
+					<input
+						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						type='text'
+						{...register('uz_latin', { required: true })}
 					/>
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>

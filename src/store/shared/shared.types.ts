@@ -1,5 +1,6 @@
 export interface ISharedInitialState {
 	showDrawer: boolean
+	search: string
 	filter: {
 		group: string[]
 		region: string
@@ -9,7 +10,8 @@ export interface ISharedInitialState {
 
 export interface IRuKarUz {
 	kar: string
-	uz: string
+	uz_latin: string
+	uz_kiril: string
 	ru: string
 	en: string
 }
@@ -46,4 +48,9 @@ export interface IItemDataResponse {
 		to: number
 		total: number
 	}
+}
+
+export interface IGetDataParams {
+	page: number
+	search: string
 }

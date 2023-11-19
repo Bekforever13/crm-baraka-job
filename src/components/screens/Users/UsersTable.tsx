@@ -13,6 +13,7 @@ const roles = [
 	{ value: 2, label: 'Админ' },
 	{ value: 3, label: 'Рабочий' },
 	{ value: 4, label: 'Клиент' },
+	{ value: 5, label: 'Пользователь' },
 ]
 
 const UsersTable: React.FC = () => {
@@ -51,7 +52,8 @@ const UsersTable: React.FC = () => {
 					value={
 						(el === 'admin' && 'Админ') ||
 						(el === 'worker' && 'Рабочий') ||
-						(el === 'client' && 'Клиент')
+						(el === 'client' && 'Клиент') ||
+						(el === 'user' && 'Пользователь')
 					}
 					onSelect={e =>
 						handleSelectRole({ userId: rec.id, roleId: e as string })

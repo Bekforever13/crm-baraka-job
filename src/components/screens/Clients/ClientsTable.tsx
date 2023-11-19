@@ -31,10 +31,17 @@ const ClientsTable: FC<ClientsTableProps> = ({
 	})
 	const navigate = useNavigate()
 
-	const { data: districtsData, isError: districtsError } =
-		useGetDistrictsQuery(1)
-	const { data: servicesData, isError: servicesError } = useGetServicesQuery(1)
-	const { data: regionsData, isError: regionsError } = useGetRegionsQuery(1)
+	const { data: districtsData, isError: districtsError } = useGetDistrictsQuery(
+		{ page: 1, search: '' }
+	)
+	const { data: servicesData, isError: servicesError } = useGetServicesQuery({
+		page: 1,
+		search: '',
+	})
+	const { data: regionsData, isError: regionsError } = useGetRegionsQuery({
+		page: 1,
+		search: '',
+	})
 
 	const onChange: TableProps<INewUserType>['onChange'] = (
 		pagination,

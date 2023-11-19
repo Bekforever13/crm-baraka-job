@@ -9,15 +9,23 @@ import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import { Table, message, Popconfirm } from 'antd'
 import { ITableProps } from 'src/components/shared/shared.types'
 import type { ColumnsType } from 'antd/es/table'
+import { useSelectors } from 'src/hooks/useSelectors'
 
 const DistrictsTable: React.FC<ITableProps> = ({
 	setIsDrawerOpen,
 	setEditData,
 }) => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { data, isLoading, isError } = useGetDistrictsQuery(currentPage)
+	const { search } = useSelectors()
+	const { data, isLoading, isError } = useGetDistrictsQuery({
+		page: currentPage,
+		search: search,
+	})
 	const [deleteRegion, { isSuccess }] = useDeleteDistrictsMutation()
-	const { data: regions } = useGetRegionsQuery(1)
+	const { data: regions } = useGetRegionsQuery({
+		page: currentPage,
+		search: '',
+	})
 
 	const handleClickEdit = (rec: TItemData) => {
 		setEditData(undefined)
@@ -49,7 +57,13 @@ const DistrictsTable: React.FC<ITableProps> = ({
 			title: 'Узбекский',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el: IRuKarUz) => el.uz,
+			render: (el: IRuKarUz) => el.uz_kiril,
+		},
+		{
+			title: 'Ozbekcha',
+			dataIndex: 'name',
+			key: 'name',
+			render: (el: IRuKarUz) => el.uz_latin,
 		},
 		{
 			title: 'Английский',
