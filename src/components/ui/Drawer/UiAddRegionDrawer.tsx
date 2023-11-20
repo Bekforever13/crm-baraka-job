@@ -133,7 +133,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 				<button
 					className='w-full p-3 border rounded-md bg-[#F4C95B] text-white font-bold'
 					type='submit'
-					disabled={isSubmitting}
+					disabled={isSubmitting || addRegionIsLoading || editRegionIsLoading}
 				>
 					{isSubmitting || addRegionIsLoading || editRegionIsLoading
 						? 'Загрузка...'

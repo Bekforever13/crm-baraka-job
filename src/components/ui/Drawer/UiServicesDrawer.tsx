@@ -17,10 +17,14 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 		formState: { isSubmitting },
 	} = useForm<IRuKarUz>()
 
-	const [addNewService, { isSuccess: addServiceIsSuccess }] =
-		useAddNewServiceMutation()
-	const [editService, { isSuccess: editServiceIsSuccess }] =
-		useEditServiceMutation()
+	const [
+		addNewService,
+		{ isLoading: addLoading, isSuccess: addServiceIsSuccess },
+	] = useAddNewServiceMutation()
+	const [
+		editService,
+		{ isLoading: editLoading, isSuccess: editServiceIsSuccess },
+	] = useEditServiceMutation()
 
 	const onClose = () => setIsDrawerOpen(false)
 
@@ -124,9 +128,11 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 				<button
 					className='w-full p-3 border rounded-md bg-[#F4C95B] text-white font-bold'
 					type='submit'
-					disabled={isSubmitting}
+					disabled={isSubmitting || addLoading || editLoading}
 				>
-					{isSubmitting ? 'Загрузка...' : 'Применить'}
+					{isSubmitting || addLoading || editLoading
+						? 'Загрузка...'
+						: 'Применить'}
 				</button>
 			</form>
 		</Drawer>
