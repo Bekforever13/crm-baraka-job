@@ -5,7 +5,7 @@ import { useActions } from 'src/hooks/useActions'
 import { useCheckUserQuery, useLoginMutation } from 'src/store/index.endpoints'
 import { ILoginDataBody } from 'src/store/auth/Auth.types'
 import { formatPhone } from 'src/utils/shared'
-import { notification } from 'antd'
+import { message, notification } from 'antd'
 import { MaskedInput } from 'antd-mask-input'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
@@ -36,6 +36,7 @@ const Login: React.FC = () => {
 			localStorage.setItem('token', data?.token)
 			setAuth(true)
 			navigate('/')
+			message.success('Добро пожаловать')
 		}
 		if (isError) {
 			notification.error({

@@ -6,14 +6,14 @@ import { message } from 'antd'
 
 const Layout: React.FC = () => {
 	const navigate = useNavigate()
-	const { data, isSuccess } = useCheckUserQuery()
+	const { data, isSuccess, isError } = useCheckUserQuery()
 
 	React.useEffect(() => {
 		if (isSuccess) {
 			!data?.data.role.includes('admin') && navigate('/auth')
-			message.success(`Добро пожаловать ${data.data.role}`)
 		}
-	}, [isSuccess])
+		if (isError) message.error('Произошла ошибка при проверке пользователя.')
+	}, [isSuccess, isError])
 
 	return (
 		<div className='bg-[#F5F2DF] w-full min-h-screen flex items-start justify-start'>
