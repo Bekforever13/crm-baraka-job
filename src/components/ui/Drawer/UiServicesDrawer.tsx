@@ -8,11 +8,8 @@ import {
 import { IRuKarUz } from 'src/store/shared/shared.types'
 import { TAddDrawerProps } from './Drawer.types'
 
-const UiServicesDrawer: React.FC<TAddDrawerProps> = ({
-	editData,
-	setIsDrawerOpen,
-	isDrawerOpen,
-}) => {
+const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
+	const { editData, setIsDrawerOpen, isDrawerOpen } = props
 	const {
 		register,
 		handleSubmit,

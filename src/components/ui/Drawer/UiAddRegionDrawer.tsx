@@ -52,15 +52,22 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 				en: editData?.name.en,
 			})
 		}
+	}, [editData])
+
+	React.useEffect(() => {
 		if (addRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Регион успешно добавлен.')
 		}
+	}, [addRegionIsSuccess])
+
+	React.useEffect(() => {
 		if (editRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Регион успешно изменён.')
+			reset()
 		}
-	}, [editData?.id, addRegionIsSuccess, editRegionIsSuccess])
+	}, [editRegionIsSuccess])
 
 	React.useEffect(() => {
 		// clear form values when drawer closed

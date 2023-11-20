@@ -22,7 +22,9 @@ const Import: React.FC<TProps> = ({ url }) => {
 		if (file) setImport({ url: url, file: file })
 	}, [file])
 
-	useEffect(() => message.success('Файл успешно импортирован'), [isSuccess])
+	useEffect(() => {
+		if (isSuccess) message.success('Файл успешно импортирован')
+	}, [isSuccess])
 
 	return (
 		<div>

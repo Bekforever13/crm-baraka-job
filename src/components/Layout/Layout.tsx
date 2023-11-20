@@ -6,16 +6,14 @@ import { message } from 'antd'
 
 const Layout: React.FC = () => {
 	const navigate = useNavigate()
-	const token = localStorage.getItem('token')
-	const { data, isSuccess, isError } = useCheckUserQuery(token as string)
+	const { data, isSuccess } = useCheckUserQuery()
 
 	React.useEffect(() => {
 		if (isSuccess) {
 			!data?.data.role.includes('admin') && navigate('/auth')
 			message.success(`Добро пожаловать ${data.data.role}`)
 		}
-		if (isError) message.error('Произошла ошибка при проверке пользователя.')
-	}, [isSuccess, isError])
+	}, [isSuccess])
 
 	return (
 		<div className='bg-[#F5F2DF] w-full min-h-screen flex items-start justify-start'>
