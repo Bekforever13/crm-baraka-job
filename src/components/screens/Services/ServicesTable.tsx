@@ -108,6 +108,7 @@ const ServicesTable: React.FC<ITableProps> = ({
 			columns={columns}
 			scroll={{ x: true }}
 			style={{ width: '100%' }}
+			locale={{ emptyText: 'Нет данных' }}
 		/>
 	)
 }
