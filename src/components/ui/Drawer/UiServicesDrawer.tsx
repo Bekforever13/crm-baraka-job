@@ -9,7 +9,7 @@ import { IRuKarUz } from 'src/store/shared/shared.types'
 import { TAddDrawerProps } from './Drawer.types'
 
 const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
-	const { editData, setIsDrawerOpen, isDrawerOpen } = props
+	const { editData, setIsDrawerOpen, isDrawerOpen, setEditData } = props
 	const {
 		register,
 		handleSubmit,
@@ -26,7 +26,14 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 		{ isLoading: editLoading, isSuccess: editServiceIsSuccess },
 	] = useEditServiceMutation()
 
-	const onClose = () => setIsDrawerOpen(false)
+	const onClose = () => {
+		setIsDrawerOpen(false)
+		setEditData({
+			id: 0,
+			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
+			region_id: 0,
+		})
+	}
 
 	const onSubmit = (values: IRuKarUz) => {
 		if (

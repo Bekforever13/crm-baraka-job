@@ -21,7 +21,7 @@ const initialValues: TDistrictData = {
 }
 
 const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
-	const { setIsDrawerOpen, isDrawerOpen, editData } = props
+	const { editData, setIsDrawerOpen, isDrawerOpen, setEditData } = props
 	const [options, setOptions] = React.useState<TSelectOptions[]>([])
 
 	const { data } = useGetRegionsQuery({ page: 1, search: '' })
@@ -37,7 +37,14 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 		defaultValues: editData || initialValues,
 	})
 
-	const onClose = () => setIsDrawerOpen(false)
+	const onClose = () => {
+		setIsDrawerOpen(false)
+		setEditData({
+			id: 0,
+			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
+			region_id: 0,
+		})
+	}
 
 	const handleClickSubmit = (values: TDistrictData) => {
 		// check is forms valid for submit

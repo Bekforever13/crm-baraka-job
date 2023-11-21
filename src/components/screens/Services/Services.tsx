@@ -7,7 +7,9 @@ import { Import } from 'src/utils/Import'
 
 const Services: React.FC = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
-	const [editData, setEditData] = React.useState<TItemData>()
+	const [editData, setEditData] = React.useState<TItemData | undefined>(
+		undefined
+	)
 
 	const handleClickAdd = () => {
 		setEditData(undefined)
@@ -28,6 +30,7 @@ const Services: React.FC = () => {
 					isDrawerOpen={isDrawerOpen}
 					setIsDrawerOpen={setIsDrawerOpen}
 					editData={editData}
+					setEditData={setEditData}
 				/>
 			</div>
 			<ServicesTable

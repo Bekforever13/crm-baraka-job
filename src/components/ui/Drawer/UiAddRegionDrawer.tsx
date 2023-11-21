@@ -9,7 +9,7 @@ import { IRuKarUz } from 'src/store/shared/shared.types'
 import { TAddDrawerProps } from './Drawer.types'
 
 const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
-	const { editData, setIsDrawerOpen, isDrawerOpen } = props
+	const { editData, setIsDrawerOpen, isDrawerOpen, setEditData } = props
 	const {
 		register,
 		handleSubmit,
@@ -26,7 +26,14 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 		{ isLoading: editRegionIsLoading, isSuccess: editRegionIsSuccess },
 	] = useEditRegionMutation()
 
-	const onClose = () => setIsDrawerOpen(false)
+	const onClose = () => {
+		setIsDrawerOpen(false)
+		setEditData({
+			id: 0,
+			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
+			region_id: 0,
+		})
+	}
 
 	const onSubmit = (values: IRuKarUz) => {
 		if (
@@ -52,12 +59,13 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 				en: editData?.name.en,
 			})
 		}
-	}, [editData])
+	}, [editData?.id])
 
 	React.useEffect(() => {
 		if (addRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Регион успешно добавлен.')
+			reset()
 		}
 	}, [addRegionIsSuccess])
 
@@ -70,7 +78,6 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 	}, [editRegionIsSuccess])
 
 	React.useEffect(() => {
-		// clear form values when drawer closed
 		if (!isDrawerOpen) {
 			reset({
 				kar: '',
