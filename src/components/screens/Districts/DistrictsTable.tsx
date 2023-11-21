@@ -20,11 +20,13 @@ const DistrictsTable: React.FC<ITableProps> = ({
 	const { data, isLoading, isError } = useGetDistrictsQuery({
 		page: currentPage,
 		search: search,
+		limit: 100000
 	})
 	const [deleteRegion, { isSuccess }] = useDeleteDistrictsMutation()
 	const { data: regions } = useGetRegionsQuery({
 		page: currentPage,
 		search: '',
+		limit: 100000,
 	})
 
 	const handleClickEdit = (rec: TItemData) => {
@@ -111,6 +113,7 @@ const DistrictsTable: React.FC<ITableProps> = ({
 			pagination={{
 				total: data?.meta.total,
 				current: currentPage,
+				pageSize: 10,
 				onChange: page => setCurrentPage(page),
 			}}
 			rowKey={e => e.id}
