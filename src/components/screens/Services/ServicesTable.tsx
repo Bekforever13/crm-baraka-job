@@ -21,6 +21,7 @@ const ServicesTable: React.FC<ITableProps> = ({
 	const { data, isLoading, isError } = useGetServicesQuery({
 		page: currentPage,
 		search: search,
+		limit: 100000,
 	})
 	const [deleteService, { isSuccess }] = useDeleteServiceMutation()
 

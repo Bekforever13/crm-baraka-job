@@ -21,6 +21,7 @@ const RegionsTable: React.FC<ITableProps> = ({
 	const { data, isLoading, isError } = useGetRegionsQuery({
 		page: currentPage,
 		search: search,
+		limit: 100000,
 	})
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 
