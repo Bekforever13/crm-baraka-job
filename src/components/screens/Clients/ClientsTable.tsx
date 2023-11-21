@@ -273,6 +273,7 @@ const ClientsTable: FC<ClientsTableProps> = ({
 			columns={clientsColumns}
 			scroll={{ x: true }}
 			style={{ width: '100%' }}
+			locale={{ emptyText: 'Нет данных' }}
 		/>
 	)
 }
