@@ -20,13 +20,11 @@ const DistrictsTable: React.FC<ITableProps> = ({
 	const { data, isLoading, isError } = useGetDistrictsQuery({
 		page: currentPage,
 		search: search,
-		limit: 100000
 	})
 	const [deleteRegion, { isSuccess }] = useDeleteDistrictsMutation()
 	const { data: regions } = useGetRegionsQuery({
 		page: currentPage,
 		search: '',
-		limit: 100000,
 	})
 
 	const handleClickEdit = (rec: TItemData) => {

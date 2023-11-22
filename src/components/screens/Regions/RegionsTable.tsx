@@ -21,7 +21,6 @@ const RegionsTable: React.FC<ITableProps> = ({
 	const { data, isLoading, isError } = useGetRegionsQuery({
 		page: currentPage,
 		search: search,
-		limit: 100000,
 	})
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 
@@ -99,7 +98,7 @@ const RegionsTable: React.FC<ITableProps> = ({
 		<Table
 			loading={isLoading}
 			pagination={{
-				total: data?.meta.total,
+				total: data?.total,
 				current: currentPage,
 				showSizeChanger: false,
 				onChange: page => setCurrentPage(page),

@@ -1,17 +1,17 @@
 import { api } from '../index.api'
 import {
 	IGetDataParams,
-	IItemDataResponse,
+	IRegionDataResponse,
 	TAddNewItem,
 	TItemData,
 } from 'src/store/shared/shared.types'
 
 export const regionsApi = api.injectEndpoints({
 	endpoints: builder => ({
-		getRegions: builder.query<IItemDataResponse, IGetDataParams>({
+		getRegions: builder.query<IRegionDataResponse, IGetDataParams>({
 			query: body => ({
 				url: '/regions',
-				params: body,
+				params: body.search.length ? body : { page: body.page },
 			}),
 			providesTags: ['regions'],
 		}),

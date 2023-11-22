@@ -24,7 +24,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 	const { editData, setIsDrawerOpen, isDrawerOpen, setEditData } = props
 	const [options, setOptions] = React.useState<TSelectOptions[]>([])
 
-	const { data } = useGetRegionsQuery({ page: 0, search: '', limit: 100000 })
+	const { data } = useGetRegionsQuery({ page: 0, search: '' })
 	const [
 		addNewDistrict,
 		{ isLoading: addRegionIsLoading, isSuccess: addRegionIsSuccess },

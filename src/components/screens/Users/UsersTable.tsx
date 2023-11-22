@@ -23,7 +23,6 @@ const UsersTable: React.FC = () => {
 	const { data, isLoading, isError } = useGetUsersQuery({
 		page: currentPage,
 		search: search,
-		limit: 100000,
 	})
 	const [deleteUser, { isSuccess }] = useDeleteUserMutation()
 	const [changeRole, { isSuccess: changeRoleIsSuccess }] =

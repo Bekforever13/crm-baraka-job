@@ -31,6 +31,11 @@ export type TAddNewItem = {
 	name: IRuKarUz
 }
 
+export interface IRegionDataResponse {
+	data: TItemData[]
+	total: number
+}
+
 export interface IItemDataResponse {
 	data: TItemData[]
 	links: {
@@ -53,5 +58,4 @@ export interface IItemDataResponse {
 export interface IGetDataParams {
 	page: number
 	search: string
-	limit: number
 }
