@@ -24,7 +24,11 @@ const Login: React.FC = () => {
 	const token = localStorage.getItem('token')
 	const { setAuth } = useActions()
 	const [login, { data, isSuccess, isLoading, isError }] = useLoginMutation()
-	const { data: checkUser, isSuccess: checkedUser } = useCheckUserQuery()
+
+	const checkUserQueryResult = token
+		? useCheckUserQuery()
+		: { data: null, isSuccess: false }
+	const { data: checkUser, isSuccess: checkedUser } = checkUserQueryResult
 
 	const onSubmit = async (values: ILoginDataBody) => {
 		setButtonDisabled(true)
