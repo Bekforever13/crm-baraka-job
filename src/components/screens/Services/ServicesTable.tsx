@@ -74,7 +74,12 @@ const ServicesTable: React.FC<ITableProps> = ({
 					/>
 					<Popconfirm
 						title='Удалить сервис?'
-						onConfirm={() => deleteService(rec.id)}
+						onConfirm={() => {
+							if (data?.meta.total && data?.meta.total < 11) {
+								setCurrentPage(1)
+							}
+							deleteService(rec.id)
+						}}
 						okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 					>
 						<BiSolidTrash className='cursor-pointer' size='22' color='red' />

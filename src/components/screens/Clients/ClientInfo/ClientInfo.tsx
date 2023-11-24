@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { UiButton } from 'src/components/ui'
 import { useGetClientInfoQuery } from 'src/store/index.endpoints'
 
-const Client: React.FC = () => {
+const ClientInfo: React.FC = () => {
 	const { id } = useParams()
 	const { data } = useGetClientInfoQuery(id)
 	const navigate = useNavigate()
@@ -20,22 +20,22 @@ const Client: React.FC = () => {
 					{
 						key: '1',
 						label: 'Имя',
-						children: data?.data.name,
+						children: data?.data?.name,
 					},
 					{
 						key: '2',
 						label: 'Телефон',
-						children: data?.data.phone,
+						children: data?.data?.phone,
 					},
 					{
 						key: '3',
 						label: 'Регион',
-						children: data?.data.region.ru,
+						children: data?.data?.region?.ru,
 					},
 					{
 						key: '4',
 						label: 'Округ',
-						children: data?.data.district.ru,
+						children: data?.data?.district?.ru,
 					},
 					{
 						key: '5',
@@ -45,8 +45,8 @@ const Client: React.FC = () => {
 								{data?.data.call_history.map(item => (
 									<Row className='flex items-center gap-x-5 text-xl border w-full p-3 rounded-md'>
 										<AiOutlinePhone color='green' />
-										<Col>{item.name}</Col>
-										<Col>{item.service.ru}</Col>
+										<Col>{item?.name}</Col>
+										<Col>{item?.service?.ru}</Col>
 									</Row>
 								))}
 							</div>
@@ -58,4 +58,4 @@ const Client: React.FC = () => {
 	)
 }
 
-export { Client }
+export { ClientInfo }

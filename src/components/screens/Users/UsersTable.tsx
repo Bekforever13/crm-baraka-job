@@ -87,7 +87,12 @@ const UsersTable: React.FC = () => {
 				return (
 					<Popconfirm
 						title='Удалить пользователя?'
-						onConfirm={() => deleteUser(rec.id)}
+						onConfirm={() => {
+							if (data?.meta.total && data?.meta.total < 11) {
+								setCurrentPage(1)
+							}
+							deleteUser(rec.id)
+						}}
 						okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 					>
 						<BiSolidTrash className='cursor-pointer' size='22' color='red' />

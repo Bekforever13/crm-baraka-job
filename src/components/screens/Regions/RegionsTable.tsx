@@ -75,7 +75,12 @@ const RegionsTable: React.FC<ITableProps> = ({
 						/>
 						<Popconfirm
 							title='Удалить регион?'
-							onConfirm={() => deleteRegion(rec.id)}
+							onConfirm={() => {
+								if (data?.total && data?.total < 11) {
+									setCurrentPage(1)
+								}
+								deleteRegion(rec.id)
+							}}
 							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 						>
 							<BiSolidTrash className='cursor-pointer' size='22' color='red' />
