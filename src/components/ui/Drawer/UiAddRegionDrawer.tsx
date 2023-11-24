@@ -15,7 +15,15 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 		handleSubmit,
 		reset,
 		formState: { isSubmitting },
-	} = useForm<IRuKarUz>()
+	} = useForm<IRuKarUz>({
+		defaultValues: {
+			kar: editData?.name.kar || '',
+			ru: editData?.name.ru || '',
+			uz_latin: editData?.name.uz_latin || '',
+			uz_kiril: editData?.name.uz_kiril || '',
+			en: editData?.name.en || '',
+		},
+	})
 
 	const [
 		addNewRegion,
@@ -31,7 +39,6 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 		setEditData({
 			id: 0,
 			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
-			region_id: 0,
 		})
 	}
 
@@ -73,12 +80,6 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 		if (editRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Регион успешно изменён.')
-			reset()
-		}
-	}, [editRegionIsSuccess])
-
-	React.useEffect(() => {
-		if (!isDrawerOpen) {
 			reset({
 				kar: '',
 				ru: '',
@@ -87,7 +88,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 				en: '',
 			})
 		}
-	}, [isDrawerOpen])
+	}, [editRegionIsSuccess])
 
 	return (
 		<Drawer

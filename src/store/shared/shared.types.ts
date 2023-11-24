@@ -58,4 +58,5 @@ export interface IItemDataResponse {
 export interface IGetDataParams {
 	page: number
 	search: string
+	limit?: number
 }

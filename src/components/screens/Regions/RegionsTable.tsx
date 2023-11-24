@@ -25,6 +25,7 @@ const RegionsTable: React.FC<ITableProps> = ({
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 
 	const handleClickEdit = (rec: TItemData) => {
+		setEditData(undefined)
 		setEditData(rec)
 		setIsDrawerOpen(true)
 	}

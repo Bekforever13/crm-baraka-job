@@ -8,3 +8,12 @@
 	box-sizing: border-box;
 	font-family: 'Montserrat', sans-serif;
 }
+
+.ant-table-filter-dropdown {
+	max-height: 400px;
+	.ant-checkbox-group {
+		max-height: 300px;
+		max-width: 500px;
+		overflow-y: scroll;
+	}
+}

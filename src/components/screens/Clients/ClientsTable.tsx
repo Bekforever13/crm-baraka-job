@@ -32,15 +32,17 @@ const ClientsTable: FC<ClientsTableProps> = ({
 	const navigate = useNavigate()
 
 	const { data: districtsData, isError: districtsError } = useGetDistrictsQuery(
-		{ page: 1, search: '' }
+		{ page: 1, search: '', limit: 100000 }
 	)
 	const { data: servicesData, isError: servicesError } = useGetServicesQuery({
 		page: 1,
 		search: '',
+		limit: 100000
 	})
 	const { data: regionsData, isError: regionsError } = useGetRegionsQuery({
 		page: 1,
 		search: '',
+		limit: 100000,
 	})
 
 	const onChange: TableProps<INewUserType>['onChange'] = (
