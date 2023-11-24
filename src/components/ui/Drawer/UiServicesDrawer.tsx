@@ -59,17 +59,32 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 				en: editData?.name.en,
 			})
 		}
+		if (!editData?.id) {
+			reset({
+				kar: '',
+				ru: '',
+				uz_latin: '',
+				uz_kiril: '',
+				en: '',
+			})
+		}
+	}, [editData?.id, editData?.name])
+
+	React.useEffect(() => {
 		if (addServiceIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Сервис успешно добавлен.')
 			reset()
 		}
+	}, [addServiceIsSuccess])
+
+	React.useEffect(() => {
 		if (editServiceIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Сервис успешно изменён.')
 			reset()
 		}
-	}, [editData?.id, addServiceIsSuccess, editServiceIsSuccess])
+	}, [editServiceIsSuccess])
 
 	React.useEffect(() => {
 		// clear form values when drawer closed

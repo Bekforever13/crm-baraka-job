@@ -66,7 +66,16 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 				en: editData?.name.en,
 			})
 		}
-	}, [editData?.id])
+		if (!editData?.id) {
+			reset({
+				kar: '',
+				ru: '',
+				uz_latin: '',
+				uz_kiril: '',
+				en: '',
+			})
+		}
+	}, [editData?.name, editData?.id])
 
 	React.useEffect(() => {
 		if (addRegionIsSuccess) {
