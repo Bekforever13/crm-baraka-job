@@ -2,8 +2,8 @@ import React from 'react'
 import { Button } from 'antd'
 import { useGetClientsQuery } from 'src/store/index.endpoints'
 import { exportToExcel } from 'src/utils/Export'
-import { ClientsTable } from './ClientsTable'
-import { ClientsSearch } from './ClientsSearch'
+import { ClientsTable } from './ClientTable/ClientsTable'
+import { ClientsSearch } from './ClientsSearch/ClientsSearch'
 import { useSelectors } from 'src/hooks/useSelectors'
 
 const Clients: React.FC = () => {

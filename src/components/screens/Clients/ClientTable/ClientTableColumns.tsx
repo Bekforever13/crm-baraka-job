@@ -1,72 +1,16 @@
-import { useState, useEffect, FC } from 'react'
-import { Table, message } from 'antd'
-import { INewUserType } from 'src/store/users/Users.types'
-import { BsClockHistory } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
-import type { ColumnsType } from 'antd/es/table'
 import { TableFilter } from 'src/components/shared'
-import { ClientsTableProps, TFiltersState } from './ClientsTypes'
-import {
-	useGetDistrictsQuery,
-	useGetRegionsQuery,
-	useGetServicesQuery,
-} from 'src/store/index.endpoints'
 import { FilterDropdownProps } from 'antd/es/table/interface'
-import { TableProps } from 'antd/lib'
-import { useActions } from 'src/hooks/useActions'
-import { useSelectors } from 'src/hooks/useSelectors'
+import type { ColumnsType } from 'antd/es/table'
+import { BsClockHistory } from 'react-icons/bs'
+import { useActions, useClientData, useSelectors } from 'src/hooks'
+import { INewUserType } from 'src/store/users/Users.types'
 
-const ClientsTable: FC<ClientsTableProps> = ({
-	data,
-	isLoading,
-	total,
-	clientsError,
-}) => {
-	const { setTableFilter, setLimit, setPage } = useActions()
-	const { tableFilter } = useSelectors()
-	const [filters, setFilters] = useState<TFiltersState>({
-		district: [],
-		service: [],
-		region: [],
-	})
+const ClientTableColumns: () => ColumnsType<INewUserType> = () => {
+	const { servicesData, regionsData, districtsData } = useClientData()
 	const navigate = useNavigate()
-
-	const { data: districtsData, isError: districtsError } = useGetDistrictsQuery(
-		{ page: 1, search: '', limit: 100000 }
-	)
-	const { data: servicesData, isError: servicesError } = useGetServicesQuery({
-		page: 1,
-		search: '',
-		limit: 100000
-	})
-	const { data: regionsData, isError: regionsError } = useGetRegionsQuery({
-		page: 1,
-		search: '',
-		limit: 100000,
-	})
-
-	const onChange: TableProps<INewUserType>['onChange'] = (
-		pagination,
-		{ service, role, region, district }
-	) => {
-		if (
-			pagination.pageSize ||
-			service?.length ||
-			region?.length ||
-			district?.length ||
-			role?.length
-		) {
-			setTableFilter({
-				...tableFilter,
-				...(service?.length && { service_id: service }),
-				...{ page: pagination.current },
-				...(region?.length && { region_id: region }),
-				...(district?.length && { district_id: district }),
-				...(role?.length && { role_id: role[role.length - 1] }),
-				...(pagination.pageSize && { limit: pagination.pageSize }),
-			})
-		}
-	}
+	const { setTableFilter } = useActions()
+	const { tableFilter, filters } = useSelectors()
 
 	const clientsColumns: ColumnsType<INewUserType> = [
 		{
@@ -229,55 +173,7 @@ const ClientsTable: FC<ClientsTableProps> = ({
 		},
 	]
 
-	useEffect(() => {
-		if (clientsError || districtsError || servicesError || regionsError) {
-			message.error('Произошла ошибка при загрузке данных')
-		}
-	}, [clientsError, districtsError, servicesError, regionsError])
-
-	useEffect(() => {
-		if (regionsData && servicesData && districtsData) {
-			setFilters(prev => ({
-				...prev,
-				region: regionsData.data.map(item => ({
-					text: item.name.ru,
-					value: item.name.ru,
-				})),
-				service: servicesData.data.map(item => ({
-					text: item.name.ru,
-					value: item.name.ru,
-				})),
-				district: districtsData.data.map(item => ({
-					text: item.name.ru,
-					value: item.name.ru,
-				})),
-			}))
-		}
-	}, [districtsData, servicesData, regionsData])
-
-	return (
-		<Table
-			loading={isLoading}
-			id='clientsTable'
-			rowKey={e => e.id}
-			pagination={{
-				total,
-				showSizeChanger: true,
-				current: tableFilter.page,
-				pageSize: tableFilter.limit,
-				onChange: (page, pageSize) => {
-					setPage(page)
-					setLimit(pageSize)
-				},
-			}}
-			onChange={onChange}
-			dataSource={data as INewUserType[]}
-			columns={clientsColumns}
-			scroll={{ x: true }}
-			style={{ width: '100%' }}
-			locale={{ emptyText: 'Нет данных' }}
-		/>
-	)
+	return clientsColumns
 }
 
-export { ClientsTable }
+export default ClientTableColumns

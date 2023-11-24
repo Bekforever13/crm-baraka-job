@@ -1,32 +1,31 @@
-import React from 'react'
-import {
-	useDeleteDistrictsMutation,
-	useGetDistrictsQuery,
-	useGetRegionsQuery,
-} from 'src/store/index.endpoints'
-import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
-import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
-import { Table, message, Popconfirm } from 'antd'
-import { ITableProps } from 'src/components/shared/shared.types'
+import {useEffect} from 'react'
+import { Popconfirm, message } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import { useSelectors } from 'src/hooks/useSelectors'
+import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
+import { useDeleteDistrictsMutation } from 'src/store/index.endpoints'
+import {
+	IItemDataResponse,
+	IRegionDataResponse,
+	IRuKarUz,
+	TItemData,
+} from 'src/store/shared/shared.types'
 
-const DistrictsTable: React.FC<ITableProps> = ({
-	setIsDrawerOpen,
+type TProps = {
+	setEditData: (el: React.SetStateAction<TItemData | undefined>) => void
+	regions: IRegionDataResponse | undefined
+	setIsDrawerOpen: (el: React.SetStateAction<boolean>) => void
+	data: IItemDataResponse | undefined
+	setCurrentPage: (el: React.SetStateAction<number>) => void
+}
+
+const DistrictsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 	setEditData,
+	regions,
+	setIsDrawerOpen,
+	setCurrentPage,
+	data,
 }) => {
-	const [currentPage, setCurrentPage] = React.useState(1)
-	const { search } = useSelectors()
-	const { data, isLoading, isError } = useGetDistrictsQuery({
-		page: currentPage,
-		search: search,
-	})
 	const [deleteRegion, { isSuccess }] = useDeleteDistrictsMutation()
-	const { data: regions } = useGetRegionsQuery({
-		page: currentPage,
-		search: '',
-	})
-
 	const handleClickEdit = (rec: TItemData) => {
 		setEditData(undefined)
 		setEditData(rec)
@@ -102,31 +101,14 @@ const DistrictsTable: React.FC<ITableProps> = ({
 		},
 	]
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (isSuccess) {
 			message.success('Регион успешно удалён.')
 			setIsDrawerOpen(false)
 		}
-		if (isError) message.error('Произошла ошибка, повторите попытку.')
-	}, [isSuccess, isError])
-
-	return (
-		<Table
-			loading={isLoading}
-			pagination={{
-				total: data?.meta.total,
-				current: currentPage,
-				pageSize: 10,
-				onChange: page => setCurrentPage(page),
-			}}
-			rowKey={e => e.id}
-			dataSource={data?.data}
-			columns={columns}
-			scroll={{ x: true }}
-			style={{ width: '100%' }}
-			locale={{ emptyText: 'Нет данных' }}
-		/>
-	)
+	}, [isSuccess])
+	
+	return columns
 }
 
-export { DistrictsTable }
+export { DistrictsTableColumns }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { UsersTable } from './UsersTable'
+import { UsersTable } from './UsersTable/UsersTable'
 import { Search } from 'src/components/shared'
 
 const Users: React.FC = () => {

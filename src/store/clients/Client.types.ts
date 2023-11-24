@@ -1,5 +1,6 @@
 import { FilterValue } from 'antd/es/table/interface'
 import { IRuKarUz } from '../shared/shared.types'
+import { TFiltersState } from 'src/components/screens/Clients/ClientsTypes'
 
 type TCallHistory = {
 	id: number
@@ -32,4 +33,5 @@ export interface IClientsParams {
 
 export interface IInitialState {
 	tableFilter: IClientsParams
+	filters: TFiltersState
 }

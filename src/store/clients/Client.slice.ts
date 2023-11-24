@@ -1,10 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IClientsParams, IInitialState } from './Client.types'
+import { TFiltersState } from 'src/components/screens/Clients/ClientsTypes'
 
 const initialState: IInitialState = {
 	tableFilter: {
 		limit: 10,
 		page: 1,
+	},
+	filters: {
+		district: [],
+		service: [],
+		region: [],
 	},
 }
 
@@ -20,6 +26,9 @@ const ClientSlice = createSlice({
 		},
 		setPage(state, { payload }: PayloadAction<number>) {
 			state.tableFilter.page = payload
+		},
+		setFilters(state, { payload }: PayloadAction<TFiltersState>) {
+			state.filters = payload
 		},
 	},
 })

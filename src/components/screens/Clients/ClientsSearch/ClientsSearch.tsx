@@ -13,6 +13,7 @@ const ClientsSearch: React.FC = () => {
 	React.useEffect(() => {
 		setTableFilter({ ...tableFilter, search: debouncedSearch })
 	}, [debouncedSearch])
+
 	React.useEffect(() => {
 		if (!search.length) {
 			const { search, ...rest } = tableFilter

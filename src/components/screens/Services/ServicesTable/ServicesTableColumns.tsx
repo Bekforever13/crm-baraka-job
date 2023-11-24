@@ -1,27 +1,25 @@
 import React from 'react'
+import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 import type { ColumnsType } from 'antd/es/table'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 import { Popconfirm } from 'antd/lib'
-import Table from 'antd/es/table'
-import {
-	useDeleteServiceMutation,
-	useGetServicesQuery,
-} from 'src/store/index.endpoints'
+import { IServiceDataResponse } from 'src/store/services/Services.types'
+import { useDeleteServiceMutation } from 'src/store/index.endpoints'
 import { message } from 'antd'
-import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
-import { ITableProps } from 'src/components/shared/shared.types'
-import { useSelectors } from 'src/hooks/useSelectors'
 
-const ServicesTable: React.FC<ITableProps> = ({
-	setIsDrawerOpen,
+type TProps = {
+	setIsDrawerOpen: (el: React.SetStateAction<boolean>) => void
+	setEditData: (el: React.SetStateAction<TItemData | undefined>) => void
+	data: IServiceDataResponse | undefined
+	setCurrentPage: (el: React.SetStateAction<number>) => void
+}
+
+const ServicesTableColumns: (el: TProps) => ColumnsType<TItemData> = ({
 	setEditData,
+	setIsDrawerOpen,
+	data,
+	setCurrentPage,
 }) => {
-	const [currentPage, setCurrentPage] = React.useState(1)
-	const { search } = useSelectors()
-	const { data, isLoading, isError } = useGetServicesQuery({
-		page: currentPage,
-		search: search,
-	})
 	const [deleteService, { isSuccess }] = useDeleteServiceMutation()
 
 	const handleClickEdit = (rec: TItemData) => {
@@ -94,28 +92,8 @@ const ServicesTable: React.FC<ITableProps> = ({
 			message.success('Сервис успешно удалён.')
 			setIsDrawerOpen(false)
 		}
-		if (isError) {
-			message.error('Произошла ошибка, повторите попытку.')
-		}
-	}, [isSuccess, isError])
-
-	return (
-		<Table
-			loading={isLoading}
-			pagination={{
-				total: data?.meta.total,
-				current: currentPage,
-				onChange: page => setCurrentPage(page),
-				showSizeChanger: false,
-			}}
-			rowKey={e => e.id}
-			dataSource={data?.data}
-			columns={columns}
-			scroll={{ x: true }}
-			style={{ width: '100%' }}
-			locale={{ emptyText: 'Нет данных' }}
-		/>
-	)
+	}, [isSuccess])
+	return columns
 }
 
-export { ServicesTable }
+export { ServicesTableColumns }

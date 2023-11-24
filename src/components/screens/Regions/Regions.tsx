@@ -1,7 +1,7 @@
 import React from 'react'
 import { UiButton, UiAddRegionDrawer } from 'src/components/ui'
 import { TItemData } from 'src/store/shared/shared.types'
-import { RegionsTable } from './RegionsTable'
+import { RegionsTable } from './RegionsTable/RegionsTable'
 import { Search } from 'src/components/shared'
 import { Import } from 'src/utils/Import'
 

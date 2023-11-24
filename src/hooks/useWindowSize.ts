@@ -23,7 +23,6 @@ export function useWindowSize(): WindowSize {
 
 	useEventListener('resize', handleSize)
 
-	// Set size at the first client-side load
 	useIsomorphicLayoutEffect(() => {
 		handleSize()
 	}, [])

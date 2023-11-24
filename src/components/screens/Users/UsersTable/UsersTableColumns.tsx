@@ -1,14 +1,21 @@
 import React from 'react'
-import { Table, message, Popconfirm, Select } from 'antd'
+import { message, Popconfirm, Select } from 'antd'
 import {
 	useDeleteUserMutation,
 	useEditUserRoleMutation,
-	useGetUsersQuery,
 } from 'src/store/index.endpoints'
 import { BiSolidTrash } from 'react-icons/bi'
 import type { ColumnsType } from 'antd/es/table'
-import { INewUserType, TUserRole } from 'src/store/users/Users.types'
-import { useSelectors } from 'src/hooks/useSelectors'
+import {
+	INewUserType,
+	IUserDataResponse,
+	TUserRole,
+} from 'src/store/users/Users.types'
+
+type TProps = {
+	data: IUserDataResponse | undefined
+	setCurrentPage: (el: React.SetStateAction<number>) => void
+}
 
 const roles = [
 	{ value: 2, label: 'Админ' },
@@ -16,13 +23,10 @@ const roles = [
 	{ value: 4, label: 'Клиент' },
 ]
 
-const UsersTable: React.FC = () => {
-	const [currentPage, setCurrentPage] = React.useState(1)
-	const { search } = useSelectors()
-	const { data, isLoading, isError } = useGetUsersQuery({
-		page: currentPage,
-		search: search,
-	})
+const UsersTableColumns: (el: TProps) => ColumnsType<INewUserType> = ({
+	data,
+	setCurrentPage,
+}) => {
 	const [deleteUser, { isSuccess }] = useDeleteUserMutation()
 	const [changeRole, { isSuccess: changeRoleIsSuccess }] =
 		useEditUserRoleMutation()
@@ -103,28 +107,11 @@ const UsersTable: React.FC = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) message.success('Пользователь успешно удалён.')
-		if (isError) message.error('Произошла ошибка, повторите попытку.')
 		if (changeRoleIsSuccess)
 			message.success('Роль пользователя успешно изменён')
-	}, [isSuccess, isError, changeRoleIsSuccess])
+	}, [isSuccess, changeRoleIsSuccess])
 
-	return (
-		<Table
-			loading={isLoading}
-			pagination={{
-				total: data?.meta.total,
-				current: currentPage,
-				onChange: page => setCurrentPage(page),
-				showSizeChanger: false,
-			}}
-			rowKey={e => e.id}
-			dataSource={data?.data}
-			columns={columns}
-			scroll={{ x: true }}
-			style={{ width: '100%' }}
-			locale={{ emptyText: 'Нет данных' }}
-		/>
-	)
+	return columns
 }
 
-export { UsersTable }
+export { UsersTableColumns }

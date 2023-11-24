@@ -2,7 +2,7 @@ import React from 'react'
 import { UiButton } from 'src/components/ui'
 import { TItemData } from 'src/store/shared/shared.types'
 import { UiAddDistrictDrawer } from 'src/components/ui/Drawer/UiAddDistrictDrawer'
-import { DistrictsTable } from './DistrictsTable'
+import { DistrictsTable } from './table/DistrictsTable'
 import { Search } from 'src/components/shared'
 import { Import } from 'src/utils/Import'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { UiButton, UiServicesDrawer } from 'src/components/ui'
-import { ServicesTable } from './ServicesTable'
+import { ServicesTable } from './ServicesTable/ServicesTable'
 import { TItemData } from 'src/store/shared/shared.types'
 import { Search } from 'src/components/shared'
 import { Import } from 'src/utils/Import'

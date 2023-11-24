@@ -1,27 +1,27 @@
-import React from 'react'
+import { Popconfirm, message } from 'antd'
+import { useEffect } from 'react'
 import type { ColumnsType } from 'antd/es/table'
-import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
-import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
-import { Popconfirm } from 'antd/lib'
-import Table from 'antd/es/table'
 import {
-	useDeleteRegionMutation,
-	useGetRegionsQuery,
-} from 'src/store/index.endpoints'
-import { message } from 'antd'
-import { ITableProps } from 'src/components/shared/shared.types'
-import { useSelectors } from 'src/hooks/useSelectors'
+	IRegionDataResponse,
+	IRuKarUz,
+	TItemData,
+} from 'src/store/shared/shared.types'
+import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
+import { useDeleteRegionMutation } from 'src/store/index.endpoints'
 
-const RegionsTable: React.FC<ITableProps> = ({
+type TProps = {
+	setIsDrawerOpen: (el: React.SetStateAction<boolean>) => void
+	setEditData: (el: React.SetStateAction<TItemData | undefined>) => void
+	data: IRegionDataResponse | undefined
+	setCurrentPage: (el: React.SetStateAction<number>) => void
+}
+
+const RegionsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 	setIsDrawerOpen,
 	setEditData,
+	data,
+	setCurrentPage,
 }) => {
-	const [currentPage, setCurrentPage] = React.useState(1)
-	const { search } = useSelectors()
-	const { data, isLoading, isError } = useGetRegionsQuery({
-		page: currentPage,
-		search: search,
-	})
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 
 	const handleClickEdit = (rec: TItemData) => {
@@ -92,31 +92,13 @@ const RegionsTable: React.FC<ITableProps> = ({
 		},
 	]
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (isSuccess) {
 			message.success('Регион успешно удалён.')
 			setIsDrawerOpen(false)
 		}
-		if (isError) message.error('Произошла ошибка, повторите попытку.')
-	}, [isSuccess, isError])
-
-	return (
-		<Table
-			loading={isLoading}
-			pagination={{
-				total: data?.total,
-				current: currentPage,
-				showSizeChanger: false,
-				onChange: page => setCurrentPage(page),
-			}}
-			rowKey={e => e.id}
-			dataSource={data?.data}
-			columns={columns}
-			scroll={{ x: true }}
-			style={{ width: '100%' }}
-			locale={{ emptyText: 'Нет данных' }}
-		/>
-	)
+	}, [isSuccess])
+	return columns
 }
 
-export { RegionsTable }
+export { RegionsTableColumns }
