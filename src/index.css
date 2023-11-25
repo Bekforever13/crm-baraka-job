@@ -10,10 +10,10 @@
 }
 
 .ant-table-filter-dropdown {
+	max-height: 500px;
+}
+.ant-checkbox-group {
 	max-height: 400px;
-	.ant-checkbox-group {
-		max-height: 300px;
-		max-width: 500px;
-		overflow-y: scroll;
-	}
+	max-width: 600px;
+	overflow-x: auto;
 }
