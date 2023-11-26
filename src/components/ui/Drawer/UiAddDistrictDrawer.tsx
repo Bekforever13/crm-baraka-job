@@ -33,7 +33,7 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 		editDistrict,
 		{ isLoading: editRegionIsLoading, isSuccess: editRegionIsSuccess },
 	] = useEditDistrictMutation()
-	const { handleSubmit, register, setValue } = useForm<TDistrictData>({
+	const { handleSubmit, register, setValue, reset } = useForm<TDistrictData>({
 		defaultValues: editData || initialValues,
 	})
 
@@ -43,6 +43,16 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 			id: 0,
 			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
 			region_id: 0,
+		})
+		reset({
+			region_id: 0,
+			name: {
+				kar: '',
+				ru: '',
+				uz_latin: '',
+				uz_kiril: '',
+				en: '',
+			},
 		})
 	}
 
@@ -72,17 +82,49 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 			setValue('name.uz_kiril', editData.name.uz_kiril)
 			setValue('name.en', editData.name.en)
 		}
-	}, [editData])
+		if (!editData?.id) {
+			reset({
+				region_id: 0,
+				name: {
+					kar: '',
+					ru: '',
+					uz_latin: '',
+					uz_kiril: '',
+					en: '',
+				},
+			})
+		}
+	}, [editData?.id, editData?.name])
 
 	React.useEffect(() => {
 		// notification messages
 		if (addRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Округ успешно добавлен.')
+			reset({
+				region_id: 0,
+				name: {
+					kar: '',
+					ru: '',
+					uz_latin: '',
+					uz_kiril: '',
+					en: '',
+				},
+			})
 		}
 		if (editRegionIsSuccess) {
 			setIsDrawerOpen(false)
 			message.success('Округ успешно изменён.')
+			reset({
+				region_id: 0,
+				name: {
+					kar: '',
+					ru: '',
+					uz_latin: '',
+					uz_kiril: '',
+					en: '',
+				},
+			})
 		}
 	}, [addRegionIsSuccess, editRegionIsSuccess])
 

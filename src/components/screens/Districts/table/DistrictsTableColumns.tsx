@@ -1,10 +1,9 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import { Popconfirm, message } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 import { useDeleteDistrictsMutation } from 'src/store/index.endpoints'
 import {
-	IItemDataResponse,
 	IRegionDataResponse,
 	IRuKarUz,
 	TItemData,
@@ -14,7 +13,6 @@ type TProps = {
 	setEditData: (el: React.SetStateAction<TItemData | undefined>) => void
 	regions: IRegionDataResponse | undefined
 	setIsDrawerOpen: (el: React.SetStateAction<boolean>) => void
-	data: IItemDataResponse | undefined
 	setCurrentPage: (el: React.SetStateAction<number>) => void
 }
 
@@ -23,7 +21,6 @@ const DistrictsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 	regions,
 	setIsDrawerOpen,
 	setCurrentPage,
-	data,
 }) => {
 	const [deleteRegion, { isSuccess }] = useDeleteDistrictsMutation()
 	const handleClickEdit = (rec: TItemData) => {
@@ -85,12 +82,9 @@ const DistrictsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 						/>
 						<Popconfirm
 							title='Удалить регион?'
-							onConfirm={() => {
-								if (data?.meta.total && data?.meta.total < 11) {
-									setCurrentPage(1)
-								}
-								deleteRegion(rec.id)
-							}}
+							onConfirm={() =>
+								deleteRegion(rec.id).then(() => setCurrentPage(1))
+							}
 							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 						>
 							<BiSolidTrash className='cursor-pointer' size='22' color='red' />
@@ -107,7 +101,7 @@ const DistrictsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 			setIsDrawerOpen(false)
 		}
 	}, [isSuccess])
-	
+
 	return columns
 }
 

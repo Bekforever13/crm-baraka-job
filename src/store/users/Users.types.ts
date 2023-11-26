@@ -10,6 +10,14 @@ export type TService = {
 	name: IRuKarUz
 }
 
+export type TNewAdminTypes = {
+	first_name: string
+	last_name: string
+	phone: string
+	password: string
+}
+
+
 export interface IUser {
 	id: number
 	name: string

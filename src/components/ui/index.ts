@@ -1,4 +1,5 @@
 export * from './Drawer/UiServicesDrawer'
 export * from './Drawer/UiAddRegionDrawer'
+export * from './Drawer/UiAddAdminDrawer'
 export * from './Select/UiSelect'
 export * from './Button/UiButton'

@@ -34,6 +34,7 @@ export const {
 	useGetUsersQuery,
 	useEditUserRoleMutation,
 	useDeleteUserMutation,
+	useAddNewAdminMutation
 } = usersApi
 
 export const { usePostImportMutation } = sharedApi

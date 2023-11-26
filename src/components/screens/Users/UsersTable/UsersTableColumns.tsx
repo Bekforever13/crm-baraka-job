@@ -36,18 +36,13 @@ const UsersTableColumns: (el: TProps) => ColumnsType<INewUserType> = ({
 	const columns: ColumnsType<INewUserType> = [
 		{
 			title: 'Имя',
-			dataIndex: 'full_name',
-			key: 'full_name',
+			dataIndex: 'name',
+			key: 'name',
 		},
 		{
 			title: 'Телефон',
 			dataIndex: 'phone',
 			key: 'phone',
-		},
-		{
-			title: 'Язык',
-			dataIndex: 'language',
-			key: 'language',
 		},
 		{
 			title: 'Роль',
@@ -69,18 +64,6 @@ const UsersTableColumns: (el: TProps) => ColumnsType<INewUserType> = ({
 					options={roles}
 				/>
 			),
-		},
-		{
-			title: 'Регион',
-			dataIndex: 'region',
-			key: 'region',
-			render: (_, rec) => rec.region?.name.ru,
-		},
-		{
-			title: 'Округ',
-			dataIndex: 'district',
-			key: 'district',
-			render: (_, rec) => rec.district?.name.ru,
 		},
 		{
 			title: 'Действия',

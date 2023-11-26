@@ -42,7 +42,6 @@ const DistrictsTable: React.FC<ITableProps> = ({
 				setEditData,
 				regions,
 				setIsDrawerOpen,
-				data,
 				setCurrentPage,
 			})}
 			scroll={{ x: true }}

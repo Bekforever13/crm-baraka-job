@@ -13,8 +13,14 @@ export interface IClientInfo {
 	name: string
 	phone: string
 	call_history: TCallHistory[]
-	region: IRuKarUz
-	district: IRuKarUz
+	region: {
+		id: number
+		name: IRuKarUz
+	}
+	district: {
+		id: number
+		name: IRuKarUz
+	}
 }
 
 export interface IClientDataResponse {

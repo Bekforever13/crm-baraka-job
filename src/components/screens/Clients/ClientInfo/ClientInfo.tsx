@@ -30,12 +30,12 @@ const ClientInfo: React.FC = () => {
 					{
 						key: '3',
 						label: 'Регион',
-						children: data?.data?.region?.ru,
+						children: data?.data?.region?.name.ru,
 					},
 					{
 						key: '4',
 						label: 'Округ',
-						children: data?.data?.district?.ru,
+						children: data?.data?.district?.name.ru,
 					},
 					{
 						key: '5',
