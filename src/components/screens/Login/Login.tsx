@@ -6,8 +6,8 @@ import { useCheckUserQuery, useLoginMutation } from 'src/store/index.endpoints'
 import { ILoginDataBody } from 'src/store/auth/Auth.types'
 import { formatPhone } from 'src/utils/shared'
 import { message, notification } from 'antd'
-import { MaskedInput } from 'antd-mask-input'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import InputMask from 'react-input-mask'
 
 const Login: React.FC = () => {
 	const [isButtonDisabled, setButtonDisabled] = React.useState(false)
@@ -24,7 +24,9 @@ const Login: React.FC = () => {
 	const token = localStorage.getItem('token')
 	const { setAuth } = useActions()
 	const [login, { data, isSuccess, isLoading, isError }] = useLoginMutation()
-	const { data: checkUser, isSuccess: checkedUser } = useCheckUserQuery(token ? token : '')
+	const { data: checkUser, isSuccess: checkedUser } = useCheckUserQuery(
+		token ? token : ''
+	)
 
 	const onSubmit = async (values: ILoginDataBody) => {
 		setButtonDisabled(true)
@@ -96,11 +98,10 @@ const Login: React.FC = () => {
 						value.replace(/\D/g, '').length > 3 || 'Введите телефон',
 				}}
 				render={({ field }) => (
-					<MaskedInput
+					<InputMask
 						{...field}
-						mask='+{998}00 000 00 00'
+						mask='+\9\9\899 999 99 99'
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
-						placeholder='Телефон'
 					/>
 				)}
 			/>

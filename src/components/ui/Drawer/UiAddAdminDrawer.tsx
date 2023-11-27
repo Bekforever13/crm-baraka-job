@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Drawer, Row, message } from 'antd'
-import { MaskedInput } from 'antd-mask-input'
+// import { MaskedInput } from 'antd-mask-input'
 import { Controller, useForm } from 'react-hook-form'
 import { useAddNewAdminMutation } from 'src/store/index.endpoints'
 import { TNewAdminTypes } from 'src/store/users/Users.types'
 import { formatPhone } from 'src/utils/shared'
+import InputMask from 'react-input-mask'
 
 type TProps = {
 	isDrawerOpen: boolean
@@ -12,11 +13,10 @@ type TProps = {
 }
 
 const UiAddAdminDrawer: React.FC<TProps> = props => {
-	const [maskedValue, setMaskedValue] = React.useState('')
 	const { setIsDrawerOpen, isDrawerOpen } = props
 	const { handleSubmit, register, control, reset } = useForm<TNewAdminTypes>({})
 	const [addNewAdmin, { isLoading, isSuccess }] = useAddNewAdminMutation()
-
+	const formRef = useRef<HTMLFormElement>(null)
 	const onClose = () => setIsDrawerOpen(false)
 
 	const handleClickSubmit = (values: TNewAdminTypes) => {
@@ -24,7 +24,7 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 	}
 
 	React.useEffect(() => {
-		if (isSuccess) {
+		if (isSuccess && formRef.current) {
 			setIsDrawerOpen(false)
 			message.success('Новый админ успешно добавлен')
 			reset({
@@ -43,7 +43,7 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 			onClose={onClose}
 			open={isDrawerOpen}
 		>
-			<form onSubmit={handleSubmit(handleClickSubmit)}>
+			<form ref={formRef} onSubmit={handleSubmit(handleClickSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Имя
 					<input
@@ -71,18 +71,11 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 								value.replace(/\D/g, '').length > 3 || 'Введите телефон',
 						}}
 						render={({ field }) => (
-							<>
-								{field.value}
-								<MaskedInput
-									value={maskedValue}
-									onChange={e => {
-										setMaskedValue(e.unmaskedValue)
-										field.onChange(e.unmaskedValue)
-									}}
-									mask='+{998}00 000 00 00'
-									className='w-[300px] px-4 py-2 rounded-md border outline-none'
-								/>
-							</>
+							<InputMask
+								{...field}
+								mask='+\9\9\899 999 99 99'
+								className='w-[300px] px-4 py-2 rounded-md border outline-none'
+							/>
 						)}
 					/>
 				</Row>

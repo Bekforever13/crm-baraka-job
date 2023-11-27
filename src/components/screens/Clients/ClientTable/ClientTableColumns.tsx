@@ -79,21 +79,23 @@ const ClientTableColumns: () => ColumnsType<INewUserType> = () => {
 				clearFilters,
 				confirm,
 			}: FilterDropdownProps) => (
-				<TableFilter
-					setSelectedKeys={setSelectedKeys}
-					selectedKeys={selectedKeys}
-					confirm={confirm}
-					clearFilters={() => {
-						const { service_id, ...rest } = tableFilter
-						clearFilters && clearFilters()
-						setTableFilter(rest)
-					}}
-					options={
-						servicesData?.data.map(item => {
-							return { value: String(item.id), label: item.name.ru }
-						}) ?? []
-					}
-				/>
+				<div className='serviceFilter'>
+					<TableFilter
+						setSelectedKeys={setSelectedKeys}
+						selectedKeys={selectedKeys}
+						confirm={confirm}
+						clearFilters={() => {
+							const { service_id, ...rest } = tableFilter
+							clearFilters && clearFilters()
+							setTableFilter(rest)
+						}}
+						options={
+							servicesData?.data.map(item => {
+								return { value: String(item.id), label: item.name.ru }
+							}) ?? []
+						}
+					/>
+				</div>
 			),
 		},
 		{
