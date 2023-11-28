@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import { Drawer, Row, message } from 'antd'
-// import { MaskedInput } from 'antd-mask-input'
 import { Controller, useForm } from 'react-hook-form'
 import { useAddNewAdminMutation } from 'src/store/index.endpoints'
 import { TNewAdminTypes } from 'src/store/users/Users.types'

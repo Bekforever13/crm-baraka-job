@@ -13,7 +13,6 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@types/react-input-mask": "^3.0.5",
     "antd": "^5.10.1",
-    "antd-mask-input": "^2.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
