@@ -15,8 +15,8 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 	const clientsColumns: ColumnsType<IClientTable> = [
 		{
 			title: 'Имя',
-			dataIndex: 'full_name',
-			key: 'full_name',
+			dataIndex: 'first_name',
+			key: 'first_name',
 		},
 		{
 			title: 'Телефон',
