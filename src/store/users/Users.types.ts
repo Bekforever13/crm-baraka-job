@@ -50,6 +50,24 @@ export interface INewUserType {
 	}
 }
 
+export interface IClientTable {
+	id: number
+	name: string
+	phone: string
+	language: string
+	role: string
+	role_id?: number
+	district?: {
+		id: number
+		name: IRuKarUz
+	}
+	region?: {
+		id: number
+		name: IRuKarUz
+	}
+	service?: string
+}
+
 export interface IUserDataResponse {
 	data: INewUserType[]
 	links: {

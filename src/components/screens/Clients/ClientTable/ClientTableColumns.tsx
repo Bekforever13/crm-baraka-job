@@ -4,15 +4,15 @@ import { FilterDropdownProps } from 'antd/es/table/interface'
 import type { ColumnsType } from 'antd/es/table'
 import { BsClockHistory } from 'react-icons/bs'
 import { useActions, useClientData, useSelectors } from 'src/hooks'
-import { INewUserType } from 'src/store/users/Users.types'
+import { IClientTable } from 'src/store/users/Users.types'
 
-const ClientTableColumns: () => ColumnsType<INewUserType> = () => {
+const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 	const { servicesData, regionsData, districtsData } = useClientData()
 	const navigate = useNavigate()
 	const { setTableFilter } = useActions()
 	const { tableFilter, filters } = useSelectors()
 
-	const clientsColumns: ColumnsType<INewUserType> = [
+	const clientsColumns: ColumnsType<IClientTable> = [
 		{
 			title: 'Имя',
 			dataIndex: 'full_name',
@@ -71,8 +71,8 @@ const ClientTableColumns: () => ColumnsType<INewUserType> = () => {
 			dataIndex: 'service',
 			key: 'service',
 			filters: filters.service,
-			render: (_, rec) => rec.service?.name.ru,
-			onFilter: (value, rec) => rec?.service?.id.toString() === value,
+			render: (_, rec) => rec.service,
+			onFilter: (value, rec) => rec?.service === value,
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
