@@ -14,13 +14,20 @@ type TProps = {
 const UiAddAdminDrawer: React.FC<TProps> = props => {
 	const { setIsDrawerOpen, isDrawerOpen } = props
 	const { handleSubmit, register, control, reset } = useForm<TNewAdminTypes>({})
-	const [addNewAdmin, { isLoading, isSuccess }] = useAddNewAdminMutation()
+	const [addNewAdmin, { isLoading, isSuccess, isError }] =
+		useAddNewAdminMutation()
 	const formRef = useRef<HTMLFormElement>(null)
 	const onClose = () => setIsDrawerOpen(false)
 
 	const handleClickSubmit = (values: TNewAdminTypes) => {
 		addNewAdmin({ ...values, phone: formatPhone(values.phone) })
 	}
+	React.useEffect(() => {
+		if (isError) {
+			message.error('Данный телефон уже зарегистрирован')
+			reset({ phone: '' })
+		}
+	}, [isError])
 
 	React.useEffect(() => {
 		if (isSuccess && formRef.current) {
