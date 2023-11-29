@@ -1,4 +1,4 @@
-import { INewUserType } from 'src/store/users/Users.types'
+import { IClientTable } from 'src/store/users/Users.types'
 
 type TFilter = {
 	text: string
@@ -6,7 +6,7 @@ type TFilter = {
 }
 
 export interface ClientsTableProps {
-	data: INewUserType[] | undefined
+	data: IClientTable[] | undefined
 	isLoading: boolean
 	total: number | undefined
 	clientsError: boolean

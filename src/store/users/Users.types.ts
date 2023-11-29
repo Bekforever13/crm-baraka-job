@@ -17,6 +17,13 @@ export type TNewAdminTypes = {
 	password: string
 }
 
+export interface IAdminTypes {
+	id: number
+	name: string
+	phone: string
+	role: string
+}
+
 
 export interface IUser {
 	id: number
@@ -69,7 +76,7 @@ export interface IClientTable {
 }
 
 export interface IUserDataResponse {
-	data: INewUserType[]
+	data: IClientTable[]
 	links: {
 		first: string
 		last: string

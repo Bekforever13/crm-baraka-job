@@ -7,7 +7,7 @@ import {
 import { BiSolidTrash } from 'react-icons/bi'
 import type { ColumnsType } from 'antd/es/table'
 import {
-	INewUserType,
+	IAdminTypes,
 	IUserDataResponse,
 	TUserRole,
 } from 'src/store/users/Users.types'
@@ -23,7 +23,7 @@ const roles = [
 	{ value: 4, label: 'Клиент' },
 ]
 
-const UsersTableColumns: (el: TProps) => ColumnsType<INewUserType> = ({
+const UsersTableColumns: (el: TProps) => ColumnsType<IAdminTypes> = ({
 	data,
 	setCurrentPage,
 }) => {
@@ -33,7 +33,7 @@ const UsersTableColumns: (el: TProps) => ColumnsType<INewUserType> = ({
 
 	const handleSelectRole = (e: TUserRole) => changeRole(e)
 
-	const columns: ColumnsType<INewUserType> = [
+	const columns: ColumnsType<IAdminTypes> = [
 		{
 			title: 'Имя',
 			dataIndex: 'name',

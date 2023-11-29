@@ -2,7 +2,7 @@ import { useEffect, FC } from 'react'
 import { Table, message } from 'antd'
 import { TableProps } from 'antd/lib'
 import { ClientsTableProps } from '../ClientsTypes'
-import { INewUserType } from 'src/store/users/Users.types'
+import { IClientTable } from 'src/store/users/Users.types'
 import { useActions, useClientData, useSelectors } from 'src/hooks'
 import ClientTableColumns from './ClientTableColumns'
 
@@ -16,7 +16,7 @@ const ClientsTable: FC<ClientsTableProps> = ({
 	const { setTableFilter, setLimit, setPage } = useActions()
 	const { tableFilter } = useSelectors()
 
-	const onChange: TableProps<INewUserType>['onChange'] = (
+	const onChange: TableProps<IClientTable>['onChange'] = (
 		pagination,
 		{ service, role, region, district }
 	) => {
@@ -61,7 +61,7 @@ const ClientsTable: FC<ClientsTableProps> = ({
 				},
 			}}
 			onChange={onChange}
-			dataSource={data as INewUserType[]}
+			dataSource={data as IClientTable[]}
 			columns={ClientTableColumns()}
 			scroll={{ x: true }}
 			style={{ width: '100%' }}
