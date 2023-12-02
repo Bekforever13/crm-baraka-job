@@ -4,6 +4,9 @@ import { ISharedInitialState } from './shared.types'
 const initialState: ISharedInitialState = {
 	showDrawer: false,
 	search: '',
+	serviceSearch: '',
+	regionSearch: '',
+	districtSearch: '',
 }
 
 const sharedSlice = createSlice({
@@ -15,6 +18,15 @@ const sharedSlice = createSlice({
 		},
 		setSearch(state, { payload }: PayloadAction<string>) {
 			state.search = payload
+		},
+		setServiceSearch(state, { payload }: PayloadAction<string>) {
+			state.serviceSearch = payload
+		},
+		setRegionSearch(state, { payload }: PayloadAction<string>) {
+			state.regionSearch = payload
+		},
+		setDistrictSearch(state, { payload }: PayloadAction<string>) {
+			state.districtSearch = payload
 		},
 	},
 })

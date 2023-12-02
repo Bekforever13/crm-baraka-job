@@ -1,3 +1,5 @@
 export * from './TableFilter/TableFilter'
 export * from './TableFilter/TableFilter.types'
 export * from './Search/Search'
+export * from './TableFilter/ServiceFilter.tsx'
+export * from './TableFilter/DistrictFilter.tsx'

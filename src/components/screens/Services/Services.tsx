@@ -19,7 +19,9 @@ const Services: React.FC = () => {
 	return (
 		<div className='flex flex-col gap-y-5 bg-white m-5 p-5 rounded-2xl'>
 			<div className='flex items-center justify-between gap-20'>
-				<Search />
+				<div className='w-[50%]'>
+					<Search />
+				</div>
 				<div className='flex items-center gap-10'>
 					<Import url='service' />
 					<UiButton type='primary' onClick={handleClickAdd}>

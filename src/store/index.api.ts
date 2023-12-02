@@ -10,7 +10,7 @@ export const api = createApi({
 			return headers
 		},
 	}),
-	refetchOnFocus: true,
+	refetchOnFocus: false,
 	tagTypes: ['regions', 'services', 'districts', 'users', 'clients'],
 	endpoints: build => ({
 		default: build.query({

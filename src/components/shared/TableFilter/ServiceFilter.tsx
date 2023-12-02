@@ -2,12 +2,14 @@ import { Button, Checkbox } from 'antd'
 import React from 'react'
 import { FilterDropdownPropsWithOptions } from './TableFilter.types'
 import { CheckboxValueType } from 'antd/lib/checkbox/Group'
+import { Search } from 'src/components/shared'
 
-const TableFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
+const ServiceFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
 	const { setSelectedKeys, selectedKeys, confirm, clearFilters, options } =
 		props
 	return (
-		<div className='p-2 w-[350px] max-h-[400px] flex flex-col'>
+		<div className='p-2 w-[350px] h-[400px] flex flex-col'>
+			<Search category='service' />
 			<div className='h-[100%] overflow-y-auto'>
 				<Checkbox.Group
 					options={options}
@@ -37,4 +39,4 @@ const TableFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
 	)
 }
 
-export { TableFilter }
+export { ServiceFilter }

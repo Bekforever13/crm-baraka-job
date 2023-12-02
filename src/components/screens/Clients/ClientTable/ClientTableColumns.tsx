@@ -1,5 +1,10 @@
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { TableFilter } from 'src/components/shared'
+import {
+	DistrictFilter,
+	ServiceFilter,
+	TableFilter,
+} from 'src/components/shared'
 import { FilterDropdownProps } from 'antd/es/table/interface'
 import type { ColumnsType } from 'antd/es/table'
 import { BsClockHistory } from 'react-icons/bs'
@@ -11,6 +16,14 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 	const navigate = useNavigate()
 	const { setTableFilter } = useActions()
 	const { tableFilter, filters } = useSelectors()
+	const serviceOptions = useMemo(() => {
+		return (
+			servicesData?.data.map(item => ({
+				value: String(item.id),
+				label: item.name.ru,
+			})) ?? []
+		)
+	}, [servicesData])
 
 	const clientsColumns: ColumnsType<IClientTable> = [
 		{
@@ -79,23 +92,17 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				clearFilters,
 				confirm,
 			}: FilterDropdownProps) => (
-				<div className='serviceFilter'>
-					<TableFilter
-						setSelectedKeys={setSelectedKeys}
-						selectedKeys={selectedKeys}
-						confirm={confirm}
-						clearFilters={() => {
-							const { service_id, ...rest } = tableFilter
-							clearFilters && clearFilters()
-							setTableFilter(rest)
-						}}
-						options={
-							servicesData?.data.map(item => {
-								return { value: String(item.id), label: item.name.ru }
-							}) ?? []
-						}
-					/>
-				</div>
+				<ServiceFilter
+					setSelectedKeys={setSelectedKeys}
+					selectedKeys={selectedKeys}
+					confirm={confirm}
+					clearFilters={() => {
+						const { service_id, ...rest } = tableFilter
+						clearFilters && clearFilters()
+						setTableFilter(rest)
+					}}
+					options={serviceOptions}
+				/>
 			),
 		},
 		{
@@ -141,7 +148,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				clearFilters,
 				confirm,
 			}: FilterDropdownProps) => (
-				<TableFilter
+				<DistrictFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
 					confirm={confirm}

@@ -1,6 +1,9 @@
 export interface ISharedInitialState {
 	showDrawer: boolean
 	search: string
+	serviceSearch: string
+	regionSearch: string
+	districtSearch: string
 }
 
 export interface IRuKarUz {

@@ -4,21 +4,22 @@ import {
 	useGetRegionsQuery,
 	useGetServicesQuery,
 } from 'src/store/index.endpoints'
-import { useActions } from '.'
+import { useActions, useSelectors } from '.'
 
 const useClientData = () => {
+	const { regionSearch, districtSearch, serviceSearch } = useSelectors()
 	const { setFilters } = useActions()
 	const { data: districtsData, isError: districtsError } = useGetDistrictsQuery(
-		{ page: 1, search: '', limit: 100000 }
+		{ page: 1, search: districtSearch, limit: 100000 }
 	)
 	const { data: servicesData, isError: servicesError } = useGetServicesQuery({
 		page: 1,
-		search: '',
+		search: serviceSearch,
 		limit: 100000,
 	})
 	const { data: regionsData, isError: regionsError } = useGetRegionsQuery({
 		page: 1,
-		search: '',
+		search: regionSearch,
 		limit: 100000,
 	})
 
