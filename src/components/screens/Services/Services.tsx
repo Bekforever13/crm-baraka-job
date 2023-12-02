@@ -20,7 +20,7 @@ const Services: React.FC = () => {
 		<div className='flex flex-col gap-y-5 bg-white m-5 p-5 rounded-2xl'>
 			<div className='flex items-center justify-between gap-20'>
 				<div className='w-[50%]'>
-					<Search />
+					<Search category='service' />
 				</div>
 				<div className='flex items-center gap-10'>
 					<Import url='service' />
