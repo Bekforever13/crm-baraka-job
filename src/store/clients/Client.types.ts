@@ -10,7 +10,8 @@ type TCallHistory = {
 
 export interface IClientInfo {
 	id: number
-	name: string
+	first_name: string
+	last_name: string
 	phone: string
 	call_history: TCallHistory[]
 	region: {

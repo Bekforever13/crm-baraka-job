@@ -18,6 +18,7 @@ const Search: React.FC = () => {
 
 	return (
 		<Input.Search
+			allowClear
 			placeholder='Поиск...'
 			value={searchValue}
 			style={{ width: '50%' }}

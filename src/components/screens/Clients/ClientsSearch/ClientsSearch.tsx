@@ -23,6 +23,7 @@ const ClientsSearch: React.FC = () => {
 
 	return (
 		<Input.Search
+			allowClear
 			placeholder='Введите имя или телефон'
 			value={search}
 			style={{ width: '50%' }}

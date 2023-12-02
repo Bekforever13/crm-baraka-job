@@ -14,7 +14,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 		register,
 		handleSubmit,
 		reset,
-		formState: { isSubmitting },
+		formState: { isSubmitting, errors },
 	} = useForm<IRuKarUz>({
 		defaultValues: {
 			kar: editData?.name.kar || '',
@@ -114,6 +114,11 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 						type='text'
 						{...register('ru', { required: true })}
 					/>
+					{errors.ru && errors.ru.type === 'required' && (
+						<span role='alert' className='text-red-500'>
+							Пожалуйста, заполните поле Русский
+						</span>
+					)}
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Каракалпакский:
@@ -122,6 +127,11 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 						type='text'
 						{...register('kar', { required: true })}
 					/>
+					{errors.kar && errors.kar.type === 'required' && (
+						<span role='alert' className='text-red-500'>
+							Пожалуйста, заполните поле Каракалпакский
+						</span>
+					)}
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Узбекский:
@@ -130,6 +140,11 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 						type='text'
 						{...register('uz_kiril', { required: true })}
 					/>
+					{errors.uz_kiril && errors.uz_kiril.type === 'required' && (
+						<span role='alert' className='text-red-500'>
+							Пожалуйста, заполните поле Узбекский
+						</span>
+					)}
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Ozbekcha:
@@ -138,6 +153,11 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 						type='text'
 						{...register('uz_latin', { required: true })}
 					/>
+					{errors.uz_latin && errors.uz_latin.type === 'required' && (
+						<span role='alert' className='text-red-500'>
+							Пожалуйста, заполните поле Ozbekcha
+						</span>
+					)}
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Английский:
@@ -146,6 +166,11 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 						type='text'
 						{...register('en', { required: true })}
 					/>
+					{errors.en && errors.en.type === 'required' && (
+						<span role='alert' className='text-red-500'>
+							Пожалуйста, заполните поле Английский
+						</span>
+					)}
 				</Row>
 				<button
 					className='w-full p-3 border rounded-md bg-[#F4C95B] text-white font-bold'

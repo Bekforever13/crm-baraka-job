@@ -20,7 +20,7 @@ const ClientInfo: React.FC = () => {
 					{
 						key: '1',
 						label: 'Имя',
-						children: data?.data?.name,
+						children: `${data?.data?.first_name} ${data?.data?.last_name}`,
 					},
 					{
 						key: '2',
@@ -30,25 +30,31 @@ const ClientInfo: React.FC = () => {
 					{
 						key: '3',
 						label: 'Регион',
-						children: data?.data?.region?.name.ru,
+						children: data?.data?.region?.name.ru
+							? data?.data?.region?.name.ru
+							: 'Пусто',
 					},
 					{
 						key: '4',
 						label: 'Округ',
-						children: data?.data?.district?.name.ru,
+						children: data?.data?.district?.name.ru
+							? data?.data?.district?.name.ru
+							: 'Пусто',
 					},
 					{
 						key: '5',
 						label: 'История звонков',
 						children: (
 							<div className='flex flex-col items-start gap-y-5 max-h-[500px] pr-2 overflow-auto'>
-								{data?.data.call_history.map(item => (
-									<Row className='flex items-center gap-x-5 text-xl border w-full p-3 rounded-md'>
-										<AiOutlinePhone color='green' />
-										<Col>{item?.name}</Col>
-										<Col>{item?.service?.ru}</Col>
-									</Row>
-								))}
+								{!data?.data.call_history.length
+									? 'Пусто'
+									: data?.data.call_history.map(item => (
+											<Row className='flex items-center gap-x-5 text-xl border w-full p-3 rounded-md'>
+												<AiOutlinePhone color='green' />
+												<Col>{item?.name}</Col>
+												<Col>{item?.service?.ru}</Col>
+											</Row>
+									))}
 							</div>
 						),
 					},
