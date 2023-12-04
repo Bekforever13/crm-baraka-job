@@ -79,7 +79,7 @@ const Navbar: React.FC = () => {
 			>
 				<div className='flex text-white w-full pl-5 items-center justify-start text-base rounded-2xl p-3 gap-3 cursor-pointer hover:bg-black hover:bg-opacity-10'>
 					<FiLogOut />
-					Logout
+					Выйти
 				</div>
 			</Popconfirm>
 		</nav>

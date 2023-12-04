@@ -25,7 +25,15 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 	const [addNewAdmin, { isLoading, isSuccess, isError }] =
 		useAddNewAdminMutation()
 	const formRef = useRef<HTMLFormElement>(null)
-	const onClose = () => setIsDrawerOpen(false)
+	const onClose = () => {
+		reset({
+			phone: '',
+			last_name: '',
+			first_name: '',
+			password: '',
+		})
+		setIsDrawerOpen(false)
+	}
 
 	const handleClickSubmit = (values: TNewAdminTypes) => {
 		addNewAdmin({ ...values, phone: formatPhone(values.phone) })
@@ -61,7 +69,7 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Имя
 					<input
-						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						className='w-full px-4 py-2 rounded-md border outline-none'
 						type='text'
 						{...register('first_name', {
 							required: true,
@@ -77,7 +85,7 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Фамилия
 					<input
-						className='w-[300px] px-4 py-2 rounded-md border outline-none'
+						className='w-full px-4 py-2 rounded-md border outline-none'
 						type='text'
 						{...register('last_name', {
 							required: true,
@@ -104,7 +112,7 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 							<InputMask
 								{...field}
 								mask='+\9\9\899 999 99 99'
-								className='w-[300px] px-4 py-2 rounded-md border outline-none'
+								className='w-full px-4 py-2 rounded-md border outline-none'
 							/>
 						)}
 					/>
@@ -118,7 +126,7 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 					Пароль
 					<div className='relative'>
 						<input
-							className='w-[300px] px-4 py-2 rounded-md border outline-none'
+							className='w-full pl-4 pr-12 py-2 rounded-md border outline-none'
 							type={showPassword ? 'text' : 'password'}
 							{...register('password', {
 								required: true,
@@ -139,7 +147,7 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					<button
-						className='w-full p-3 border rounded-md bg-[#F4C95B] text-white font-bold '
+						className='w-full px-4 p-3 border rounded-md bg-[#F4C95B] text-white font-bold '
 						type='submit'
 						disabled={isLoading}
 					>
