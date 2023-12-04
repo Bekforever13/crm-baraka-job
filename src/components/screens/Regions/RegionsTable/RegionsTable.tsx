@@ -11,10 +11,10 @@ const RegionsTable: React.FC<ITableProps> = ({
 	setEditData,
 }) => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { search } = useSelectors()
+	const { regionSearch } = useSelectors()
 	const { data, isLoading, isError } = useGetRegionsQuery({
 		page: currentPage,
-		search: search,
+		search: regionSearch,
 	})
 
 	React.useEffect(() => {

@@ -13,10 +13,10 @@ const DistrictsTable: React.FC<ITableProps> = ({
 	setEditData,
 }) => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { search } = useSelectors()
+	const { districtSearch } = useSelectors()
 	const { data, isLoading, isError } = useGetDistrictsQuery({
 		page: currentPage,
-		search: search,
+		search: districtSearch,
 	})
 	const { data: regions } = useGetRegionsQuery({
 		page: currentPage,

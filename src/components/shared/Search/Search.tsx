@@ -12,7 +12,7 @@ const Search: React.FC<{ category: string }> = ({ category }) => {
 		if (category === 'region') setRegionSearch(debouncedSearch)
 		if (category === 'district') setDistrictSearch(debouncedSearch)
 		if (category === 'service') setServiceSearch(debouncedSearch)
-	}, [debouncedSearch])
+	}, [debouncedSearch, category])
 
 	React.useEffect(() => {
 		if (!searchValue.length) {

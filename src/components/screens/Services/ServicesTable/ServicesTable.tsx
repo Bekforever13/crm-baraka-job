@@ -11,10 +11,10 @@ const ServicesTable: React.FC<ITableProps> = ({
 	setEditData,
 }) => {
 	const [currentPage, setCurrentPage] = React.useState(1)
-	const { search } = useSelectors()
+	const { serviceSearch } = useSelectors()
 	const { data, isLoading, isError } = useGetServicesQuery({
 		page: currentPage,
-		search: search,
+		search: serviceSearch,
 	})
 
 	React.useEffect(() => {
