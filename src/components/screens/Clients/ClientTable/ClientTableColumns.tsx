@@ -32,6 +32,11 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 			key: 'first_name',
 		},
 		{
+			title: 'Фамилия',
+			dataIndex: 'last_name',
+			key: 'last_name',
+		},
+		{
 			title: 'Телефон',
 			dataIndex: 'phone',
 			key: 'phone',

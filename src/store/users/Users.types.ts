@@ -59,7 +59,8 @@ export interface INewUserType {
 
 export interface IClientTable {
 	id: number
-	name: string
+	first_name: string
+	last_name: string
 	phone: string
 	language: string
 	role: string
