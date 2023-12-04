@@ -36,7 +36,7 @@ const items: MenuProps['items'] = [
 	getItem('Регионы', '/regions', <TbCategory />),
 	getItem('Округи', '/districts', <BiSolidMapPin />),
 	getItem('Сервисы', '/services', <BiSolidUserDetail />),
-	getItem('Пользователи', '/users', <FaUsers />),
+	getItem('Админы', '/users', <FaUsers />),
 ]
 
 const Navbar: React.FC = () => {
