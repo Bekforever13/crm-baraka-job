@@ -147,7 +147,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 					)}
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
-					Ozbekcha:
+					O‘zbekcha:
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
@@ -155,7 +155,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 					/>
 					{errors.uz_latin && errors.uz_latin.type === 'required' && (
 						<span role='alert' className='text-red-500'>
-							Пожалуйста, заполните поле Ozbekcha
+							Пожалуйста, заполните поле O‘zbekcha
 						</span>
 					)}
 				</Row>

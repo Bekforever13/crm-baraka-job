@@ -203,24 +203,26 @@ const UiAddDistrictDrawer: React.FC<TAddDrawerProps> = props => {
 						type='text'
 						{...register('name.uz_kiril', { required: true })}
 					/>
-					{errors.name?.uz_kiril && errors.name?.uz_kiril.type === 'required' && (
-						<span role='alert' className='text-red-500'>
-							Пожалуйста, заполните поле Узбекский
-						</span>
-					)}
+					{errors.name?.uz_kiril &&
+						errors.name?.uz_kiril.type === 'required' && (
+							<span role='alert' className='text-red-500'>
+								Пожалуйста, заполните поле Узбекский
+							</span>
+						)}
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
-					Ozbekcha:
+					O‘zbekcha:
 					<input
 						className='w-[300px] px-4 py-2 rounded-md border outline-none'
 						type='text'
 						{...register('name.uz_latin', { required: true })}
 					/>
-					{errors.name?.uz_latin && errors.name?.uz_latin.type === 'required' && (
-						<span role='alert' className='text-red-500'>
-							Пожалуйста, заполните поле Ozbekcha
-						</span>
-					)}
+					{errors.name?.uz_latin &&
+						errors.name?.uz_latin.type === 'required' && (
+							<span role='alert' className='text-red-500'>
+								Пожалуйста, заполните поле O‘zbekcha
+							</span>
+						)}
 				</Row>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Английский:

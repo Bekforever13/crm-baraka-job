@@ -47,7 +47,7 @@ const ServicesTableColumns: (el: TProps) => ColumnsType<TItemData> = ({
 			render: (el: IRuKarUz) => el.uz_kiril,
 		},
 		{
-			title: 'Ozbekcha',
+			title: 'O‘zbekcha',
 			dataIndex: 'name',
 			key: 'name',
 			render: (el: IRuKarUz) => el.uz_latin,
@@ -72,6 +72,7 @@ const ServicesTableColumns: (el: TProps) => ColumnsType<TItemData> = ({
 					/>
 					<Popconfirm
 						title='Удалить сервис?'
+						cancelText='Отмена'
 						onConfirm={() => {
 							if (data?.meta.total && data?.meta.total < 11) {
 								setCurrentPage(1)

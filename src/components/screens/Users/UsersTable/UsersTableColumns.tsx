@@ -73,6 +73,7 @@ const UsersTableColumns: (el: TProps) => ColumnsType<IAdminTypes> = ({
 				return (
 					<Popconfirm
 						title='Удалить пользователя?'
+						cancelText='Отмена'
 						onConfirm={() => {
 							if (data?.meta.total && data?.meta.total < 11) {
 								setCurrentPage(1)

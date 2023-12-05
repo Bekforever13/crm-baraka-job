@@ -56,7 +56,7 @@ const DistrictsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 			render: (el: IRuKarUz) => el.uz_kiril,
 		},
 		{
-			title: 'Ozbekcha',
+			title: 'O‘zbekcha',
 			dataIndex: 'name',
 			key: 'name',
 			render: (el: IRuKarUz) => el.uz_latin,
@@ -85,6 +85,7 @@ const DistrictsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 							onConfirm={() =>
 								deleteRegion(rec.id).then(() => setCurrentPage(1))
 							}
+							cancelText='Отмена'
 							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 						>
 							<BiSolidTrash className='cursor-pointer' size='22' color='red' />

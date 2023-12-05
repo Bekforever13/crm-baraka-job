@@ -50,7 +50,7 @@ const RegionsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 			render: (el: IRuKarUz) => el.uz_kiril,
 		},
 		{
-			title: 'Ozbekcha',
+			title: 'O‘zbekcha',
 			dataIndex: 'name',
 			key: 'name',
 			render: (el: IRuKarUz) => el.uz_latin,
@@ -82,6 +82,7 @@ const RegionsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 								}
 								deleteRegion(rec.id)
 							}}
+							cancelText='Отмена'
 							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
 						>
 							<BiSolidTrash className='cursor-pointer' size='22' color='red' />

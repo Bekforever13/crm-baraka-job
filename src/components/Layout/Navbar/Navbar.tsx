@@ -76,6 +76,7 @@ const Navbar: React.FC = () => {
 				title='Вы хотите выйти?'
 				onConfirm={handleClickLogout}
 				okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
+				cancelText='Отмена'
 			>
 				<div className='flex text-white w-full pl-5 items-center justify-start text-base rounded-2xl p-3 gap-3 cursor-pointer hover:bg-black hover:bg-opacity-10'>
 					<FiLogOut />
