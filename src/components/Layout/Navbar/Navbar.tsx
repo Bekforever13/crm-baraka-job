@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { AiOutlineHome } from 'react-icons/ai'
+// import { AiOutlineHome } from 'react-icons/ai'
 import { FaUsers } from 'react-icons/fa'
 import { BiSolidMapPin, BiSolidUserDetail } from 'react-icons/bi'
 import { FiLogOut } from 'react-icons/fi'
@@ -31,8 +31,8 @@ function getItem(
 }
 
 const items: MenuProps['items'] = [
-	getItem('Главная', '/', <AiOutlineHome />),
-	getItem('Клиенты', '/clients', <IoPeopleOutline />),
+	// getItem('Главная', '/', <AiOutlineHome />),
+	getItem('Клиенты', '/', <IoPeopleOutline />),
 	getItem('Регионы', '/regions', <TbCategory />),
 	getItem('Округи', '/districts', <BiSolidMapPin />),
 	getItem('Сервисы', '/services', <BiSolidUserDetail />),

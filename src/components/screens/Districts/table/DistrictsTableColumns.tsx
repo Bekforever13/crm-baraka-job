@@ -35,7 +35,7 @@ const DistrictsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 			dataIndex: 'region_id',
 			key: 'region_id',
 			render: (el: number) =>
-				regions?.data.find(item => item.id === el)?.name.ru,
+				regions?.data.find(item => item.id === +el)?.name.ru,
 		},
 		{
 			title: 'Каракалпакский',
