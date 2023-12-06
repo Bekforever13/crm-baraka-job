@@ -16,8 +16,11 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 	const navigate = useNavigate()
 	const { setTableFilter } = useActions()
 	const { tableFilter, filters } = useSelectors()
+<<<<<<< HEAD
 
 	// here you can change value of service filter
+=======
+>>>>>>> 8db7b71ebb59d3a2c05d977e9fbf5f0a85f3a378
 	const serviceOptions = useMemo(() => {
 		return (
 			servicesData?.data.map(item => ({
@@ -64,7 +67,10 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				clearFilters,
 				confirm,
 			}: FilterDropdownProps) => (
+<<<<<<< HEAD
 				// TableFilter is the custom component you can change it
+=======
+>>>>>>> 8db7b71ebb59d3a2c05d977e9fbf5f0a85f3a378
 				<TableFilter
 					setSelectedKeys={selectedKeys => {
 						if (selectedKeys.length > 0) {
@@ -93,7 +99,11 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 			key: 'service',
 			filters: filters.service,
 			render: (_, rec) => rec.service,
+<<<<<<< HEAD
 			onFilter: (values, rec) => Number(rec?.service_id) === Number(values),
+=======
+			onFilter: (value, rec) => rec?.service === value,
+>>>>>>> 8db7b71ebb59d3a2c05d977e9fbf5f0a85f3a378
 			filterDropdown: ({
 				setSelectedKeys,
 				selectedKeys,
@@ -104,7 +114,15 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
 					confirm={confirm}
+<<<<<<< HEAD
 					clearFilters={clearFilters}
+=======
+					clearFilters={() => {
+						const { service_id, ...rest } = tableFilter
+						clearFilters && clearFilters()
+						setTableFilter(rest)
+					}}
+>>>>>>> 8db7b71ebb59d3a2c05d977e9fbf5f0a85f3a378
 					options={serviceOptions}
 				/>
 			),

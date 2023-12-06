@@ -16,7 +16,10 @@ const ClientsTable: FC<ClientsTableProps> = ({
 	const { setTableFilter, setLimit, setPage } = useActions()
 	const { tableFilter } = useSelectors()
 
+<<<<<<< HEAD
 	// here's the logic for OnChange when filter is activated or changed page size etc...
+=======
+>>>>>>> 8db7b71ebb59d3a2c05d977e9fbf5f0a85f3a378
 	const onChange: TableProps<IClientTable>['onChange'] = (
 		pagination,
 		{ service, role, region, district }
@@ -40,7 +43,10 @@ const ClientsTable: FC<ClientsTableProps> = ({
 		}
 	}
 
+<<<<<<< HEAD
 	// show error if something wrong
+=======
+>>>>>>> 8db7b71ebb59d3a2c05d977e9fbf5f0a85f3a378
 	useEffect(() => {
 		if (clientsError || districtsError || servicesError || regionsError) {
 			message.error('Произошла ошибка при загрузке данных')
@@ -63,7 +69,11 @@ const ClientsTable: FC<ClientsTableProps> = ({
 				},
 			}}
 			onChange={onChange}
+<<<<<<< HEAD
 			dataSource={data}
+=======
+			dataSource={data as IClientTable[]}
+>>>>>>> 8db7b71ebb59d3a2c05d977e9fbf5f0a85f3a378
 			columns={ClientTableColumns()}
 			scroll={{ x: true }}
 			style={{ width: '100%' }}
