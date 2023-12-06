@@ -2,9 +2,12 @@ import { FilterValue } from 'antd/es/table/interface'
 import { IRuKarUz } from '../shared/shared.types'
 import { TFiltersState } from 'src/components/screens/Clients/ClientsTypes'
 
-type TCallHistory = {
+export type TCallHistory = {
 	id: number
-	name: string
+	first_name: string
+	last_name: string
+	date: string
+	phone: string
 	service: IRuKarUz
 }
 

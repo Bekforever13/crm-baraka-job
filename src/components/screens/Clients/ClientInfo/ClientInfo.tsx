@@ -1,9 +1,9 @@
-import { Col, Descriptions, Row } from 'antd'
+import { Descriptions } from 'antd'
 import React from 'react'
-import { AiOutlinePhone } from 'react-icons/ai'
 import { useParams, useNavigate } from 'react-router-dom'
 import { UiButton } from 'src/components/ui'
 import { useGetClientInfoQuery } from 'src/store/index.endpoints'
+import { ClientInfoTable } from './ClientInfoTable'
 
 const ClientInfo: React.FC = () => {
 	const { id } = useParams()
@@ -16,6 +16,7 @@ const ClientInfo: React.FC = () => {
 				title='Информация о пользователе'
 				extra={<UiButton onClick={() => navigate(-1)}> Назад </UiButton>}
 				layout='vertical'
+				labelStyle={{ fontWeight: 700, color: '#000' }}
 				items={[
 					{
 						key: '1',
@@ -41,25 +42,12 @@ const ClientInfo: React.FC = () => {
 							? data?.data?.district?.name.ru
 							: 'Пусто',
 					},
-					{
-						key: '5',
-						label: 'История звонков',
-						children: (
-							<div className='flex flex-col items-start gap-y-5 max-h-[500px] pr-2 overflow-auto'>
-								{!data?.data.call_history.length
-									? 'Пусто'
-									: data?.data.call_history.map(item => (
-											<Row className='flex items-center gap-x-5 text-xl border w-full p-3 rounded-md'>
-												<AiOutlinePhone color='green' />
-												<Col>{item?.name}</Col>
-												<Col>{item?.service?.ru}</Col>
-											</Row>
-									))}
-							</div>
-						),
-					},
 				]}
 			/>
+			<div className='flex flex-col gap-y-5 mt-5'>
+				<h3 className='font-bold'>История звонков:</h3>
+				<ClientInfoTable dataSource={data?.data.call_history!} />
+			</div>
 		</div>
 	)
 }
