@@ -73,10 +73,7 @@ export interface IClientTable {
 		name: IRuKarUz
 	}
 	service?: string
-<<<<<<< HEAD
 	service_id?: boolean | React.Key
-=======
->>>>>>> 8db7b71ebb59d3a2c05d977e9fbf5f0a85f3a378
 }
 
 export interface IDataResponseClient {
