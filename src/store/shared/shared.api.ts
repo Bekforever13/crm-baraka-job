@@ -13,7 +13,7 @@ export const sharedApi = api.injectEndpoints({
 					body: formData,
 				}
 			},
-			invalidatesTags: ['services', 'regions', 'districts'],
+			invalidatesTags: ['categories', 'regions', 'districts'],
 		}),
 	}),
 })

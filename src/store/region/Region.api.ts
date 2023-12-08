@@ -11,7 +11,7 @@ export const regionsApi = api.injectEndpoints({
 		getRegions: builder.query<IRegionDataResponse, IGetDataParams>({
 			query: body => ({
 				url: '/regions',
-				params: body.search.length ? body : { page: body.page },
+				params: body?.search?.length ? body : { page: body.page },
 			}),
 			providesTags: ['regions'],
 		}),
