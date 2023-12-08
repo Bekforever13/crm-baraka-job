@@ -1,17 +1,21 @@
 import { Button, Checkbox } from 'antd'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, FC, Key } from 'react'
 import { FilterDropdownPropsWithOptions } from './TableFilter.types'
 import { CheckboxValueType } from 'antd/lib/checkbox/Group'
 import { useActions, useSelectors } from 'src/hooks'
 
-const TableFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
+const TableFilter: FC<FilterDropdownPropsWithOptions> = props => {
+	// destructurize props
 	const { setSelectedKeys, selectedKeys, confirm, clearFilters, options } =
 		props
+	// store actions and states
 	const { tableFilter } = useSelectors()
 	const { setTableFilter } = useActions()
+	// states
 	const [activeFilters, setActiveFilters] = useState<CheckboxValueType[]>([])
 
 	useEffect(() => {
+		// clear filters from store
 		if (!activeFilters.length && clearFilters) {
 			const { role_id, region_id, ...rest } = tableFilter
 			clearFilters()
@@ -26,7 +30,7 @@ const TableFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
 					value={selectedKeys as CheckboxValueType[]}
 					onChange={values => {
 						setActiveFilters(values)
-						setSelectedKeys(values as React.Key[])
+						setSelectedKeys(values as Key[])
 					}}
 					className='flex flex-col gap-y-2 w-full'
 				/>

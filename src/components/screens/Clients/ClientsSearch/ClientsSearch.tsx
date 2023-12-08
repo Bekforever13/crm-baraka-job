@@ -1,20 +1,25 @@
-import React from 'react'
+import { FC, useState, useEffect } from 'react'
 import { Input } from 'antd'
 import { useActions } from 'src/hooks/useActions'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { useDebounce } from 'src/hooks/useDebounce'
 
-const ClientsSearch: React.FC = () => {
-	const [search, setSearch] = React.useState('')
+const ClientsSearch: FC = () => {
+	// states
+	const [search, setSearch] = useState('')
+	// debounce
 	const debouncedSearch = useDebounce<string>(search, 300)
+	// store actions and states
 	const { tableFilter } = useSelectors()
 	const { setTableFilter } = useActions()
 
-	React.useEffect(() => {
+	useEffect(() => {
+		// adding search value to our store state and this will make refetch data when search value > 0
 		setTableFilter({ ...tableFilter, search: debouncedSearch })
 	}, [debouncedSearch])
 
-	React.useEffect(() => {
+	useEffect(() => {
+		// if search value is empty we delete search from table filter
 		if (!search.length) {
 			const { search, ...rest } = tableFilter
 			setTableFilter(rest)

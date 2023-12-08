@@ -1,9 +1,11 @@
+import { FC } from 'react'
 import { Table, TableProps } from 'antd'
-import React from 'react'
 import type { ColumnsType } from 'antd/es/table'
 import { TCallHistory } from 'src/store/clients/Client.types'
 
-const ClientInfoTable: React.FC<TableProps<TCallHistory>> = props => {
+// table for ClientInfo
+const ClientInfoTable: FC<TableProps<TCallHistory>> = props => {
+	// columns for our table
 	const columns: ColumnsType<TCallHistory> = [
 		{
 			title: 'Имя',

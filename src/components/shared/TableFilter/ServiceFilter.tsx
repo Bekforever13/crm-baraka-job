@@ -1,20 +1,22 @@
 import { Button, Checkbox } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, FC, Key } from 'react'
 import { FilterDropdownPropsWithOptions } from './TableFilter.types'
 import { CheckboxValueType } from 'antd/lib/checkbox/Group'
 import { Search } from 'src/components/shared'
 import { useActions, useSelectors } from 'src/hooks'
 
-const ServiceFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
-	const { tableFilter } = useSelectors()
-	const { setTableFilter } = useActions()
+const ServiceFilter: FC<FilterDropdownPropsWithOptions> = props => {
+	// destructurize props
 	const { setSelectedKeys, selectedKeys, confirm, clearFilters, options } =
 		props
+	// store actions and states
+	const { tableFilter } = useSelectors()
+	const { setTableFilter } = useActions()
+	// states
 	const [activeFilters, setActiveFilters] = useState<CheckboxValueType[]>([])
 
-	const handleSubmit = () => confirm()
-
 	useEffect(() => {
+		// clear filters from store
 		if (!activeFilters.length && clearFilters) {
 			const { service_id, ...rest } = tableFilter
 			clearFilters()
@@ -30,7 +32,7 @@ const ServiceFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
 					value={selectedKeys as CheckboxValueType[]}
 					onChange={values => {
 						setActiveFilters(values)
-						setSelectedKeys(values as React.Key[])
+						setSelectedKeys(values as Key[])
 					}}
 					className='flex flex-col gap-y-2 w-full'
 				/>
@@ -38,7 +40,7 @@ const ServiceFilter: React.FC<FilterDropdownPropsWithOptions> = props => {
 			<div className='flex justify-between mt-2 gap-x-3 bg-white'>
 				<Button
 					type='primary'
-					onClick={handleSubmit}
+					onClick={() => confirm()}
 					size='small'
 					style={{ width: 90, backgroundColor: 'green' }}
 				>

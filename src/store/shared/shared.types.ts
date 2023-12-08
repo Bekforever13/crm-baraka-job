@@ -1,9 +1,10 @@
 export interface ISharedInitialState {
 	showDrawer: boolean
 	search: string
-	serviceSearch: string
+	categoriesSearch: string
 	regionSearch: string
 	districtSearch: string
+	editData: TItemData | null
 }
 
 export interface IRuKarUz {
@@ -34,8 +35,14 @@ export type TAddNewItem = {
 	name: IRuKarUz
 }
 
+export type TRegionWithDistricts = {
+	id: number
+	name: IRuKarUz
+	districts: TItemData[]
+}
+
 export interface IRegionDataResponse {
-	data: TItemData[]
+	data: TRegionWithDistricts[]
 	total: number
 }
 
@@ -60,6 +67,6 @@ export interface IItemDataResponse {
 
 export interface IGetDataParams {
 	page: number
-	search: string
+	search?: string
 	limit?: number
 }

@@ -1,17 +1,22 @@
 import { IRuKarUz } from '../shared/shared.types'
 
-export type TServiceData = {
-	id: number
-	name: string
+export type TCategoriesInitState = {
+	categoriesData: TAddCategoriesData[]
 }
 
-export type TAddServiceData = {
+export type TServiceData = {
 	id: number
 	name: IRuKarUz
 }
 
-export interface IServiceDataResponse {
-	data: TAddServiceData[]
+export type TAddCategoriesData = {
+	id: number
+	category_name: IRuKarUz
+	services: TServiceData[]
+}
+
+export interface ICategoriesDataResponse {
+	data: TAddCategoriesData[]
 	links: {
 		first: string
 		last: string

@@ -1,23 +1,31 @@
-import React from 'react'
+import { FC, useState, useEffect } from 'react'
 import Table from 'antd/es/table'
 import { useGetRegionsQuery } from 'src/store/index.endpoints'
 import { message } from 'antd'
-import { ITableProps } from 'src/components/shared/shared.types'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { RegionsTableColumns } from './RegionsTableColumns'
+import { RegionsExpandedTable } from './RegionsExpandedTable'
 
-const RegionsTable: React.FC<ITableProps> = ({
-	setIsDrawerOpen,
-	setEditData,
-}) => {
-	const [currentPage, setCurrentPage] = React.useState(1)
+const RegionsTable: FC = () => {
+	// State
+	const [currentPage, setCurrentPage] = useState(1)
+	// store states
 	const { regionSearch } = useSelectors()
+	// rtk hook
 	const { data, isLoading, isError } = useGetRegionsQuery({
 		page: currentPage,
 		search: regionSearch,
 	})
 
-	React.useEffect(() => {
+	// hook will check page after deleting item and if currentPage > last page then currentpage will be = last page
+	// useCheckLastPage({
+	// 	currentPage,
+	// 	lastPage: data?.meta.last_page!,
+	// 	setCurrentPage,
+	// })
+
+	// error message
+	useEffect(() => {
 		if (isError) message.error('Произошла ошибка, повторите попытку.')
 	}, [isError])
 
@@ -32,15 +40,17 @@ const RegionsTable: React.FC<ITableProps> = ({
 			}}
 			rowKey={e => e.id}
 			dataSource={data?.data}
-			columns={RegionsTableColumns({
-				setIsDrawerOpen,
-				setEditData,
-				data,
-				setCurrentPage,
-			})}
+			columns={RegionsTableColumns({ data, setCurrentPage })}
 			scroll={{ x: true }}
 			style={{ width: '100%' }}
 			locale={{ emptyText: 'Нет данных' }}
+			expandable={{
+				expandedRowRender: record => (
+					// our custom table will show when clicked expand category
+					<RegionsExpandedTable districts={record.districts} />
+				),
+				rowExpandable: record => !!record.name.ru,
+			}}
 		/>
 	)
 }

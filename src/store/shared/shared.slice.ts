@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ISharedInitialState } from './shared.types'
+import { ISharedInitialState, TItemData } from './shared.types'
 
 const initialState: ISharedInitialState = {
 	showDrawer: false,
 	search: '',
-	serviceSearch: '',
+	categoriesSearch: '',
 	regionSearch: '',
 	districtSearch: '',
+	editData: null,
 }
 
 const sharedSlice = createSlice({
@@ -16,11 +17,14 @@ const sharedSlice = createSlice({
 		setShowDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.showDrawer = payload
 		},
+		setEditData(state, { payload }: PayloadAction<TItemData | null>) {
+			state.editData = payload
+		},
 		setSearch(state, { payload }: PayloadAction<string>) {
 			state.search = payload
 		},
-		setServiceSearch(state, { payload }: PayloadAction<string>) {
-			state.serviceSearch = payload
+		setCategoriesSearch(state, { payload }: PayloadAction<string>) {
+			state.categoriesSearch = payload
 		},
 		setRegionSearch(state, { payload }: PayloadAction<string>) {
 			state.regionSearch = payload

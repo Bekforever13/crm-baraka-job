@@ -1,19 +1,18 @@
-import React from 'react'
+import { FC } from 'react'
 import { UiButton, UiAddRegionDrawer } from 'src/components/ui'
-import { TItemData } from 'src/store/shared/shared.types'
 import { RegionsTable } from './RegionsTable/RegionsTable'
 import { Search } from 'src/components/shared'
 import { Import } from 'src/utils/Import'
+import { useActions } from 'src/hooks'
 
-const Regions: React.FC = () => {
-	const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
-	const [editData, setEditData] = React.useState<TItemData | undefined>(
-		undefined
-	)
+const Regions: FC = () => {
+	// Store actions
+	const { setShowDrawer, setEditData } = useActions()
 
+	// after click add button we will clear editData state from store and open drawer
 	const handleClickAdd = () => {
-		setEditData(undefined)
-		setIsDrawerOpen(true)
+		setEditData(null)
+		setShowDrawer(true)
 	}
 
 	return (
@@ -28,17 +27,9 @@ const Regions: React.FC = () => {
 						Добавить
 					</UiButton>
 				</div>
-				<UiAddRegionDrawer
-					isDrawerOpen={isDrawerOpen}
-					setIsDrawerOpen={setIsDrawerOpen}
-					editData={editData}
-					setEditData={setEditData}
-				/>
+				<UiAddRegionDrawer />
 			</div>
-			<RegionsTable
-				setEditData={setEditData}
-				setIsDrawerOpen={setIsDrawerOpen}
-			/>
+			<RegionsTable />
 		</div>
 	)
 }

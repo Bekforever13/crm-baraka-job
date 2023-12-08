@@ -6,13 +6,16 @@ import { IClientTable } from 'src/store/users/Users.types'
 import { useActions, useClientData, useSelectors } from 'src/hooks'
 import { ClientTableColumns } from './ClientTableColumns'
 
+// this is main table for /clients
 const ClientsTable: FC<ClientsTableProps> = ({
 	data,
 	isLoading,
 	total,
 	clientsError,
 }) => {
-	const { servicesError, regionsError, districtsError } = useClientData()
+	// custom hook
+	const { categoriesError, regionsError, districtsError } = useClientData()
+	// store hooks
 	const { setTableFilter, setLimit, setPage } = useActions()
 	const { tableFilter } = useSelectors()
 
@@ -40,12 +43,12 @@ const ClientsTable: FC<ClientsTableProps> = ({
 		}
 	}
 
-	// show error if something wrong
+	// show error if something data's not fetched from our custom hook
 	useEffect(() => {
-		if (clientsError || districtsError || servicesError || regionsError) {
+		if (clientsError || districtsError || categoriesError || regionsError) {
 			message.error('Произошла ошибка при загрузке данных')
 		}
-	}, [clientsError, districtsError, servicesError, regionsError])
+	}, [clientsError, districtsError, categoriesError, regionsError])
 
 	return (
 		<Table

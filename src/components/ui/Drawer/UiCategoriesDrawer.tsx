@@ -1,33 +1,37 @@
 import React from 'react'
-import { Drawer, Row, message } from 'antd'
+import { Drawer, Row, Spin, message } from 'antd'
 import { useForm } from 'react-hook-form'
-import {
-	useAddNewServiceMutation,
-	useEditServiceMutation,
-} from 'src/store/index.endpoints'
 import { IRuKarUz } from 'src/store/shared/shared.types'
-import { TAddDrawerProps } from './Drawer.types'
+import {
+	useAddNewCategoriesMutation,
+	useEditCategoriesMutation,
+} from 'src/store/index.endpoints'
+import { useActions, useSelectors } from 'src/hooks'
 
-const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
-	const { editData, setIsDrawerOpen, isDrawerOpen, setEditData } = props
+const UiCategoriesDrawer: React.FC = () => {
+	// store actions and state
+	const { showDrawer, editData } = useSelectors()
+	const { setShowDrawer, setEditData } = useActions()
+	// react-hook-form hook
 	const {
 		register,
-		handleSubmit,
 		reset,
-		formState: { isSubmitting, errors },
+		handleSubmit,
+		formState: { errors, isSubmitting },
 	} = useForm<IRuKarUz>()
-
+	// rtk hooks
 	const [
-		addNewService,
-		{ isLoading: addLoading, isSuccess: addServiceIsSuccess },
-	] = useAddNewServiceMutation()
+		addNewCategories,
+		{ isLoading: addLoading, isSuccess: addCategoriesIsSuccess },
+	] = useAddNewCategoriesMutation()
 	const [
-		editService,
-		{ isLoading: editLoading, isSuccess: editServiceIsSuccess },
-	] = useEditServiceMutation()
+		editCategories,
+		{ isLoading: editLoading, isSuccess: editCategoriesIsSuccess },
+	] = useEditCategoriesMutation()
 
+	// after drawer closed we will clear values
 	const onClose = () => {
-		setIsDrawerOpen(false)
+		setShowDrawer(false)
 		setEditData({
 			id: 0,
 			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
@@ -35,6 +39,7 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 		})
 	}
 
+	// if we editing we will submit like editing, else we create new
 	const onSubmit = (values: IRuKarUz) => {
 		if (
 			values?.ru.length ||
@@ -44,12 +49,13 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 			values?.kar.length
 		) {
 			editData?.id
-				? editService({ id: editData.id, name: values })
-				: addNewService({ name: values })
+				? editCategories({ id: editData.id, name: values })
+				: addNewCategories({ name: values })
 		}
 	}
 
 	React.useEffect(() => {
+		// if editData have values we will fill our form with it
 		if (editData) {
 			reset({
 				kar: editData?.name.kar,
@@ -59,6 +65,7 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 				en: editData?.name.en,
 			})
 		}
+		// if editdata empty we clear form values
 		if (!editData?.id) {
 			reset({
 				kar: '',
@@ -70,41 +77,30 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 		}
 	}, [editData?.id, editData?.name])
 
+	// success message
 	React.useEffect(() => {
-		if (addServiceIsSuccess) {
-			setIsDrawerOpen(false)
+		if (addCategoriesIsSuccess) {
+			setShowDrawer(false)
 			message.success('Сервис успешно добавлен.')
 			reset()
 		}
-	}, [addServiceIsSuccess])
+	}, [addCategoriesIsSuccess])
 
+	// success message
 	React.useEffect(() => {
-		if (editServiceIsSuccess) {
-			setIsDrawerOpen(false)
+		if (editCategoriesIsSuccess) {
+			setShowDrawer(false)
 			message.success('Сервис успешно изменён.')
 			reset()
 		}
-	}, [editServiceIsSuccess])
-
-	React.useEffect(() => {
-		// clear form values when drawer closed
-		if (!isDrawerOpen) {
-			reset({
-				kar: '',
-				ru: '',
-				uz_latin: '',
-				uz_kiril: '',
-				en: '',
-			})
-		}
-	}, [isDrawerOpen])
+	}, [editCategoriesIsSuccess])
 
 	return (
 		<Drawer
 			title='Сервис'
 			placement='right'
 			onClose={onClose}
-			open={isDrawerOpen}
+			open={showDrawer}
 		>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -177,13 +173,12 @@ const UiServicesDrawer: React.FC<TAddDrawerProps> = props => {
 					type='submit'
 					disabled={isSubmitting || addLoading || editLoading}
 				>
-					{isSubmitting || addLoading || editLoading
-						? 'Загрузка...'
-						: 'Применить'}
+					{isSubmitting || addLoading || editLoading ? 
+					<Spin spinning /> : 'Применить'}
 				</button>
 			</form>
 		</Drawer>
 	)
 }
 
-export { UiServicesDrawer }
+export { UiCategoriesDrawer }

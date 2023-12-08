@@ -12,11 +12,13 @@ import {
 	TUserRole,
 } from 'src/store/users/Users.types'
 
+// prop types
 type TProps = {
 	data: IUserDataResponse | undefined
 	setCurrentPage: (el: React.SetStateAction<number>) => void
 }
 
+// static data for select role
 const roles = [
 	{ value: 2, label: 'Админ' },
 	{ value: 3, label: 'Рабочий' },
@@ -27,12 +29,15 @@ const UsersTableColumns: (el: TProps) => ColumnsType<IAdminTypes> = ({
 	data,
 	setCurrentPage,
 }) => {
+	// rtk hooks
 	const [deleteUser, { isSuccess }] = useDeleteUserMutation()
 	const [changeRole, { isSuccess: changeRoleIsSuccess }] =
 		useEditUserRoleMutation()
 
+	// change role of admin
 	const handleSelectRole = (e: TUserRole) => changeRole(e)
 
+	// table columns
 	const columns: ColumnsType<IAdminTypes> = [
 		{
 			title: 'Имя',
@@ -58,9 +63,7 @@ const UsersTableColumns: (el: TProps) => ColumnsType<IAdminTypes> = ({
 						(el === 'client' && 'Клиент') ||
 						(el === 'user' && 'Пользователь')
 					}
-					onSelect={e =>
-						handleSelectRole({ userId: rec.id, roleId: e as string })
-					}
+					onSelect={e => handleSelectRole({ userId: rec.id, roleId: String(e) })}
 					options={roles}
 				/>
 			),
@@ -89,10 +92,12 @@ const UsersTableColumns: (el: TProps) => ColumnsType<IAdminTypes> = ({
 		},
 	]
 
+	// success messages
 	React.useEffect(() => {
 		if (isSuccess) message.success('Пользователь успешно удалён.')
-		if (changeRoleIsSuccess)
+		if (changeRoleIsSuccess) {
 			message.success('Роль пользователя успешно изменён')
+		}
 	}, [isSuccess, changeRoleIsSuccess])
 
 	return columns

@@ -4,6 +4,7 @@ import { Login } from 'src/components/screens'
 import { routes } from 'src/routes/Routes'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { Layout } from 'src/components/Layout/Layout'
+import { Politics } from './components/screens/Politics'
 
 const App: React.FC = () => {
 	const { isAuth } = useSelectors()
@@ -11,12 +12,14 @@ const App: React.FC = () => {
 	const navigate = useNavigate()
 
 	React.useEffect(() => {
-		if (!isAuth) navigate('/auth', { replace: true })
+		if (!isAuth && pathname !== '/politics')
+			navigate('/auth', { replace: true })
 	}, [pathname, isAuth])
 
 	return (
 		<div>
 			<Routes>
+				<Route path='/politics' element={<Politics />} />
 				<Route path='/auth' element={<Login />} />
 				{isAuth && (
 					<Route path='/' element={<Layout />}>

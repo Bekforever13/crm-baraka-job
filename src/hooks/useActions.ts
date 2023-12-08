@@ -4,11 +4,13 @@ import { useDispatch } from 'react-redux'
 import { actions as auth } from 'src/store/auth/Auth.slice'
 import { actions as shared } from 'src/store/shared/shared.slice'
 import { actions as client } from 'src/store/clients/Client.slice'
+import { actions as categories } from 'src/store/categories/Categories.slice'
 
 const rootActions = {
 	...auth,
 	...shared,
 	...client,
+	...categories,
 }
 
 export const useActions = () => {

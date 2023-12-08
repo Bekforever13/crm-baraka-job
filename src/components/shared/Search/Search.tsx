@@ -1,24 +1,31 @@
-import React from 'react'
+import { FC, useState, useEffect } from 'react'
 import { Input } from 'antd'
 import { useActions } from 'src/hooks/useActions'
 import { useDebounce } from 'src/hooks/useDebounce'
 
-const Search: React.FC<{ category: string }> = ({ category }) => {
-	const [searchValue, setSearchValue] = React.useState('')
+const Search: FC<{ category: string }> = ({ category }) => {
+	// states
+	const [searchValue, setSearchValue] = useState('')
+	// hooks
 	const debouncedSearch = useDebounce<string>(searchValue, 300)
-	const { setRegionSearch, setDistrictSearch, setServiceSearch } = useActions()
+	// store actions
+	const { setRegionSearch, setDistrictSearch, setCategoriesSearch } =
+		useActions()
 
-	React.useEffect(() => {
+		useEffect(() => {
+		// after check category we will change correct search state in store
 		if (category === 'region') setRegionSearch(debouncedSearch)
 		if (category === 'district') setDistrictSearch(debouncedSearch)
-		if (category === 'service') setServiceSearch(debouncedSearch)
+		if (category === 'categories') setCategoriesSearch(debouncedSearch)
 	}, [debouncedSearch, category])
 
-	React.useEffect(() => {
+
+	useEffect(() => {
+		// if search value is empty we clear all search values from store
 		if (!searchValue.length) {
 			setRegionSearch('')
 			setDistrictSearch('')
-			setServiceSearch('')
+			setCategoriesSearch('')
 		}
 	}, [searchValue])
 

@@ -5,32 +5,32 @@ import {
 	IRegionDataResponse,
 	IRuKarUz,
 	TItemData,
+	TRegionWithDistricts,
 } from 'src/store/shared/shared.types'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 import { useDeleteRegionMutation } from 'src/store/index.endpoints'
+import { useActions } from 'src/hooks'
 
 type TProps = {
-	setIsDrawerOpen: (el: React.SetStateAction<boolean>) => void
-	setEditData: (el: React.SetStateAction<TItemData | undefined>) => void
 	data: IRegionDataResponse | undefined
 	setCurrentPage: (el: React.SetStateAction<number>) => void
 }
 
-const RegionsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
-	setIsDrawerOpen,
-	setEditData,
-	data,
-	setCurrentPage,
-}) => {
+const RegionsTableColumns: (
+	props: TProps
+) => ColumnsType<TRegionWithDistricts> = ({ data, setCurrentPage }) => {
+	// store actions
+	const { setEditData, setShowDrawer } = useActions()
+	// rtk hook
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 
+	// after click edit we will set editData to store and open drawer
 	const handleClickEdit = (rec: TItemData) => {
-		setEditData(undefined)
 		setEditData(rec)
-		setIsDrawerOpen(true)
+		setShowDrawer(true)
 	}
 
-	const columns: ColumnsType<TItemData> = [
+	const columns: ColumnsType<TRegionWithDistricts> = [
 		{
 			title: 'Каракалпакский',
 			dataIndex: 'name',
@@ -96,7 +96,7 @@ const RegionsTableColumns: (props: TProps) => ColumnsType<TItemData> = ({
 	useEffect(() => {
 		if (isSuccess) {
 			message.success('Регион успешно удалён.')
-			setIsDrawerOpen(false)
+			setShowDrawer(false)
 		}
 	}, [isSuccess])
 	return columns

@@ -1,8 +1,7 @@
-import React from 'react'
+import { FC } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-// import { AiOutlineHome } from 'react-icons/ai'
 import { FaUsers } from 'react-icons/fa'
-import { BiSolidMapPin, BiSolidUserDetail } from 'react-icons/bi'
+import { BiSolidUserDetail } from 'react-icons/bi'
 import { FiLogOut } from 'react-icons/fi'
 import { TbCategory } from 'react-icons/tb'
 import { IoPeopleOutline } from 'react-icons/io5'
@@ -34,27 +33,30 @@ const items: MenuProps['items'] = [
 	// getItem('Главная', '/', <AiOutlineHome />),
 	getItem('Клиенты', '/', <IoPeopleOutline />),
 	getItem('Регионы', '/regions', <TbCategory />),
-	getItem('Округи', '/districts', <BiSolidMapPin />),
-	getItem('Сервисы', '/services', <BiSolidUserDetail />),
+	getItem('Категории', '/categories', <BiSolidUserDetail />),
 	getItem('Админы', '/users', <FaUsers />),
 ]
 
-const Navbar: React.FC = () => {
+const Navbar: FC = () => {
+	// hooks
 	const navigate = useNavigate()
 	const { pathname } = useLocation()
+	// store actions
 	const { setAuth } = useActions()
+	// custom hook
 	const { width } = useWindowSize()
 
+	// after logout submit we clear tokens and remove access
 	const handleClickLogout = () => {
 		localStorage.removeItem('token')
 		setAuth(false)
 		navigate('/auth')
 	}
 
+	// after click any menu item we navigate to menu items key, which is our route
 	const onClick: MenuProps['onClick'] = e => navigate(e.key)
 
 	return (
-		// <nav className='hidden z-50 fixed md:flex flex-col justify-between gap-y-5 bg-[#689C56] w-[180px] min-h-screen py-7 select-none'>
 		<nav className='select-none bg-[#689C56] z-50 fixed top-0 w-full flex items-center justify-between h-20 md:flex md:flex-col md:justify-between md:gap-y-5  md:w-[180px] md:min-h-screen md:py-7'>
 			<div>
 				<h1 className='text-white text-2xl text-center font-bold mb-7 md:block hidden'>

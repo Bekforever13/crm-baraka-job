@@ -1,14 +1,17 @@
+import { FC } from 'react'
 import { Descriptions } from 'antd'
-import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { UiButton } from 'src/components/ui'
 import { useGetClientInfoQuery } from 'src/store/index.endpoints'
 import { ClientInfoTable } from './ClientInfoTable'
 
-const ClientInfo: React.FC = () => {
+// this component will show after /client/:id opened
+const ClientInfo: FC = () => {
+	// react hooks
 	const { id } = useParams()
-	const { data } = useGetClientInfoQuery(id)
 	const navigate = useNavigate()
+	// rtk hooks
+	const { data } = useGetClientInfoQuery(id)
 
 	return (
 		<div className='flex flex-col bg-white m-5 p-5 rounded-2xl'>

@@ -14,6 +14,6 @@ export interface ClientsTableProps {
 
 export type TFiltersState = {
 	district: TFilter[]
-	service: TFilter[]
+	categories: TFilter[]
 	region: TFilter[]
 }

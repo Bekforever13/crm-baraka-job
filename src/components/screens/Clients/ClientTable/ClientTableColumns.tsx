@@ -11,32 +11,31 @@ import { BsClockHistory } from 'react-icons/bs'
 import { useActions, useClientData, useSelectors } from 'src/hooks'
 import { IClientTable } from 'src/store/users/Users.types'
 
+// this columns component for main table in /clients
 const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
-	const { servicesData, regionsData, districtsData } = useClientData()
+	// hooks
 	const navigate = useNavigate()
+	// store actions and states
 	const { setTableFilter } = useActions()
 	const { tableFilter, filters } = useSelectors()
+	// custom hook
+	const { categoriesData, regionsData, districtsData } = useClientData()
 
 	// here you can change value of service filter
 	const serviceOptions = useMemo(() => {
 		return (
-			servicesData?.data.map(item => ({
+			categoriesData?.data.map(item => ({
 				value: String(item.id),
-				label: item.name.ru,
+				label: item.category_name.ru,
 			})) ?? []
 		)
-	}, [servicesData])
+	}, [categoriesData])
 
 	const clientsColumns: ColumnsType<IClientTable> = [
 		{
 			title: 'Имя',
-			dataIndex: 'first_name',
-			key: 'first_name',
-		},
-		{
-			title: 'Фамилия',
-			dataIndex: 'last_name',
-			key: 'last_name',
+			dataIndex: 'name',
+			key: 'name',
 		},
 		{
 			title: 'Телефон',
@@ -64,7 +63,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				clearFilters,
 				confirm,
 			}: FilterDropdownProps) => (
-				// TableFilter is the custom component you can change it
+				// this is the custom component
 				<TableFilter
 					setSelectedKeys={selectedKeys => {
 						if (selectedKeys.length > 0) {
@@ -91,7 +90,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 			title: 'Сервис',
 			dataIndex: 'service',
 			key: 'service',
-			filters: filters.service,
+			filters: filters.categories,
 			render: (_, rec) => rec.service,
 			onFilter: (values, rec) => Number(rec?.service_id) === Number(values),
 			filterDropdown: ({
@@ -100,6 +99,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				clearFilters,
 				confirm,
 			}: FilterDropdownProps) => (
+				// this is the custom component
 				<ServiceFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
@@ -122,6 +122,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				clearFilters,
 				confirm,
 			}: FilterDropdownProps) => (
+				// this is the custom component
 				<TableFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
@@ -152,6 +153,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				clearFilters,
 				confirm,
 			}: FilterDropdownProps) => (
+				// this is the custom component
 				<DistrictFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}

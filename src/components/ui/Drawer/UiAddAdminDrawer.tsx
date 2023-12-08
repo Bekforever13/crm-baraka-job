@@ -1,20 +1,20 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState, FC, useEffect } from 'react'
 import { Drawer, Row, message } from 'antd'
 import { Controller, useForm } from 'react-hook-form'
 import { useAddNewAdminMutation } from 'src/store/index.endpoints'
 import { TNewAdminTypes } from 'src/store/users/Users.types'
-import { formatPhone } from 'src/utils/shared'
+import { formatPhone } from 'src/utils/utils'
 import InputMask from 'react-input-mask'
 import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa'
+import { useActions, useSelectors } from 'src/hooks'
 
-type TProps = {
-	isDrawerOpen: boolean
-	setIsDrawerOpen: (el: React.SetStateAction<boolean>) => void
-}
-
-const UiAddAdminDrawer: React.FC<TProps> = props => {
+const UiAddAdminDrawer: FC = () => {
+	// states
 	const [showPassword, setShowPassword] = useState(false)
-	const { setIsDrawerOpen, isDrawerOpen } = props
+	// store actions and states
+	const { showDrawer } = useSelectors()
+	const { setShowDrawer } = useActions()
+	// react-hook-form hook
 	const {
 		handleSubmit,
 		register,
@@ -22,9 +22,13 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 		reset,
 		formState: { errors },
 	} = useForm<TNewAdminTypes>({})
+	// rtk hooks
 	const [addNewAdmin, { isLoading, isSuccess, isError }] =
 		useAddNewAdminMutation()
+	// hook
 	const formRef = useRef<HTMLFormElement>(null)
+
+	// after drawer closed we will clear values
 	const onClose = () => {
 		reset({
 			phone: '',
@@ -32,22 +36,26 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 			first_name: '',
 			password: '',
 		})
-		setIsDrawerOpen(false)
+		setShowDrawer(false)
 	}
 
+	//  create new admin
 	const handleClickSubmit = (values: TNewAdminTypes) => {
 		addNewAdmin({ ...values, phone: formatPhone(values.phone) })
 	}
-	React.useEffect(() => {
+
+	// error message
+	useEffect(() => {
 		if (isError) {
 			message.error('Данный телефон уже зарегистрирован')
 			reset({ phone: '' })
 		}
 	}, [isError])
 
-	React.useEffect(() => {
+	useEffect(() => {
+		// clear form after success
 		if (isSuccess && formRef.current) {
-			setIsDrawerOpen(false)
+			setShowDrawer(false)
 			message.success('Новый админ успешно добавлен')
 			reset({
 				phone: '',
@@ -59,12 +67,7 @@ const UiAddAdminDrawer: React.FC<TProps> = props => {
 	}, [isSuccess])
 
 	return (
-		<Drawer
-			title='Админ'
-			placement='right'
-			onClose={onClose}
-			open={isDrawerOpen}
-		>
+		<Drawer title='Админ' placement='right' onClose={onClose} open={showDrawer}>
 			<form ref={formRef} onSubmit={handleSubmit(handleClickSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Имя

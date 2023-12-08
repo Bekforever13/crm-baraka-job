@@ -2,19 +2,22 @@ import { useEffect } from 'react'
 import {
 	useGetDistrictsQuery,
 	useGetRegionsQuery,
-	useGetServicesQuery,
+	useGetCategoriesQuery,
 } from 'src/store/index.endpoints'
 import { useActions, useSelectors } from '.'
 
 const useClientData = () => {
-	const { regionSearch, districtSearch, serviceSearch } = useSelectors()
+	// store states and actions
+	const { regionSearch, districtSearch, categoriesSearch } = useSelectors()
 	const { setFilters } = useActions()
+
+	// rtk hooks
 	const { data: districtsData, isError: districtsError } = useGetDistrictsQuery(
 		{ page: 1, search: districtSearch, limit: 100000 }
 	)
-	const { data: servicesData, isError: servicesError } = useGetServicesQuery({
+	const { data: categoriesData, isError: categoriesError } = useGetCategoriesQuery({
 		page: 1,
-		search: serviceSearch,
+		search: categoriesSearch,
 		limit: 100000,
 	})
 	const { data: regionsData, isError: regionsError } = useGetRegionsQuery({
@@ -23,16 +26,17 @@ const useClientData = () => {
 		limit: 100000,
 	})
 
+	// set store state with filters
 	useEffect(() => {
-		if (regionsData && servicesData && districtsData) {
+		if (regionsData && categoriesData && districtsData) {
 			setFilters({
 				region: regionsData.data.map(item => ({
 					text: item.name.ru,
 					value: item.name.ru,
 				})),
-				service: servicesData.data.map(item => ({
-					text: item.name.ru,
-					value: item.name.ru,
+				categories: categoriesData.data.map(item => ({
+					text: item.category_name.ru,
+					value: item.category_name.ru,
 				})),
 				district: districtsData.data.map(item => ({
 					text: item.name.ru,
@@ -40,14 +44,14 @@ const useClientData = () => {
 				})),
 			})
 		}
-	}, [districtsData, servicesData, regionsData])
+	}, [districtsData, categoriesData, regionsData])
 
 	return {
 		districtsData,
-		servicesData,
+		categoriesData,
 		regionsData,
 		districtsError,
-		servicesError,
+		categoriesError,
 		regionsError,
 	}
 }

@@ -1,18 +1,22 @@
-import React from 'react'
+import { FC, useState, useEffect } from 'react'
 import { Table, message } from 'antd'
 import { useGetUsersQuery } from 'src/store/index.endpoints'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { UsersTableColumns } from './UsersTableColumns'
 
-const UsersTable: React.FC = () => {
-	const [currentPage, setCurrentPage] = React.useState(1)
+const UsersTable: FC = () => {
+	// states
+	const [currentPage, setCurrentPage] = useState(1)
+	// store states
 	const { search } = useSelectors()
+	// rtk hooks
 	const { data, isLoading, isError } = useGetUsersQuery({
 		page: currentPage,
 		search: search,
 	})
 
-	React.useEffect(() => {
+	// error message
+	useEffect(() => {
 		if (isError) message.error('Произошла ошибка, повторите попытку.')
 	}, [isError])
 

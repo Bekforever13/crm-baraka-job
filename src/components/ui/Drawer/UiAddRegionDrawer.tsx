@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC, useEffect } from 'react'
 import { Drawer, Row, message } from 'antd'
 import { useForm } from 'react-hook-form'
 import {
@@ -6,10 +6,13 @@ import {
 	useEditRegionMutation,
 } from 'src/store/index.endpoints'
 import { IRuKarUz } from 'src/store/shared/shared.types'
-import { TAddDrawerProps } from './Drawer.types'
+import { useActions, useSelectors } from 'src/hooks'
 
-const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
-	const { editData, setIsDrawerOpen, isDrawerOpen, setEditData } = props
+const UiAddRegionDrawer: FC = () => {
+	// store actions and states
+	const { showDrawer, editData } = useSelectors()
+	const { setShowDrawer, setEditData } = useActions()
+	// react-hook-form hook
 	const {
 		register,
 		handleSubmit,
@@ -24,7 +27,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 			en: editData?.name.en || '',
 		},
 	})
-
+	// rtk hooks
 	const [
 		addNewRegion,
 		{ isLoading: addRegionIsLoading, isSuccess: addRegionIsSuccess },
@@ -34,14 +37,16 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 		{ isLoading: editRegionIsLoading, isSuccess: editRegionIsSuccess },
 	] = useEditRegionMutation()
 
+	// after drawer closed we will clear values
 	const onClose = () => {
-		setIsDrawerOpen(false)
+		setShowDrawer(false)
 		setEditData({
 			id: 0,
 			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
 		})
 	}
 
+	// if we editing we will submit like editing, else we create new
 	const onSubmit = (values: IRuKarUz) => {
 		if (
 			values?.ru.length ||
@@ -56,7 +61,8 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 		}
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
+		// if editData have values we will fill our form with it
 		if (editData) {
 			reset({
 				kar: editData?.name.kar,
@@ -66,6 +72,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 				en: editData?.name.en,
 			})
 		}
+		// if editdata empty we clear form values
 		if (!editData?.id) {
 			reset({
 				kar: '',
@@ -77,17 +84,19 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 		}
 	}, [editData?.name, editData?.id])
 
-	React.useEffect(() => {
+	// success message
+	useEffect(() => {
 		if (addRegionIsSuccess) {
-			setIsDrawerOpen(false)
+			setShowDrawer(false)
 			message.success('Регион успешно добавлен.')
 			reset()
 		}
 	}, [addRegionIsSuccess])
 
-	React.useEffect(() => {
+	// success message
+	useEffect(() => {
 		if (editRegionIsSuccess) {
-			setIsDrawerOpen(false)
+			setShowDrawer(false)
 			message.success('Регион успешно изменён.')
 			reset({
 				kar: '',
@@ -104,7 +113,7 @@ const UiAddRegionDrawer: React.FC<TAddDrawerProps> = props => {
 			title='Регион'
 			placement='right'
 			onClose={onClose}
-			open={isDrawerOpen}
+			open={showDrawer}
 		>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>

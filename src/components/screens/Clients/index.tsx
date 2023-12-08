@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 import { Button } from 'antd'
 import { useGetClientsQuery } from 'src/store/index.endpoints'
 import { exportToExcel } from 'src/utils/Export'
@@ -6,13 +6,11 @@ import { ClientsTable } from './ClientTable/ClientsTable'
 import { ClientsSearch } from './ClientsSearch/ClientsSearch'
 import { useSelectors } from 'src/hooks/useSelectors'
 
-const Clients: React.FC = () => {
+const Clients: FC = () => {
+	// Store actions and states
 	const { tableFilter } = useSelectors()
-	const {
-		data,
-		isLoading,
-		isError: clientsError,
-	} = useGetClientsQuery(tableFilter)
+	// RTK hooks
+	const { data, isLoading, isError: clientsError } = useGetClientsQuery(tableFilter)
 
 	return (
 		<div className='flex flex-col gap-y-5 bg-white m-5 p-5 rounded-2xl'>

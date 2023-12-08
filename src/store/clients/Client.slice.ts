@@ -9,7 +9,7 @@ const initialState: IInitialState = {
 	},
 	filters: {
 		district: [],
-		service: [],
+		categories: [],
 		region: [],
 	},
 }

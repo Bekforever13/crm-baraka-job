@@ -1,19 +1,27 @@
-import React from 'react'
+import { FC, useEffect } from 'react'
 import { Navbar } from './Navbar/Navbar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useCheckUserQuery } from 'src/store/index.endpoints'
 import { message } from 'antd'
 
-const Layout: React.FC = () => {
+const Layout: FC = () => {
+	// hooks
 	const navigate = useNavigate()
+	// access token
 	const token = localStorage.getItem('token')
+	// rtk hooks
 	const { data, isSuccess, isError } = useCheckUserQuery(token ? token : '')
 
-	React.useEffect(() => {
+	useEffect(() => {
+		// if role is not admin then navigate back to auth page
 		if (isSuccess) {
 			!data?.data.role.includes('admin') && navigate('/auth')
 		}
-		if (isError) message.error('Произошла ошибка при проверке пользователя.')
+		// if can't check user go back to auth page
+		if (isError) {
+			message.error('Произошла ошибка при проверке пользователя.')
+			navigate('/auth')
+		}
 	}, [isSuccess, isError])
 
 	return (
