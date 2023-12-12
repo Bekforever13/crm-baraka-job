@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import type { ColumnsType } from 'antd/es/table'
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 import { Popconfirm, message } from 'antd'
@@ -9,6 +9,7 @@ import {
 } from 'src/store/categories/Categories.types'
 import { useActions } from 'src/hooks'
 import { TItemData } from 'src/store/shared/shared.types'
+import { FaRegPlusSquare } from 'react-icons/fa'
 
 // props type
 type Props = {
@@ -16,9 +17,12 @@ type Props = {
 	setCurrentPage: (el: React.SetStateAction<number>) => void
 }
 
-const CategoriesTableColumns: (el: Props) => ColumnsType<TAddCategoriesData> = () => {
+const CategoriesTableColumns: (
+	el: Props
+) => ColumnsType<TAddCategoriesData> = () => {
 	// Store actions
-	const { setEditData, setShowDrawer } = useActions()
+	const { setEditData, setShowDrawer, setSecondDrawer, setCategoryID } =
+		useActions()
 	// RTK hooks
 	const [deleteService, { isSuccess }] = useDeleteCategoriesMutation()
 
@@ -65,6 +69,16 @@ const CategoriesTableColumns: (el: Props) => ColumnsType<TAddCategoriesData> = (
 			key: 'actions',
 			render: (_, rec) => (
 				<div className='flex items-center gap-3'>
+					<FaRegPlusSquare
+						color='green'
+						size='22'
+						className='cursor-pointer'
+						onClick={() => {
+							setSecondDrawer(true)
+							setCategoryID(rec.id)
+						}}
+					/>
+
 					<BiSolidPencil
 						onClick={() =>
 							handleClickEdit({
@@ -77,7 +91,7 @@ const CategoriesTableColumns: (el: Props) => ColumnsType<TAddCategoriesData> = (
 						color='blue'
 					/>
 					<Popconfirm
-						title='Удалить сервис?'
+						title='Удалить Категорию?'
 						cancelText='Отмена'
 						onConfirm={() => deleteService(rec.id)}
 						okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
@@ -89,9 +103,9 @@ const CategoriesTableColumns: (el: Props) => ColumnsType<TAddCategoriesData> = (
 		},
 	]
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (isSuccess) {
-			message.success('Сервис успешно удалён.')
+			message.success('Категория успешно удалена.')
 			setShowDrawer(false)
 		}
 	}, [isSuccess])

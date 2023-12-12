@@ -106,6 +106,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 					confirm={confirm}
 					clearFilters={clearFilters}
 					options={serviceOptions}
+					data={categoriesData}
 				/>
 			),
 		},

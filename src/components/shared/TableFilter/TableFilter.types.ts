@@ -1,3 +1,5 @@
+import { ICategoriesDataResponse } from "src/store/categories/Categories.types"
+
 export type FilterDropdownProps = {
 	setSelectedKeys: (values: React.Key[]) => void
 	selectedKeys: React.Key[]
@@ -12,4 +14,5 @@ type FilterOption = {
 
 export interface FilterDropdownPropsWithOptions extends FilterDropdownProps {
 	options: FilterOption[]
+	data?: ICategoriesDataResponse
 }

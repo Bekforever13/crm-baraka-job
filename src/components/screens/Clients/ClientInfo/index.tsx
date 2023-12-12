@@ -24,26 +24,22 @@ const ClientInfo: FC = () => {
 					{
 						key: '1',
 						label: 'Имя',
-						children: `${data?.data?.first_name} ${data?.data?.last_name}`,
+						children: data?.data?.name || 'Не указан',
 					},
 					{
 						key: '2',
 						label: 'Телефон',
-						children: data?.data?.phone,
+						children: data?.data?.phone || 'Не указан',
 					},
 					{
 						key: '3',
 						label: 'Регион',
-						children: data?.data?.region?.name.ru
-							? data?.data?.region?.name.ru
-							: 'Пусто',
+						children: data?.data?.region?.name.ru || 'Не указан',
 					},
 					{
 						key: '4',
 						label: 'Округ',
-						children: data?.data?.district?.name.ru
-							? data?.data?.district?.name.ru
-							: 'Пусто',
+						children: data?.data?.district?.name.ru || 'Не указан',
 					},
 				]}
 			/>

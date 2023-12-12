@@ -2,6 +2,14 @@ import { FilterValue } from 'antd/es/table/interface'
 import { IRuKarUz } from '../shared/shared.types'
 import { TFiltersState } from 'src/components/screens/Clients/ClientsTypes'
 
+
+export interface Option {
+	value: string | number
+	label: string
+	children?: Option[]
+	disableCheckbox?: boolean
+}
+
 export type TCallHistory = {
 	id: number
 	first_name: string
@@ -13,8 +21,7 @@ export type TCallHistory = {
 
 export interface IClientInfo {
 	id: number
-	first_name: string
-	last_name: string
+	name: string
 	phone: string
 	call_history: TCallHistory[]
 	region: {
@@ -44,4 +51,6 @@ export interface IClientsParams {
 export interface IInitialState {
 	tableFilter: IClientsParams
 	filters: TFiltersState
+	cascaderOptions: Option[]
+	cascaderSearch: string
 }

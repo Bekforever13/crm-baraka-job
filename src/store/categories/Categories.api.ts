@@ -1,6 +1,7 @@
 import { api } from '../index.api'
 import { IGetDataParams, IRuKarUz } from 'src/store/shared/shared.types'
-import { ICategoriesDataResponse, TServiceData } from './Categories.types'
+import { ICategoriesDataResponse } from './Categories.types'
+import { TAddServiceData } from '../services/Services.types'
 
 export const categoriesApi = api.injectEndpoints({
 	endpoints: builder => ({
@@ -19,11 +20,11 @@ export const categoriesApi = api.injectEndpoints({
 			}),
 			invalidatesTags: ['categories'],
 		}),
-		editCategories: builder.mutation<unknown, TServiceData>({
+		editCategories: builder.mutation<unknown, TAddServiceData>({
 			query: body => ({
 				url: `/categories/${body.id}`,
 				method: 'PUT',
-				body: { name: { ...body.name } },
+				body: { name: body.name },
 			}),
 			invalidatesTags: ['categories'],
 		}),

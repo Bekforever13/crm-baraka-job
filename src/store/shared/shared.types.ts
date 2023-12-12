@@ -1,10 +1,9 @@
 export interface ISharedInitialState {
 	showDrawer: boolean
 	search: string
-	categoriesSearch: string
-	regionSearch: string
 	districtSearch: string
 	editData: TItemData | null
+	secondDrawer: boolean
 }
 
 export interface IRuKarUz {
@@ -33,6 +32,8 @@ export type TDistrictData = {
 
 export type TAddNewItem = {
 	name: IRuKarUz
+	category_id?: number
+	region_id?: number
 }
 
 export type TRegionWithDistricts = {
@@ -43,7 +44,21 @@ export type TRegionWithDistricts = {
 
 export interface IRegionDataResponse {
 	data: TRegionWithDistricts[]
-	total: number
+	links: {
+		first: string
+		last: string
+		next: string
+	}
+	meta: {
+		current_page: number
+		from: number
+		last_page: number
+		links: { active: boolean; label: string; url: string | null }[]
+		path: string
+		per_page: number
+		to: number
+		total: number
+	}
 }
 
 export interface IItemDataResponse {

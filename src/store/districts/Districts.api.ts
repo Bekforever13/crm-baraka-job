@@ -13,7 +13,7 @@ export const districtsApi = api.injectEndpoints({
 				url: '/districts',
 				params: body,
 			}),
-			providesTags: ['districts'],
+			providesTags: ['districts', 'regions'],
 		}),
 		getOneDistrict: builder.query<IItemDataResponse, number>({
 			query: id => ({
@@ -26,22 +26,22 @@ export const districtsApi = api.injectEndpoints({
 				method: 'POST',
 				body,
 			}),
-			invalidatesTags: ['districts'],
+			invalidatesTags: ['districts', 'regions'],
 		}),
 		editDistrict: builder.mutation<unknown, TItemData>({
 			query: body => ({
 				url: `/districts/${body.id}`,
 				method: 'PUT',
-				body: { name: { ...body.name }, region_id: body.region_id },
+				body: {name: body.name, region_id: body.region_id},
 			}),
-			invalidatesTags: ['districts'],
+			invalidatesTags: ['districts', 'regions'],
 		}),
 		deleteDistricts: builder.mutation<unknown, number>({
 			query: id => ({
 				url: `/districts/${id}`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: ['districts'],
+			invalidatesTags: ['districts', 'regions'],
 		}),
 	}),
 })

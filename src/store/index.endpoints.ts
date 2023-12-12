@@ -5,6 +5,7 @@ import { regionsApi } from './region/Region.api'
 import { usersApi } from './users/Users.api'
 import { sharedApi } from './shared/shared.api'
 import { districtsApi } from './districts/Districts.api'
+import { servicesApi } from './services/Services.api'
 
 export const { useLoginMutation, useCheckUserQuery } = authApi
 
@@ -21,6 +22,13 @@ export const {
 	useEditCategoriesMutation,
 	useDeleteCategoriesMutation,
 } = categoriesApi
+
+export const {
+	useGetServicesQuery,
+	useAddNewServiceMutation,
+	useEditServiceMutation,
+	useDeleteServiceMutation,
+} = servicesApi
 
 export const {
 	useGetDistrictsQuery,

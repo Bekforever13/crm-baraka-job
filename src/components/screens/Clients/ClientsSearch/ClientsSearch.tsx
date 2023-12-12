@@ -1,8 +1,8 @@
 import { FC, useState, useEffect } from 'react'
-import { Input } from 'antd'
 import { useActions } from 'src/hooks/useActions'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { useDebounce } from 'src/hooks/useDebounce'
+import { Input } from 'antd'
 
 const ClientsSearch: FC = () => {
 	// states
@@ -15,7 +15,7 @@ const ClientsSearch: FC = () => {
 
 	useEffect(() => {
 		// adding search value to our store state and this will make refetch data when search value > 0
-		setTableFilter({ ...tableFilter, search: debouncedSearch })
+		setTableFilter({ ...tableFilter, search: debouncedSearch, page: 1 })
 	}, [debouncedSearch])
 
 	useEffect(() => {

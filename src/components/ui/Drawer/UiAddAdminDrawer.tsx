@@ -32,8 +32,7 @@ const UiAddAdminDrawer: FC = () => {
 	const onClose = () => {
 		reset({
 			phone: '',
-			last_name: '',
-			first_name: '',
+			name: '',
 			password: '',
 		})
 		setShowDrawer(false)
@@ -59,8 +58,7 @@ const UiAddAdminDrawer: FC = () => {
 			message.success('Новый админ успешно добавлен')
 			reset({
 				phone: '',
-				last_name: '',
-				first_name: '',
+				name: '',
 				password: '',
 			})
 		}
@@ -70,32 +68,16 @@ const UiAddAdminDrawer: FC = () => {
 		<Drawer title='Админ' placement='right' onClose={onClose} open={showDrawer}>
 			<form ref={formRef} onSubmit={handleSubmit(handleClickSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
-					Имя
+					Ф.И.О
 					<input
 						className='w-full px-4 py-2 rounded-md border outline-none'
 						type='text'
-						{...register('first_name', {
+						{...register('name', {
 							required: true,
 							maxLength: 20,
 						})}
 					/>
-					{errors.first_name && errors.first_name.type === 'required' && (
-						<span role='alert' className='text-red-500'>
-							Пожалуйста, заполните поле Имя
-						</span>
-					)}
-				</Row>
-				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
-					Фамилия
-					<input
-						className='w-full px-4 py-2 rounded-md border outline-none'
-						type='text'
-						{...register('last_name', {
-							required: true,
-							maxLength: 20,
-						})}
-					/>
-					{errors.last_name && errors.last_name.type === 'required' && (
+					{errors.name && errors.name.type === 'required' && (
 						<span role='alert' className='text-red-500'>
 							Пожалуйста, заполните поле Фамилия
 						</span>

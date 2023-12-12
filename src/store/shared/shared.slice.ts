@@ -4,16 +4,18 @@ import { ISharedInitialState, TItemData } from './shared.types'
 const initialState: ISharedInitialState = {
 	showDrawer: false,
 	search: '',
-	categoriesSearch: '',
-	regionSearch: '',
 	districtSearch: '',
 	editData: null,
+	secondDrawer: false,
 }
 
 const sharedSlice = createSlice({
 	name: 'shared',
 	initialState,
 	reducers: {
+		setSecondDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.secondDrawer = payload
+		},
 		setShowDrawer(state, { payload }: PayloadAction<boolean>) {
 			state.showDrawer = payload
 		},
@@ -22,12 +24,6 @@ const sharedSlice = createSlice({
 		},
 		setSearch(state, { payload }: PayloadAction<string>) {
 			state.search = payload
-		},
-		setCategoriesSearch(state, { payload }: PayloadAction<string>) {
-			state.categoriesSearch = payload
-		},
-		setRegionSearch(state, { payload }: PayloadAction<string>) {
-			state.regionSearch = payload
 		},
 		setDistrictSearch(state, { payload }: PayloadAction<string>) {
 			state.districtSearch = payload

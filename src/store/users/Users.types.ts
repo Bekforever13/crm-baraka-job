@@ -11,8 +11,7 @@ export type TService = {
 }
 
 export type TNewAdminTypes = {
-	first_name: string
-	last_name: string
+	name: string
 	phone: string
 	password: string
 }

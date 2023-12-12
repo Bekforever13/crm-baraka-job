@@ -1,45 +1,43 @@
-import React from 'react'
-import { Drawer, Row, Spin, message } from 'antd'
+import { FC, useEffect } from 'react'
+import { Drawer, Row, message } from 'antd'
 import { useForm } from 'react-hook-form'
-import { IRuKarUz } from 'src/store/shared/shared.types'
 import {
-	useAddNewCategoriesMutation,
-	useEditCategoriesMutation,
+	useAddNewServiceMutation,
+	useEditServiceMutation,
 } from 'src/store/index.endpoints'
+import { IRuKarUz } from 'src/store/shared/shared.types'
 import { useActions, useSelectors } from 'src/hooks'
 
-const UiCategoriesDrawer: React.FC = () => {
-	// store actions and state
-	const { showDrawer, editData } = useSelectors()
-	const { setShowDrawer, setEditData } = useActions()
-	// react-hook-form hook
+const UiServicesDrawer: FC = () => {
+	// store states and actions
+	const { setSecondDrawer, setDistrictEditData } = useActions()
+	const { secondDrawer, categoriesEditData, categoryID } = useSelectors()
+	// react hook form
 	const {
 		register,
-		reset,
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		reset,
+		formState: { isSubmitting, errors },
 	} = useForm<IRuKarUz>()
-	// rtk hooks
-	const [
-		addNewCategories,
-		{ isLoading: addLoading, isSuccess: addCategoriesIsSuccess },
-	] = useAddNewCategoriesMutation()
-	const [
-		editCategories,
-		{ isLoading: editLoading, isSuccess: editCategoriesIsSuccess },
-	] = useEditCategoriesMutation()
 
-	// after drawer closed we will clear values
+	const [
+		addNewService,
+		{ isLoading: addLoading, isSuccess: addServiceIsSuccess },
+	] = useAddNewServiceMutation()
+	const [
+		editService,
+		{ isLoading: editLoading, isSuccess: editServiceIsSuccess },
+	] = useEditServiceMutation()
+
 	const onClose = () => {
-		setShowDrawer(false)
-		setEditData({
+		setSecondDrawer(false)
+		setDistrictEditData({
 			id: 0,
 			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
 			region_id: 0,
 		})
 	}
 
-	// if we editing we will submit like editing, else we create new
 	const onSubmit = (values: IRuKarUz) => {
 		if (
 			values?.ru.length ||
@@ -48,25 +46,23 @@ const UiCategoriesDrawer: React.FC = () => {
 			values?.en.length ||
 			values?.kar.length
 		) {
-			editData?.id
-				? editCategories({ id: editData.id, name: values })
-				: addNewCategories({ name: values })
+			categoriesEditData?.id
+				? editService({ id: categoriesEditData.id, name: values })
+				: addNewService({ category_id: categoryID, name: values })
 		}
 	}
 
-	React.useEffect(() => {
-		// if editData have values we will fill our form with it
-		if (editData) {
+	useEffect(() => {
+		if (categoriesEditData) {
 			reset({
-				kar: editData?.name.kar,
-				ru: editData?.name.ru,
-				uz_latin: editData?.name.uz_latin,
-				uz_kiril: editData?.name.uz_kiril,
-				en: editData?.name.en,
+				kar: categoriesEditData?.name.kar,
+				ru: categoriesEditData?.name.ru,
+				uz_latin: categoriesEditData?.name.uz_latin,
+				uz_kiril: categoriesEditData?.name.uz_kiril,
+				en: categoriesEditData?.name.en,
 			})
 		}
-		// if editdata empty we clear form values
-		if (!editData?.id) {
+		if (!categoriesEditData?.id) {
 			reset({
 				kar: '',
 				ru: '',
@@ -75,32 +71,43 @@ const UiCategoriesDrawer: React.FC = () => {
 				en: '',
 			})
 		}
-	}, [editData?.id, editData?.name])
+	}, [categoriesEditData?.id, categoriesEditData?.name])
 
-	// success message
-	React.useEffect(() => {
-		if (addCategoriesIsSuccess) {
-			setShowDrawer(false)
+	useEffect(() => {
+		if (addServiceIsSuccess) {
+			setSecondDrawer(false)
 			message.success('Сервис успешно добавлен.')
 			reset()
 		}
-	}, [addCategoriesIsSuccess])
+	}, [addServiceIsSuccess])
 
-	// success message
-	React.useEffect(() => {
-		if (editCategoriesIsSuccess) {
-			setShowDrawer(false)
+	useEffect(() => {
+		if (editServiceIsSuccess) {
+			setSecondDrawer(false)
 			message.success('Сервис успешно изменён.')
 			reset()
 		}
-	}, [editCategoriesIsSuccess])
+	}, [editServiceIsSuccess])
+
+	useEffect(() => {
+		// clear form values when drawer closed
+		if (!secondDrawer) {
+			reset({
+				kar: '',
+				ru: '',
+				uz_latin: '',
+				uz_kiril: '',
+				en: '',
+			})
+		}
+	}, [secondDrawer])
 
 	return (
 		<Drawer
-			title='Категории'
+			title='Сервис'
 			placement='right'
 			onClose={onClose}
-			open={showDrawer}
+			open={secondDrawer}
 		>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -173,12 +180,13 @@ const UiCategoriesDrawer: React.FC = () => {
 					type='submit'
 					disabled={isSubmitting || addLoading || editLoading}
 				>
-					{isSubmitting || addLoading || editLoading ? 
-					<Spin spinning /> : 'Применить'}
+					{isSubmitting || addLoading || editLoading
+						? 'Загрузка...'
+						: 'Применить'}
 				</button>
 			</form>
 		</Drawer>
 	)
 }
 
-export { UiCategoriesDrawer }
+export { UiServicesDrawer }

@@ -1,18 +1,16 @@
-import { IRuKarUz } from '../shared/shared.types'
+import { IRuKarUz, TItemData } from '../shared/shared.types'
 
 export type TCategoriesInitState = {
 	categoriesData: TAddCategoriesData[]
-}
-
-export type TServiceData = {
-	id: number
-	name: IRuKarUz
+	categoriesSearch: string
+	categoryID: number
+	categoriesEditData: TItemData | null
 }
 
 export type TAddCategoriesData = {
 	id: number
 	category_name: IRuKarUz
-	services: TServiceData[]
+	services: TItemData[]
 }
 
 export interface ICategoriesDataResponse {

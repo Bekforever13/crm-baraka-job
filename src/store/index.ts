@@ -5,12 +5,14 @@ import { reducer as shared } from './shared/shared.slice'
 import { reducer as auth } from './auth/Auth.slice'
 import { reducer as client } from './clients/Client.slice'
 import { reducer as categories } from './categories/Categories.slice'
+import { reducer as regions } from './region/Region.slice'
 
 const reducers = combineReducers({
 	shared,
 	auth,
 	client,
 	categories,
+	regions,
 	[api.reducerPath]: api.reducer,
 })
 

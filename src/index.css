@@ -8,3 +8,8 @@
 	box-sizing: border-box;
 	font-family: 'Montserrat', sans-serif;
 }
+
+.ant-cascader-menu-item-content {
+	max-width: 300px;
+	white-space: normal;
+}

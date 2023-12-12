@@ -10,6 +10,7 @@ import {
 import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
 import { useDeleteRegionMutation } from 'src/store/index.endpoints'
 import { useActions } from 'src/hooks'
+import { FaRegPlusSquare } from 'react-icons/fa'
 
 type TProps = {
 	data: IRegionDataResponse | undefined
@@ -18,9 +19,10 @@ type TProps = {
 
 const RegionsTableColumns: (
 	props: TProps
-) => ColumnsType<TRegionWithDistricts> = ({ data, setCurrentPage }) => {
+) => ColumnsType<TRegionWithDistricts> = () => {
 	// store actions
-	const { setEditData, setShowDrawer } = useActions()
+	const { setEditData, setShowDrawer, setSecondDrawer, setRegionID } =
+		useActions()
 	// rtk hook
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
 
@@ -65,31 +67,33 @@ const RegionsTableColumns: (
 			title: 'Действия',
 			dataIndex: 'actions',
 			key: 'actions',
-			render: (_, rec) => {
-				return (
-					<div className='flex items-center gap-3'>
-						<BiSolidPencil
-							onClick={() => handleClickEdit(rec)}
-							className='cursor-pointer'
-							size='22'
-							color='blue'
-						/>
-						<Popconfirm
-							title='Удалить регион?'
-							onConfirm={() => {
-								if (data?.total && data?.total < 11) {
-									setCurrentPage(1)
-								}
-								deleteRegion(rec.id)
-							}}
-							cancelText='Отмена'
-							okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
-						>
-							<BiSolidTrash className='cursor-pointer' size='22' color='red' />
-						</Popconfirm>
-					</div>
-				)
-			},
+			render: (_, rec) => (
+				<div className='flex items-center gap-3'>
+					<FaRegPlusSquare
+						color='green'
+						size='22'
+						className='cursor-pointer'
+						onClick={() => {
+							setSecondDrawer(true)
+							setRegionID(rec.id)
+						}}
+					/>
+					<BiSolidPencil
+						onClick={() => handleClickEdit(rec)}
+						className='cursor-pointer'
+						size='22'
+						color='blue'
+					/>
+					<Popconfirm
+						title='Удалить регион?'
+						onConfirm={() => deleteRegion(rec.id)}
+						cancelText='Отмена'
+						okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
+					>
+						<BiSolidTrash className='cursor-pointer' size='22' color='red' />
+					</Popconfirm>
+				</div>
+			),
 		},
 	]
 
@@ -99,6 +103,7 @@ const RegionsTableColumns: (
 			setShowDrawer(false)
 		}
 	}, [isSuccess])
+
 	return columns
 }
 

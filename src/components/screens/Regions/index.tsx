@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { UiButton, UiAddRegionDrawer } from 'src/components/ui'
+import { UiButton, UiAddRegionDrawer, UiDistrictDrawer } from 'src/components/ui'
 import { RegionsTable } from './RegionsTable/RegionsTable'
 import { Search } from 'src/components/shared'
 import { Import } from 'src/utils/Import'
@@ -28,6 +28,7 @@ const Regions: FC = () => {
 					</UiButton>
 				</div>
 				<UiAddRegionDrawer />
+				<UiDistrictDrawer />
 			</div>
 			<RegionsTable />
 		</div>

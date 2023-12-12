@@ -1,16 +1,24 @@
-import { Table } from 'antd'
-import React from 'react'
-import { TServiceData } from 'src/store/categories/Categories.types'
-import { IRuKarUz } from 'src/store/shared/shared.types'
+import { Popconfirm, Table } from 'antd'
+import { FC } from 'react'
+import { BiSolidPencil, BiSolidTrash } from 'react-icons/bi'
+import { useActions } from 'src/hooks'
+import { useDeleteServiceMutation } from 'src/store/index.endpoints'
+import { TAddServiceData } from 'src/store/services/Services.types'
+import { IRuKarUz, TItemData } from 'src/store/shared/shared.types'
 
 // prop type
 type TProps = {
-	districts: TServiceData[]
+	districts: TItemData[]
+	categoryID: number
 }
 
 // ** This table will be show when clicked expand some category **
 
-const CategoriesExpandedTable: React.FC<TProps> = ({ districts }) => {
+const CategoriesExpandedTable: FC<TProps> = ({ districts, categoryID }) => {
+	// store states and actions
+	const { setCategoryID, setCategoriesEditData, setSecondDrawer } = useActions()
+	// rtk hooks
+	const [deleteService] = useDeleteServiceMutation()
 
 	// columns for table
 	const columns = [
@@ -38,6 +46,32 @@ const CategoriesExpandedTable: React.FC<TProps> = ({ districts }) => {
 			dataIndex: 'name',
 			key: 'name',
 			render: (el: IRuKarUz) => el.en,
+		},
+		{
+			dataIndex: 'actions',
+			key: 'actions',
+			render: (_: unknown, rec: TAddServiceData) => (
+				<div className='flex items-center gap-3'>
+					<BiSolidPencil
+						onClick={() => {
+							setCategoriesEditData(rec)
+							setSecondDrawer(true)
+							setCategoryID(categoryID)
+						}}
+						className='cursor-pointer'
+						size='22'
+						color='blue'
+					/>
+					<Popconfirm
+						title='Удалить сервис?'
+						onConfirm={() => deleteService(rec.id)}
+						cancelText='Отмена'
+						okButtonProps={{ style: { backgroundColor: '#F4C95B' } }}
+					>
+						<BiSolidTrash className='cursor-pointer' size='22' color='red' />
+					</Popconfirm>
+				</div>
+			),
 		},
 	]
 

@@ -13,7 +13,9 @@ const CategoriesTable: FC = () => {
 	const { setCategoriesData } = useActions()
 	const { categoriesData, categoriesSearch } = useSelectors()
 	// RTK hooks
-	const { data, isLoading, isError } = useGetCategoriesQuery({ page: currentPage })
+	const { data, isLoading, isError } = useGetCategoriesQuery({
+		page: currentPage,
+	})
 
 	// hook will check page after deleting item and if currentPage > last page then currentpage will be = last page
 	useCheckLastPage({
@@ -39,11 +41,27 @@ const CategoriesTable: FC = () => {
 		// when start search this logic will start work
 		if (categoriesData) {
 			setCategoriesData(
-				categoriesData.filter(el =>
-					Object.values(el.category_name).some(val =>
-						val.toLowerCase().includes(categoriesSearch.toLowerCase())
+				categoriesData.filter(el => {
+					// if we searching category
+					const isCategoryNameMatch = Object.values(el.category_name).some(
+						val => val.toLowerCase().includes(categoriesSearch.toLowerCase())
 					)
-				)
+
+					if (isCategoryNameMatch) {
+						return true
+					}
+
+					// if we searching service
+					const isServiceNameMatch = el.services
+						.map(item => item.name)
+						.some(name =>
+							Object.values(name).some(val =>
+								val.toLowerCase().includes(categoriesSearch.toLowerCase())
+							)
+						)
+
+					return isServiceNameMatch
+				})
 			)
 		}
 		// if search value empty data will be restored from { data }
@@ -75,9 +93,9 @@ const CategoriesTable: FC = () => {
 			expandable={{
 				expandedRowRender: record => (
 					// our custom table will show when clicked expand category
-					<CategoriesExpandedTable districts={record.services} />
+					<CategoriesExpandedTable categoryID={record.id} districts={record.services} />
 				),
-				rowExpandable: record => !!record.category_name.ru,
+				rowExpandable: record => record.services.length > 0,
 			}}
 		/>
 	)

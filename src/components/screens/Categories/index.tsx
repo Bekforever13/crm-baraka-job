@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { UiButton, UiCategoriesDrawer } from 'src/components/ui'
+import { UiButton, UiCategoriesDrawer, UiServicesDrawer } from 'src/components/ui'
 import { CategoriesTable } from './CategoriesTable/CategoriesTable'
 import { Search } from 'src/components/shared'
 import { Import } from 'src/utils/Import'
@@ -28,6 +28,7 @@ const Categories: FC = () => {
 					</UiButton>
 				</div>
 				<UiCategoriesDrawer />
+				<UiServicesDrawer />
 			</div>
 			<CategoriesTable />
 		</div>
