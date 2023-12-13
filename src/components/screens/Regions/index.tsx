@@ -7,12 +7,12 @@ import { useActions } from 'src/hooks'
 
 const Regions: FC = () => {
 	// Store actions
-	const { setShowDrawer, setEditData } = useActions()
+	const { setRegionDrawer, setEditData } = useActions()
 
 	// after click add button we will clear editData state from store and open drawer
 	const handleClickAdd = () => {
 		setEditData(null)
-		setShowDrawer(true)
+		setRegionDrawer(true)
 	}
 
 	return (

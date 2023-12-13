@@ -10,8 +10,8 @@ import { useActions, useSelectors } from 'src/hooks'
 
 const UiCategoriesDrawer: React.FC = () => {
 	// store actions and state
-	const { showDrawer, editData } = useSelectors()
-	const { setShowDrawer, setEditData } = useActions()
+	const { categoriesDrawer, editData } = useSelectors()
+	const { setCategoryDrawer, setEditData } = useActions()
 	// react-hook-form hook
 	const {
 		register,
@@ -31,7 +31,7 @@ const UiCategoriesDrawer: React.FC = () => {
 
 	// after drawer closed we will clear values
 	const onClose = () => {
-		setShowDrawer(false)
+		setCategoryDrawer(false)
 		setEditData({
 			id: 0,
 			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
@@ -80,7 +80,7 @@ const UiCategoriesDrawer: React.FC = () => {
 	// success message
 	React.useEffect(() => {
 		if (addCategoriesIsSuccess) {
-			setShowDrawer(false)
+			setCategoryDrawer(false)
 			message.success('Сервис успешно добавлен.')
 			reset()
 		}
@@ -89,7 +89,7 @@ const UiCategoriesDrawer: React.FC = () => {
 	// success message
 	React.useEffect(() => {
 		if (editCategoriesIsSuccess) {
-			setShowDrawer(false)
+			setCategoryDrawer(false)
 			message.success('Сервис успешно изменён.')
 			reset()
 		}
@@ -100,7 +100,7 @@ const UiCategoriesDrawer: React.FC = () => {
 			title='Категории'
 			placement='right'
 			onClose={onClose}
-			open={showDrawer}
+			open={categoriesDrawer}
 		>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
@@ -173,8 +173,11 @@ const UiCategoriesDrawer: React.FC = () => {
 					type='submit'
 					disabled={isSubmitting || addLoading || editLoading}
 				>
-					{isSubmitting || addLoading || editLoading ? 
-					<Spin spinning /> : 'Применить'}
+					{isSubmitting || addLoading || editLoading ? (
+						<Spin spinning />
+					) : (
+						'Применить'
+					)}
 				</button>
 			</form>
 		</Drawer>

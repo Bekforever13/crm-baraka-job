@@ -4,7 +4,7 @@ import { FilterDropdownPropsWithOptions } from './TableFilter.types'
 import { CheckboxValueType } from 'antd/lib/checkbox/Group'
 import { useActions, useSelectors } from 'src/hooks'
 
-const TableFilter: FC<FilterDropdownPropsWithOptions> = props => {
+const RegionFilter: FC<FilterDropdownPropsWithOptions> = props => {
 	// destructurize props
 	const { setSelectedKeys, selectedKeys, confirm, clearFilters, options } =
 		props
@@ -57,4 +57,4 @@ const TableFilter: FC<FilterDropdownPropsWithOptions> = props => {
 	)
 }
 
-export { TableFilter }
+export { RegionFilter }

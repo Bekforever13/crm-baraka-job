@@ -10,8 +10,8 @@ import { useActions, useSelectors } from 'src/hooks'
 
 const UiServicesDrawer: FC = () => {
 	// store states and actions
-	const { setSecondDrawer, setDistrictEditData } = useActions()
-	const { secondDrawer, categoriesEditData, categoryID } = useSelectors()
+	const { setServiceDrawer, setDistrictEditData } = useActions()
+	const { serviceDrawer, categoriesEditData, categoryID } = useSelectors()
 	// react hook form
 	const {
 		register,
@@ -30,7 +30,7 @@ const UiServicesDrawer: FC = () => {
 	] = useEditServiceMutation()
 
 	const onClose = () => {
-		setSecondDrawer(false)
+		setServiceDrawer(false)
 		setDistrictEditData({
 			id: 0,
 			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
@@ -53,6 +53,7 @@ const UiServicesDrawer: FC = () => {
 	}
 
 	useEffect(() => {
+		// if we have editData fill form
 		if (categoriesEditData) {
 			reset({
 				kar: categoriesEditData?.name.kar,
@@ -75,7 +76,7 @@ const UiServicesDrawer: FC = () => {
 
 	useEffect(() => {
 		if (addServiceIsSuccess) {
-			setSecondDrawer(false)
+			setServiceDrawer(false)
 			message.success('Сервис успешно добавлен.')
 			reset()
 		}
@@ -83,7 +84,7 @@ const UiServicesDrawer: FC = () => {
 
 	useEffect(() => {
 		if (editServiceIsSuccess) {
-			setSecondDrawer(false)
+			setServiceDrawer(false)
 			message.success('Сервис успешно изменён.')
 			reset()
 		}
@@ -91,7 +92,7 @@ const UiServicesDrawer: FC = () => {
 
 	useEffect(() => {
 		// clear form values when drawer closed
-		if (!secondDrawer) {
+		if (!serviceDrawer) {
 			reset({
 				kar: '',
 				ru: '',
@@ -100,14 +101,14 @@ const UiServicesDrawer: FC = () => {
 				en: '',
 			})
 		}
-	}, [secondDrawer])
+	}, [serviceDrawer])
 
 	return (
 		<Drawer
 			title='Сервис'
 			placement='right'
 			onClose={onClose}
-			open={secondDrawer}
+			open={serviceDrawer}
 		>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>

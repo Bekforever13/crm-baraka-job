@@ -16,7 +16,7 @@ type TProps = {
 
 const CategoriesExpandedTable: FC<TProps> = ({ districts, categoryID }) => {
 	// store states and actions
-	const { setCategoryID, setCategoriesEditData, setSecondDrawer } = useActions()
+	const { setCategoryID, setCategoriesEditData, setServiceDrawer } = useActions()
 	// rtk hooks
 	const [deleteService] = useDeleteServiceMutation()
 
@@ -55,7 +55,7 @@ const CategoriesExpandedTable: FC<TProps> = ({ districts, categoryID }) => {
 					<BiSolidPencil
 						onClick={() => {
 							setCategoriesEditData(rec)
-							setSecondDrawer(true)
+							setServiceDrawer(true)
 							setCategoryID(categoryID)
 						}}
 						className='cursor-pointer'

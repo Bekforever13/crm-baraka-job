@@ -2,6 +2,8 @@ import { IRuKarUz, TItemData } from '../shared/shared.types'
 
 export type TCategoriesInitState = {
 	categoriesData: TAddCategoriesData[]
+	categoriesDrawer: boolean
+	serviceDrawer: boolean
 	categoriesSearch: string
 	categoryID: number
 	categoriesEditData: TItemData | null

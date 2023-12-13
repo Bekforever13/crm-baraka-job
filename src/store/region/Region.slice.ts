@@ -3,6 +3,8 @@ import { RegionInitState } from './Region.types'
 import { TItemData, TRegionWithDistricts } from '../shared/shared.types'
 
 const initialState: RegionInitState = {
+	regionDrawer: false,
+	districtDrawer: false,
 	regionSearch: '',
 	districtEditData: null,
 	regionID: 0,
@@ -15,6 +17,12 @@ const regionSlice = createSlice({
 	reducers: {
 		setRegionSearch(state, { payload }: PayloadAction<string>) {
 			state.regionSearch = payload
+		},
+		setRegionDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.regionDrawer = payload
+		},
+		setDistrictDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.districtDrawer = payload
 		},
 		setDistrictEditData(state, { payload }: PayloadAction<TItemData | null>) {
 			state.districtEditData = payload

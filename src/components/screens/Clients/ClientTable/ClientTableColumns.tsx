@@ -2,8 +2,9 @@ import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
 	DistrictFilter,
+	RegionFilter,
+	RoleFilter,
 	ServiceFilter,
-	TableFilter,
 } from 'src/components/shared'
 import { FilterDropdownProps } from 'antd/es/table/interface'
 import type { ColumnsType } from 'antd/es/table'
@@ -64,14 +65,8 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				confirm,
 			}: FilterDropdownProps) => (
 				// this is the custom component
-				<TableFilter
-					setSelectedKeys={selectedKeys => {
-						if (selectedKeys.length > 0) {
-							setSelectedKeys([selectedKeys[selectedKeys.length - 1]])
-						} else {
-							setSelectedKeys(selectedKeys)
-						}
-					}}
+				<RoleFilter
+					setSelectedKeys={selectedKeys => setSelectedKeys(selectedKeys)}
 					selectedKeys={selectedKeys}
 					confirm={confirm}
 					clearFilters={() => {
@@ -125,7 +120,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 				confirm,
 			}: FilterDropdownProps) => (
 				// this is the custom component
-				<TableFilter
+				<RegionFilter
 					setSelectedKeys={setSelectedKeys}
 					selectedKeys={selectedKeys}
 					confirm={confirm}

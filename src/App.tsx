@@ -4,10 +4,9 @@ import { Login } from 'src/components/screens'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { Layout } from 'src/components/Layout/Layout'
 import { Politics } from './components/screens/Politics'
-import { useApp } from './routes/Routes'
+import { routes } from './routes/Routes'
 
 const App: FC = () => {
-	const { routes } = useApp()
 	const { isAuth } = useSelectors()
 	const { pathname } = useLocation()
 	const navigate = useNavigate()

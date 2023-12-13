@@ -21,7 +21,7 @@ const CategoriesTableColumns: (
 	el: Props
 ) => ColumnsType<TAddCategoriesData> = () => {
 	// Store actions
-	const { setEditData, setShowDrawer, setSecondDrawer, setCategoryID } =
+	const { setEditData, setCategoryDrawer, setServiceDrawer, setCategoryID } =
 		useActions()
 	// RTK hooks
 	const [deleteService, { isSuccess }] = useDeleteCategoriesMutation()
@@ -29,7 +29,7 @@ const CategoriesTableColumns: (
 	// after click edit we will set editData to store and open drawer
 	const handleClickEdit = (rec: TItemData) => {
 		setEditData(rec)
-		setShowDrawer(true)
+		setCategoryDrawer(true)
 	}
 
 	const columns: ColumnsType<TAddCategoriesData> = [
@@ -74,7 +74,7 @@ const CategoriesTableColumns: (
 						size='22'
 						className='cursor-pointer'
 						onClick={() => {
-							setSecondDrawer(true)
+							setServiceDrawer(true)
 							setCategoryID(rec.id)
 						}}
 					/>
@@ -106,7 +106,7 @@ const CategoriesTableColumns: (
 	useEffect(() => {
 		if (isSuccess) {
 			message.success('Категория успешно удалена.')
-			setShowDrawer(false)
+			setCategoryDrawer(false)
 		}
 	}, [isSuccess])
 	return columns

@@ -10,8 +10,8 @@ import { useActions, useSelectors } from 'src/hooks'
 
 const UiAddRegionDrawer: FC = () => {
 	// store actions and states
-	const { showDrawer, editData } = useSelectors()
-	const { setShowDrawer, setEditData } = useActions()
+	const { regionDrawer, editData } = useSelectors()
+	const { setRegionDrawer, setEditData } = useActions()
 	// react-hook-form hook
 	const {
 		register,
@@ -39,7 +39,7 @@ const UiAddRegionDrawer: FC = () => {
 
 	// after drawer closed we will clear values
 	const onClose = () => {
-		setShowDrawer(false)
+		setRegionDrawer(false)
 		setEditData({
 			id: 0,
 			name: { kar: '', ru: '', uz_latin: '', uz_kiril: '', en: '' },
@@ -87,7 +87,7 @@ const UiAddRegionDrawer: FC = () => {
 	// success message
 	useEffect(() => {
 		if (addRegionIsSuccess) {
-			setShowDrawer(false)
+			setRegionDrawer(false)
 			message.success('Регион успешно добавлен.')
 			reset()
 		}
@@ -96,7 +96,7 @@ const UiAddRegionDrawer: FC = () => {
 	// success message
 	useEffect(() => {
 		if (editRegionIsSuccess) {
-			setShowDrawer(false)
+			setRegionDrawer(false)
 			message.success('Регион успешно изменён.')
 			reset({
 				kar: '',
@@ -113,7 +113,7 @@ const UiAddRegionDrawer: FC = () => {
 			title='Регион'
 			placement='right'
 			onClose={onClose}
-			open={showDrawer}
+			open={regionDrawer}
 		>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>

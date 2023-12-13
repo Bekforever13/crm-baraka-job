@@ -13,7 +13,7 @@ export const usersApi = api.injectEndpoints({
 		}),
 		editUserRole: builder.mutation<unknown, TUserRole>({
 			query: ({ userId, roleId }) => ({
-				url: `/user/${userId}/attach-role/${roleId}`,
+				url: `/user/${userId}/role/${roleId}`,
 				method: 'POST',
 			}),
 			invalidatesTags: ['users'],

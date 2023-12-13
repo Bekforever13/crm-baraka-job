@@ -2,22 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ISharedInitialState, TItemData } from './shared.types'
 
 const initialState: ISharedInitialState = {
-	showDrawer: false,
 	search: '',
 	districtSearch: '',
 	editData: null,
-	secondDrawer: false,
+	usersDrawer: false,
 }
 
 const sharedSlice = createSlice({
 	name: 'shared',
 	initialState,
 	reducers: {
-		setSecondDrawer(state, { payload }: PayloadAction<boolean>) {
-			state.secondDrawer = payload
-		},
-		setShowDrawer(state, { payload }: PayloadAction<boolean>) {
-			state.showDrawer = payload
+		setUsersDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.usersDrawer = payload
 		},
 		setEditData(state, { payload }: PayloadAction<TItemData | null>) {
 			state.editData = payload

@@ -10,8 +10,8 @@ import { useActions, useSelectors } from 'src/hooks'
 
 const UiDistrictDrawer: React.FC = () => {
 	// store states and actions
-	const { setSecondDrawer, setDistrictEditData } = useActions()
-	const { secondDrawer, districtEditData, regionID } = useSelectors()
+	const { setDistrictDrawer, setDistrictEditData } = useActions()
+	const { districtDrawer, districtEditData, regionID } = useSelectors()
 
 	// rtk hooks
 	const [
@@ -32,7 +32,7 @@ const UiDistrictDrawer: React.FC = () => {
 	} = useForm<TDistrictData>()
 
 	const onClose = () => {
-		setSecondDrawer(false)
+		setDistrictDrawer(false)
 		reset({
 			region_id: 0,
 			name: {
@@ -92,7 +92,7 @@ const UiDistrictDrawer: React.FC = () => {
 	React.useEffect(() => {
 		// notification messages
 		if (addRegionIsSuccess) {
-			setSecondDrawer(false)
+			setDistrictDrawer(false)
 			message.success('Округ успешно добавлен.')
 			reset({
 				region_id: 0,
@@ -106,7 +106,7 @@ const UiDistrictDrawer: React.FC = () => {
 			})
 		}
 		if (editRegionIsSuccess) {
-			setSecondDrawer(false)
+			setDistrictDrawer(false)
 			message.success('Округ успешно изменён.')
 			reset({
 				region_id: 0,
@@ -126,7 +126,7 @@ const UiDistrictDrawer: React.FC = () => {
 			title='Округ'
 			placement='right'
 			onClose={onClose}
-			open={secondDrawer}
+			open={districtDrawer}
 		>
 			<form onSubmit={handleSubmit(handleClickSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>

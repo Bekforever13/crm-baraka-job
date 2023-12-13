@@ -1,9 +1,8 @@
 export interface ISharedInitialState {
-	showDrawer: boolean
 	search: string
 	districtSearch: string
 	editData: TItemData | null
-	secondDrawer: boolean
+	usersDrawer: boolean
 }
 
 export interface IRuKarUz {

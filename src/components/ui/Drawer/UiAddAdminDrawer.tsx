@@ -12,8 +12,8 @@ const UiAddAdminDrawer: FC = () => {
 	// states
 	const [showPassword, setShowPassword] = useState(false)
 	// store actions and states
-	const { showDrawer } = useSelectors()
-	const { setShowDrawer } = useActions()
+	const { usersDrawer } = useSelectors()
+	const { setUsersDrawer } = useActions()
 	// react-hook-form hook
 	const {
 		handleSubmit,
@@ -35,7 +35,7 @@ const UiAddAdminDrawer: FC = () => {
 			name: '',
 			password: '',
 		})
-		setShowDrawer(false)
+		setUsersDrawer(false)
 	}
 
 	//  create new admin
@@ -54,7 +54,7 @@ const UiAddAdminDrawer: FC = () => {
 	useEffect(() => {
 		// clear form after success
 		if (isSuccess && formRef.current) {
-			setShowDrawer(false)
+			setUsersDrawer(false)
 			message.success('Новый админ успешно добавлен')
 			reset({
 				phone: '',
@@ -65,7 +65,7 @@ const UiAddAdminDrawer: FC = () => {
 	}, [isSuccess])
 
 	return (
-		<Drawer title='Админ' placement='right' onClose={onClose} open={showDrawer}>
+		<Drawer title='Админ' placement='right' onClose={onClose} open={usersDrawer}>
 			<form ref={formRef} onSubmit={handleSubmit(handleClickSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Ф.И.О

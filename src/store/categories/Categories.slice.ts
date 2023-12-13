@@ -3,6 +3,8 @@ import { TAddCategoriesData, TCategoriesInitState } from './Categories.types'
 import { TItemData } from '../shared/shared.types'
 
 const initialState: TCategoriesInitState = {
+	categoriesDrawer: false,
+	serviceDrawer: false,
 	categoriesData: [],
 	categoriesSearch: '',
 	categoryID: 0,
@@ -13,6 +15,12 @@ const CategoriesSlice = createSlice({
 	name: 'CategoriesSlice',
 	initialState,
 	reducers: {
+		setServiceDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.serviceDrawer = payload
+		},
+		setCategoryDrawer(state, { payload }: PayloadAction<boolean>) {
+			state.categoriesDrawer = payload
+		},
 		setCategoriesData(state, { payload }: PayloadAction<TAddCategoriesData[]>) {
 			state.categoriesData = payload
 		},

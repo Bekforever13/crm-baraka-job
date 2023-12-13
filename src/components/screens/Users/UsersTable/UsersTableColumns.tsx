@@ -20,9 +20,8 @@ type TProps = {
 
 // static data for select role
 const roles = [
+	{ value: 1, label: 'Супер Админ' },
 	{ value: 2, label: 'Админ' },
-	{ value: 3, label: 'Рабочий' },
-	{ value: 4, label: 'Клиент' },
 ]
 
 const UsersTableColumns: (el: TProps) => ColumnsType<IAdminTypes> = ({
@@ -63,7 +62,9 @@ const UsersTableColumns: (el: TProps) => ColumnsType<IAdminTypes> = ({
 						(el === 'client' && 'Клиент') ||
 						(el === 'user' && 'Пользователь')
 					}
-					onSelect={e => handleSelectRole({ userId: rec.id, roleId: String(e) })}
+					onSelect={e =>
+						handleSelectRole({ userId: rec.id, roleId: String(e) })
+					}
 					options={roles}
 				/>
 			),

@@ -14,7 +14,7 @@ type TProps = {
 // ** This table will be show when clicked expand some category **
 const RegionsExpandedTable: FC<TProps> = ({ districts, regionsId }) => {
 	// store states and actions
-	const { setRegionID, setDistrictEditData, setSecondDrawer } = useActions()
+	const { setRegionID, setDistrictEditData, setDistrictDrawer } = useActions()
 	// rtk hooks
 	const [deleteDistrict] = useDeleteDistrictsMutation()
 	// columns for table
@@ -52,7 +52,7 @@ const RegionsExpandedTable: FC<TProps> = ({ districts, regionsId }) => {
 					<BiSolidPencil
 						onClick={() => {
 							setDistrictEditData(rec)
-							setSecondDrawer(true)
+							setDistrictDrawer(true)
 							setRegionID(regionsId)
 						}}
 						className='cursor-pointer'

@@ -5,13 +5,13 @@ import { useActions } from 'src/hooks'
 
 const Users: FC = () => {
 	// store actions
-	const { setShowDrawer } = useActions()
+	const { setUsersDrawer } = useActions()
 
 	return (
 		<div className='flex flex-col gap-y-5 bg-white m-5 p-5 rounded-2xl'>
 			<div className='w-full flex justify-end'>
 				<UiButton
-					onClick={() => setShowDrawer(true)}
+					onClick={() => setUsersDrawer(true)}
 					style={{ width: 'fit-content' }}
 				>
 					Добавить

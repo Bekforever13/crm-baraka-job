@@ -21,7 +21,7 @@ const RegionsTableColumns: (
 	props: TProps
 ) => ColumnsType<TRegionWithDistricts> = () => {
 	// store actions
-	const { setEditData, setShowDrawer, setSecondDrawer, setRegionID } =
+	const { setEditData, setRegionDrawer, setDistrictDrawer, setRegionID } =
 		useActions()
 	// rtk hook
 	const [deleteRegion, { isSuccess }] = useDeleteRegionMutation()
@@ -29,7 +29,7 @@ const RegionsTableColumns: (
 	// after click edit we will set editData to store and open drawer
 	const handleClickEdit = (rec: TItemData) => {
 		setEditData(rec)
-		setShowDrawer(true)
+		setRegionDrawer(true)
 	}
 
 	const columns: ColumnsType<TRegionWithDistricts> = [
@@ -74,7 +74,7 @@ const RegionsTableColumns: (
 						size='22'
 						className='cursor-pointer'
 						onClick={() => {
-							setSecondDrawer(true)
+							setDistrictDrawer(true)
 							setRegionID(rec.id)
 						}}
 					/>
@@ -100,7 +100,7 @@ const RegionsTableColumns: (
 	useEffect(() => {
 		if (isSuccess) {
 			message.success('Регион успешно удалён.')
-			setShowDrawer(false)
+			setRegionDrawer(false)
 		}
 	}, [isSuccess])
 
