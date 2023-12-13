@@ -17,14 +17,15 @@ const TableFilter: FC<FilterDropdownPropsWithOptions> = props => {
 	useEffect(() => {
 		// clear filters from store
 		if (!activeFilters.length && clearFilters) {
+			/* eslint-disable-next-line   */
 			const { role_id, region_id, ...rest } = tableFilter
 			clearFilters()
 			setTableFilter(rest)
 		}
 	}, [activeFilters])
 	return (
-		<div className='p-2 w-[350px] max-h-[400px] flex flex-col'>
-			<div className='h-[100%] overflow-y-auto'>
+		<div className='p-2 max-h-[400px] flex flex-col'>
+			<div className='h-[100%] w-fit overflow-y-auto'>
 				<Checkbox.Group
 					options={options}
 					value={selectedKeys as CheckboxValueType[]}
@@ -32,7 +33,7 @@ const TableFilter: FC<FilterDropdownPropsWithOptions> = props => {
 						setActiveFilters(values)
 						setSelectedKeys(values as Key[])
 					}}
-					className='flex flex-col gap-y-2 w-full'
+					className='flex flex-col gap-y-2'
 				/>
 			</div>
 			<div className='flex justify-between mt-2 gap-x-3 bg-white'>

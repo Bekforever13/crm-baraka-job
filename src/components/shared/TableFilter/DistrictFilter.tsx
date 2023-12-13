@@ -18,6 +18,7 @@ const DistrictFilter: FC<FilterDropdownPropsWithOptions> = props => {
 	useEffect(() => {
 		// clear filters from store
 		if (!activeFilters.length && clearFilters) {
+			/* eslint-disable-next-line   */
 			const { district_id, ...rest } = tableFilter
 			clearFilters()
 			setTableFilter(rest)

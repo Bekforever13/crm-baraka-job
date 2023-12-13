@@ -38,35 +38,9 @@ const ClientSlice = createSlice({
 		setCascaderOptions(state, { payload }: PayloadAction<Option[]>) {
 			state.cascaderOptions = payload
 		},
-		addToCascaderOptions(state, { payload }: PayloadAction<Option>) {
-			state.cascaderOptions = [...state.cascaderOptions, payload]
-		},
 		setCascaderSearch(state, { payload }: PayloadAction<string>) {
 			state.cascaderSearch = payload
 		},
-		// searchCascader(state, { payload }: PayloadAction<string>) {
-		// 	if (payload.length) {
-		// 		state.cascaderOptions = state.cascaderOptions.filter(el => {
-		// 			// if we search category
-		// 			const isLeftCascadeNameMatch = Object.values(el.label).some(val =>
-		// 				val.toLowerCase().includes(payload.toLowerCase())
-		// 			)
-
-		// 			if (isLeftCascadeNameMatch) {
-		// 				return true
-		// 			}
-
-		// 			// if we searching service
-		// 			const isRightCascadeNameMatch = el.children?.some(item =>
-		// 				Object.values(item.label).some(val =>
-		// 					val.toLowerCase().includes(payload.toLowerCase())
-		// 				)
-		// 			)
-
-		// 			return isRightCascadeNameMatch
-		// 		})
-		// 	}
-		// },
 	},
 })
 

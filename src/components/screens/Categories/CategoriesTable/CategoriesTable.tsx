@@ -20,7 +20,7 @@ const CategoriesTable: FC = () => {
 	// hook will check page after deleting item and if currentPage > last page then currentpage will be = last page
 	useCheckLastPage({
 		currentPage,
-		lastPage: data?.meta.last_page!,
+		lastPage: data?.meta.last_page ?? 1,
 		setCurrentPage,
 	})
 
@@ -33,7 +33,7 @@ const CategoriesTable: FC = () => {
 
 	useEffect(() => {
 		// after data fetched, data will be stored in our slice
-		setCategoriesData(data?.data!)
+		setCategoriesData(data?.data ?? [])
 	}, [data])
 
 	// ** search filter

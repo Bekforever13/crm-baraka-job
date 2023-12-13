@@ -1,6 +1,7 @@
 import * as XLSX from 'xlsx'
-
+/* eslint-disable-next-line   */
 const flattenObject = (obj: any, parentKey = ''): any => {
+	/* eslint-disable-next-line   */
 	return Object.keys(obj).reduce((acc: any, key) => {
 		const newKey = parentKey ? `${parentKey}.${key}` : key
 		if (typeof obj[key] === 'object' && obj[key] !== null) {

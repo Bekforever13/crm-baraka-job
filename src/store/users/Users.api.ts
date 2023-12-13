@@ -25,7 +25,7 @@ export const usersApi = api.injectEndpoints({
 			}),
 			invalidatesTags: ['users'],
 		}),
-		addNewAdmin: builder.mutation<any, TNewAdminTypes>({
+		addNewAdmin: builder.mutation<unknown, TNewAdminTypes>({
 			query: body => ({
 				url: '/admins',
 				method: 'POST',

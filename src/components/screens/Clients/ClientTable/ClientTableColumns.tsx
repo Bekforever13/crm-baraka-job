@@ -75,6 +75,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 					selectedKeys={selectedKeys}
 					confirm={confirm}
 					clearFilters={() => {
+						/* eslint-disable-next-line   */
 						const { role_id, ...rest } = tableFilter
 						clearFilters && clearFilters()
 						setTableFilter(rest)
@@ -129,6 +130,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 					selectedKeys={selectedKeys}
 					confirm={confirm}
 					clearFilters={() => {
+						/* eslint-disable-next-line   */
 						const { region_id, ...rest } = tableFilter
 						clearFilters && clearFilters()
 						setTableFilter(rest)
@@ -160,6 +162,7 @@ const ClientTableColumns: () => ColumnsType<IClientTable> = () => {
 					selectedKeys={selectedKeys}
 					confirm={confirm}
 					clearFilters={() => {
+						/* eslint-disable-next-line   */
 						const { district_id, ...rest } = tableFilter
 						clearFilters && clearFilters()
 						setTableFilter(rest)

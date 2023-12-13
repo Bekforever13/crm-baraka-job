@@ -96,7 +96,7 @@ const UiAddAdminDrawer: FC = () => {
 						render={({ field }) => (
 							<InputMask
 								{...field}
-								mask='+\9\9\899 999 99 99'
+								mask={'+\\9\\9\\899 999 99 99'}
 								className='w-full px-4 py-2 rounded-md border outline-none'
 							/>
 						)}

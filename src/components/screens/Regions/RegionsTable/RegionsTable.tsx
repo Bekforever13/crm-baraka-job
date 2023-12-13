@@ -21,7 +21,7 @@ const RegionsTable: FC = () => {
 	// hook will check page after deleting item and if currentPage > last page then currentpage will be = last page
 	useCheckLastPage({
 		currentPage,
-		lastPage: data?.meta.last_page!,
+		lastPage: data?.meta.last_page ?? 1,
 		setCurrentPage,
 	})
 

@@ -45,7 +45,7 @@ const ClientInfo: FC = () => {
 			/>
 			<div className='flex flex-col gap-y-5 mt-5'>
 				<h3 className='font-bold'>История звонков:</h3>
-				<ClientInfoTable dataSource={data?.data.call_history!} />
+				<ClientInfoTable dataSource={data?.data.call_history} />
 			</div>
 		</div>
 	)

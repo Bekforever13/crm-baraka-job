@@ -21,6 +21,7 @@ const ClientsSearch: FC = () => {
 	useEffect(() => {
 		// if search value is empty we delete search from table filter
 		if (!search.length) {
+			/* eslint-disable-next-line   */
 			const { search, ...rest } = tableFilter
 			setTableFilter(rest)
 		}

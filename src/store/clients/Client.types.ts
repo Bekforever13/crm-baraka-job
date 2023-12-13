@@ -2,7 +2,6 @@ import { FilterValue } from 'antd/es/table/interface'
 import { IRuKarUz } from '../shared/shared.types'
 import { TFiltersState } from 'src/components/screens/Clients/ClientsTypes'
 
-
 export interface Option {
 	value: string | number
 	label: string
@@ -42,6 +41,7 @@ export interface IClientsParams {
 	limit: number
 	search?: string
 	page?: number
+	/* eslint-disable-next-line   */
 	role_id?: any
 	service_id?: FilterValue
 	region_id?: FilterValue

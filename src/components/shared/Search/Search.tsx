@@ -9,16 +9,20 @@ const Search: FC<{ category: string }> = ({ category }) => {
 	// hooks
 	const debouncedSearch = useDebounce<string>(searchValue, 300)
 	// store actions
-	const { setRegionSearch, setDistrictSearch, setCategoriesSearch } =
-		useActions()
+	const {
+		setRegionSearch,
+		setDistrictSearch,
+		setCategoriesSearch,
+		setCascaderSearch,
+	} = useActions()
 
-		useEffect(() => {
+	useEffect(() => {
 		// after check category we will change correct search state in store
 		if (category === 'region') setRegionSearch(debouncedSearch)
 		if (category === 'district') setDistrictSearch(debouncedSearch)
 		if (category === 'categories') setCategoriesSearch(debouncedSearch)
+		if (category === 'service') setCascaderSearch(debouncedSearch)
 	}, [debouncedSearch, category])
-
 
 	useEffect(() => {
 		// if search value is empty we clear all search values from store
@@ -26,6 +30,7 @@ const Search: FC<{ category: string }> = ({ category }) => {
 			setRegionSearch('')
 			setDistrictSearch('')
 			setCategoriesSearch('')
+			setCascaderSearch('')
 		}
 	}, [searchValue])
 
