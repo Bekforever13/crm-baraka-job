@@ -9,18 +9,14 @@ const ClientInfoTable: FC<TableProps<TCallHistory>> = props => {
 	const columns: ColumnsType<TCallHistory> = [
 		{
 			title: 'Имя',
-			dataIndex: 'first_name',
-			key: 'first_name',
+			dataIndex: 'name',
+			key: 'name',
 		},
 		{
-			title: 'Фамилия',
-			dataIndex: 'last_name',
-			key: 'last_name',
-		},
-		{
-			title: 'Телефон',
-			dataIndex: 'phone',
-			key: 'phone',
+			title: 'Статус',
+			dataIndex: 'status',
+			key: 'status',
+			render: () => 'outgoing' ? 'Входящий' : 'Исходящий'
 		},
 		{
 			title: 'Сервис',
