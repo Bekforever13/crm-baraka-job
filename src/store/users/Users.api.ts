@@ -23,7 +23,7 @@ export const usersApi = api.injectEndpoints({
 				url: `/user/${id}`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: ['users'],
+			invalidatesTags: ['users', 'clients'],
 		}),
 		addNewAdmin: builder.mutation<unknown, TNewAdminTypes>({
 			query: body => ({
