@@ -40,7 +40,9 @@ const Search: FC<{ category: string }> = ({ category }) => {
 			placeholder='Поиск...'
 			value={searchValue}
 			style={{ width: '100%' }}
-			onChange={e => setSearchValue(e.target.value)}
+			onChange={e => {
+				setSearchValue(e.target.value)
+			}}
 		/>
 	)
 }

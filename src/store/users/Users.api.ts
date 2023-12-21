@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import { api } from '../index.api'
 import { IGetDataParams } from '../shared/shared.types'
 import { IUserDataResponse, TNewAdminTypes, TUserRole } from './Users.types'
@@ -31,6 +32,25 @@ export const usersApi = api.injectEndpoints({
 				method: 'POST',
 				body,
 			}),
+			onQueryStarted: (_, { queryFulfilled }) => {
+				try {
+					queryFulfilled.catch((e: any) => {
+						if (
+							e.error.data.data.error === 'The phone has already been taken.'
+						) {
+							message.error('Данный телефон уже зарегистрирован')
+						}
+						if (
+							e.error.data.data.error ===
+							'The password field must be at least 8 characters.'
+						) {
+							message.error('Пароль должен быть не менее 8 символов')
+						}
+					})
+				} catch (err) {
+					console.log('error', err)
+				}
+			},
 			invalidatesTags: ['users'],
 		}),
 	}),

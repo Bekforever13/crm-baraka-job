@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react'
 import Table from 'antd/es/table'
-import { useGetRegionsQuery } from 'src/store/index.endpoints'
+import { useGetAllRegionsQuery, useGetRegionsQuery } from 'src/store/index.endpoints'
 import { message } from 'antd'
 import { useSelectors } from 'src/hooks/useSelectors'
 import { RegionsTableColumns } from './RegionsTableColumns'
@@ -14,6 +14,7 @@ const RegionsTable: FC = () => {
 	const { setRegionsData } = useActions()
 	const { regionSearch, regionsData } = useSelectors()
 	// rtk hook
+	const {data: allRegionsData} = useGetAllRegionsQuery()
 	const { data, isLoading, isError } = useGetRegionsQuery({
 		page: currentPage,
 	})
@@ -62,10 +63,10 @@ const RegionsTable: FC = () => {
 
 	useEffect(() => {
 		// if search value empty data will be restored from { data }
-		if (!regionSearch.length && data) {
-			setRegionsData(data.data)
+		if (!regionSearch.length && allRegionsData) {
+			setRegionsData(allRegionsData.data)
 		}
-	}, [data, regionSearch])
+	}, [allRegionsData, regionSearch])
 
 	return (
 		<Table

@@ -15,6 +15,12 @@ export const regionsApi = api.injectEndpoints({
 			}),
 			providesTags: ['regions'],
 		}),
+		getAllRegions: builder.query<IRegionDataResponse, void>({
+			query: () => ({
+				url: '/regions?limit=100000',
+			}),
+			providesTags: ['regions'],
+		}),
 		addNewRegion: builder.mutation<unknown, TAddNewItem>({
 			query: body => ({
 				url: '/regions',

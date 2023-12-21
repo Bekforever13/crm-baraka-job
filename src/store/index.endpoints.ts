@@ -14,10 +14,12 @@ export const {
 	useAddNewRegionMutation,
 	useEditRegionMutation,
 	useDeleteRegionMutation,
+	useGetAllRegionsQuery,
 } = regionsApi
 
 export const {
 	useGetCategoriesQuery,
+	useGetAllCategoriesQuery,
 	useAddNewCategoriesMutation,
 	useEditCategoriesMutation,
 	useDeleteCategoriesMutation,

@@ -23,8 +23,7 @@ const UiAddAdminDrawer: FC = () => {
 		formState: { errors },
 	} = useForm<TNewAdminTypes>({})
 	// rtk hooks
-	const [addNewAdmin, { isLoading, isSuccess, isError }] =
-		useAddNewAdminMutation()
+	const [addNewAdmin, { isLoading, isSuccess }] = useAddNewAdminMutation()
 	// hook
 	const formRef = useRef<HTMLFormElement>(null)
 
@@ -43,14 +42,6 @@ const UiAddAdminDrawer: FC = () => {
 		addNewAdmin({ ...values, phone: formatPhone(values.phone) })
 	}
 
-	// error message
-	useEffect(() => {
-		if (isError) {
-			message.error('Данный телефон уже зарегистрирован')
-			reset({ phone: '' })
-		}
-	}, [isError])
-
 	useEffect(() => {
 		// clear form after success
 		if (isSuccess && formRef.current) {
@@ -65,7 +56,12 @@ const UiAddAdminDrawer: FC = () => {
 	}, [isSuccess])
 
 	return (
-		<Drawer title='Админ' placement='right' onClose={onClose} open={usersDrawer}>
+		<Drawer
+			title='Админ'
+			placement='right'
+			onClose={onClose}
+			open={usersDrawer}
+		>
 			<form ref={formRef} onSubmit={handleSubmit(handleClickSubmit)}>
 				<Row className='my-5 flex flex-col gap-y-2' gutter={16}>
 					Ф.И.О
@@ -115,6 +111,7 @@ const UiAddAdminDrawer: FC = () => {
 							type={showPassword ? 'text' : 'password'}
 							{...register('password', {
 								required: true,
+								min: 8,
 							})}
 						/>
 						<span

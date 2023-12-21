@@ -7,8 +7,14 @@ export const categoriesApi = api.injectEndpoints({
 	endpoints: builder => ({
 		getCategories: builder.query<ICategoriesDataResponse, IGetDataParams>({
 			query: body => ({
-				url: `/categories`,
+				url: '/categories',
 				params: body,
+			}),
+			providesTags: ['categories'],
+		}),
+		getAllCategories: builder.query<ICategoriesDataResponse, void>({
+			query: () => ({
+				url: '/categories?limit=100000',
 			}),
 			providesTags: ['categories'],
 		}),

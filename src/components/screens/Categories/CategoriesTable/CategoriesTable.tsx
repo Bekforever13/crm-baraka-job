@@ -1,6 +1,9 @@
 import { FC, useState, useEffect } from 'react'
 import Table from 'antd/es/table'
-import { useGetCategoriesQuery } from 'src/store/index.endpoints'
+import {
+	useGetAllCategoriesQuery,
+	useGetCategoriesQuery,
+} from 'src/store/index.endpoints'
 import { message } from 'antd'
 import { CategoriesTableColumns } from './CategoriesTableColumns'
 import { CategoriesExpandedTable } from './CategoriesExpandedTable'
@@ -12,6 +15,7 @@ const CategoriesTable: FC = () => {
 	// Store actions and states
 	const { setCategoriesData } = useActions()
 	const { categoriesData, categoriesSearch } = useSelectors()
+	const { data: allCategoriesData } = useGetAllCategoriesQuery()
 	// RTK hooks
 	const { data, isLoading, isError } = useGetCategoriesQuery({
 		page: currentPage,
@@ -39,36 +43,35 @@ const CategoriesTable: FC = () => {
 	// ** search filter
 	useEffect(() => {
 		// when start search this logic will start work
-		if (categoriesData) {
-			setCategoriesData(
-				categoriesData.filter(el => {
-					// if we searching category
-					const isCategoryNameMatch = Object.values(el.category_name).some(
-						val => val.toLowerCase().includes(categoriesSearch.toLowerCase())
-					)
+		if (categoriesData && categoriesSearch.length) {
+			const filter = categoriesData.filter(el => {
+				// if we searching category
+				const isCategoryNameMatch = Object.values(el.category_name).some(val =>
+					val.toLowerCase().includes(categoriesSearch.toLowerCase())
+				)
 
-					if (isCategoryNameMatch) {
-						return true
-					}
+				if (isCategoryNameMatch) {
+					return true
+				}
 
-					// if we searching service
-					const isServiceNameMatch = el.services
-						.map(item => item.name)
-						.some(name =>
-							Object.values(name).some(val =>
-								val.toLowerCase().includes(categoriesSearch.toLowerCase())
-							)
+				// if we searching service
+				const isServiceNameMatch = el.services
+					.map(item => item.name)
+					.some(name =>
+						Object.values(name).some(val =>
+							val.toLowerCase().includes(categoriesSearch.toLowerCase())
 						)
+					)
+				return isServiceNameMatch
+			})
 
-					return isServiceNameMatch
-				})
-			)
+			setCategoriesData(filter)
 		}
 		// if search value empty data will be restored from { data }
-		if (!categoriesSearch.length && data) {
-			setCategoriesData(data?.data)
+		if (!categoriesSearch && allCategoriesData) {
+			setCategoriesData(allCategoriesData?.data)
 		}
-	}, [categoriesSearch])
+	}, [categoriesSearch, categoriesSearch.length])
 
 	return (
 		<Table
@@ -82,7 +85,7 @@ const CategoriesTable: FC = () => {
 							current: currentPage,
 							onChange: page => setCurrentPage(page),
 							showSizeChanger: false,
-					}
+					  }
 			}
 			rowKey={e => e.id}
 			dataSource={categoriesData}
@@ -93,7 +96,10 @@ const CategoriesTable: FC = () => {
 			expandable={{
 				expandedRowRender: record => (
 					// our custom table will show when clicked expand category
-					<CategoriesExpandedTable categoryID={record.id} districts={record.services} />
+					<CategoriesExpandedTable
+						categoryID={record.id}
+						districts={record.services}
+					/>
 				),
 				rowExpandable: record => record.services.length > 0,
 			}}
