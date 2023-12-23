@@ -9,6 +9,26 @@ import { CategoriesTableColumns } from './CategoriesTableColumns'
 import { CategoriesExpandedTable } from './CategoriesExpandedTable'
 import { useActions, useCheckLastPage, useSelectors } from 'src/hooks'
 
+const findInObject = (object: any, key: any, value: any) => {
+	if (object === null || object === undefined) {
+		return false
+	}
+
+	if (object[key] === value) {
+		return true
+	}
+
+	for (const property in object) {
+		if (typeof object[property] === 'object') {
+			if (findInObject(object[property], key, value)) {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
 const CategoriesTable: FC = () => {
 	// State
 	const [currentPage, setCurrentPage] = useState(1)
@@ -42,7 +62,6 @@ const CategoriesTable: FC = () => {
 
 	// ** search filter
 	useEffect(() => {
-		// when start search this logic will start work
 		if (categoriesData && categoriesSearch.length) {
 			const filter = categoriesData.filter(el => {
 				// if we searching category

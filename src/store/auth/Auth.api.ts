@@ -19,5 +19,11 @@ export const authApi = api.injectEndpoints({
 				body,
 			}),
 		}),
+		logout: builder.mutation<unknown, void>({
+			query: () => ({
+				url: '/logout',
+				method: 'POST',
+			}),
+		}),
 	}),
 })

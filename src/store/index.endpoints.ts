@@ -7,7 +7,8 @@ import { sharedApi } from './shared/shared.api'
 import { districtsApi } from './districts/Districts.api'
 import { servicesApi } from './services/Services.api'
 
-export const { useLoginMutation, useCheckUserQuery } = authApi
+export const { useLoginMutation, useCheckUserQuery, useLogoutMutation } =
+	authApi
 
 export const {
 	useGetRegionsQuery,

@@ -10,6 +10,7 @@ import { useActions } from 'src/hooks/useActions'
 import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
 import { useWindowSize } from 'src/hooks/useWindowSize'
+import { useLogoutMutation } from 'src/store/index.endpoints'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -45,12 +46,15 @@ const Navbar: FC = () => {
 	const { setAuth } = useActions()
 	// custom hook
 	const { width } = useWindowSize()
+	// rtk hook
+	const [logout] = useLogoutMutation()
 
 	// after logout submit we clear tokens and remove access
 	const handleClickLogout = () => {
 		localStorage.removeItem('token')
 		setAuth(false)
 		navigate('/auth')
+		logout()
 	}
 
 	// after click any menu item we navigate to menu items key, which is our route
